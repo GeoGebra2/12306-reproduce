@@ -95,6 +95,10 @@ nodes:
     type: UI
     path: frontend/src/pages/HomePage.jsx
     description: Home Page Container
+  API_ROOT:
+    type: API
+    path: backend/src/index.js
+    signature: GET /
 edges:
   - from: ROOT
     to: REQ-1
@@ -164,4 +168,7 @@ edges:
     relation: HAS_CHILD
   - from: ROOT
     to: HomePage
+    relation: DEFINES
+  - from: ROOT
+    to: API_ROOT
     relation: DEFINES

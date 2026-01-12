@@ -3,6 +3,8 @@
   artifacts:
     ui_ids:
       - HomePage
+    api_ids:
+      - API_ROOT
 - id: REQ-1
   status: unprocessed
 - id: REQ-1-1
