@@ -4,3 +4,15 @@ API_ROOT:
   signature: GET /
   upstream_ids: []
   downstream_ids: []
+API-REQ-1-LOGIN:
+  related_req_id: REQ-1
+  path: backend/src/routes/auth.js
+  signature: POST /api/auth/login
+  upstream_ids: []
+  downstream_ids: []
+API-REQ-1-REGISTER:
+  related_req_id: REQ-1
+  path: backend/src/routes/auth.js
+  signature: POST /api/auth/register
+  upstream_ids: []
+  downstream_ids: []

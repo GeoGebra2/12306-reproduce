@@ -7,7 +7,25 @@ const db = new sqlite3.Database(dbPath, (err) => {
     console.error('Error opening database', err.message);
   } else {
     console.log('Connected to the SQLite database.');
+    initTables();
   }
 });
+
+function initTables() {
+  db.serialize(() => {
+    // Users Table (REQ-1)
+    db.run(`CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE,
+      password TEXT,
+      id_type TEXT,
+      id_card TEXT UNIQUE,
+      real_name TEXT,
+      phone TEXT,
+      email TEXT,
+      type TEXT
+    )`);
+  });
+}
 
 module.exports = db;

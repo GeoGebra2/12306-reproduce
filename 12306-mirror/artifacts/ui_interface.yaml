@@ -4,3 +4,17 @@ HomePage:
   description: Home Page Container
   upstream_ids: []
   downstream_ids: []
+UI-REQ-1-LOGIN-PAGE:
+  related_req_id: REQ-1
+  path: frontend/src/pages/LoginPage.jsx
+  description: Login Page Container
+  upstream_ids:
+    - ROOT-HOME-PAGE
+  downstream_ids: []
+UI-REQ-1-REGISTER-PAGE:
+  related_req_id: REQ-1
+  path: frontend/src/pages/RegisterPage.jsx
+  description: Register Page Container
+  upstream_ids:
+    - ROOT-HOME-PAGE
+  downstream_ids: []

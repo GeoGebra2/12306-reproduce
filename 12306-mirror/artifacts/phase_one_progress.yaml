@@ -6,7 +6,14 @@
     api_ids:
       - API_ROOT
 - id: REQ-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-REQ-1-LOGIN-PAGE
+      - UI-REQ-1-REGISTER-PAGE
+    api_ids:
+      - API-REQ-1-LOGIN
+      - API-REQ-1-REGISTER
 - id: REQ-1-1
   status: unprocessed
 - id: REQ-1-2

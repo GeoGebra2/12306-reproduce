@@ -99,6 +99,22 @@ nodes:
     type: API
     path: backend/src/index.js
     signature: GET /
+  UI-REQ-1-LOGIN-PAGE:
+    type: UI
+    path: frontend/src/pages/LoginPage.jsx
+    description: Login Page Container
+  UI-REQ-1-REGISTER-PAGE:
+    type: UI
+    path: frontend/src/pages/RegisterPage.jsx
+    description: Register Page Container
+  API-REQ-1-LOGIN:
+    type: API
+    path: backend/src/routes/auth.js
+    signature: POST /api/auth/login
+  API-REQ-1-REGISTER:
+    type: API
+    path: backend/src/routes/auth.js
+    signature: POST /api/auth/register
 edges:
   - from: ROOT
     to: REQ-1
@@ -171,4 +187,22 @@ edges:
     relation: DEFINES
   - from: ROOT
     to: API_ROOT
+    relation: DEFINES
+  - from: REQ-1
+    to: UI-REQ-1-LOGIN-PAGE
+    relation: DEFINES
+  - from: ROOT-HOME-PAGE
+    to: UI-REQ-1-LOGIN-PAGE
+    relation: CALLS
+  - from: REQ-1
+    to: UI-REQ-1-REGISTER-PAGE
+    relation: DEFINES
+  - from: ROOT-HOME-PAGE
+    to: UI-REQ-1-REGISTER-PAGE
+    relation: CALLS
+  - from: REQ-1
+    to: API-REQ-1-LOGIN
+    relation: DEFINES
+  - from: REQ-1
+    to: API-REQ-1-REGISTER
     relation: DEFINES
