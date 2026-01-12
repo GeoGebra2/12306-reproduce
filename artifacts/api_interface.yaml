@@ -1,0 +1,6 @@
+POST /api/auth/register:
+  related_req_id: REQ-1-1
+  path: 12306-mirror/backend/src/routes/auth.js
+  signature: POST /register
+  downstream_ids:
+    - authService.register

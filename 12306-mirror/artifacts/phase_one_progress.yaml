@@ -15,7 +15,7 @@
       - API-REQ-1-LOGIN
       - API-REQ-1-REGISTER
 - id: REQ-1-1
-  status: unprocessed
+  status: processed
 - id: REQ-1-2
   status: unprocessed
 - id: REQ-2

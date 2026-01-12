@@ -1,14 +1,26 @@
 const express = require('express');
 const router = express.Router();
+const AuthService = require('../services/authService');
 
-// Placeholder for Login
-router.post('/login', (req, res) => {
-  res.status(501).json({ message: 'Not Implemented' });
+// Login
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const result = await AuthService.login(username, password);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-// Placeholder for Register
-router.post('/register', (req, res) => {
-  res.status(501).json({ message: 'Not Implemented' });
+// Register
+router.post('/register', async (req, res) => {
+  try {
+    const result = await AuthService.register(req.body);
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 module.exports = router;

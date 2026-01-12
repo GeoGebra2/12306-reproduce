@@ -1,0 +1,6 @@
+authService.register:
+  related_req_id: REQ-1-1
+  path: 12306-mirror/backend/src/services/authService.js
+  signature: register(userData)
+  db_tables:
+    - users
