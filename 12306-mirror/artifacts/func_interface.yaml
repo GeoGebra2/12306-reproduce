@@ -5,3 +5,10 @@ FUNC-STATION-HOT:
   upstream_ids: []
   db_tables:
     - stations
+stationService.getHotStations:
+  related_req_id: REQ-2-1-2
+  path: backend/src/services/stationService.js
+  signature: getHotStations()
+  upstream_ids: []
+  db_tables:
+    - stations

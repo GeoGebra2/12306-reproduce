@@ -24,3 +24,10 @@ API-STATION-HOT:
     - FUNC-STATION-HOT
   downstream_ids:
     - UI-QUICK-SEARCH-PANEL
+GET /api/stations/hot:
+  related_req_id: REQ-2-1-2
+  path: backend/src/routes/stations.js
+  signature: GET /api/stations/hot
+  upstream_ids: []
+  downstream_ids:
+    - stationService.getHotStations

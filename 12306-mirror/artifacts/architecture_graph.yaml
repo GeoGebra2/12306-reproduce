@@ -125,6 +125,20 @@ nodes:
     signature: getHotStations()
     db_tables:
       - stations
+  stationService.getHotStations:
+    type: FUNC
+    path: backend/src/services/stationService.js
+    signature: getHotStations()
+    db_tables:
+      - stations
+  GET /api/stations/hot:
+    type: API
+    path: backend/src/routes/stations.js
+    signature: GET /api/stations/hot
+  QuickSearchPanel:
+    type: UI
+    path: frontend/src/pages/components/QuickSearchPanel.jsx
+    description: Updated QuickSearchPanel with hot stations and destination search
 edges:
   - from: ROOT
     to: REQ-1
@@ -228,3 +242,18 @@ edges:
   - from: req_2_1_2_main
     to: FUNC-STATION-HOT
     relation: DEFINES
+  - from: REQ-2-1-2
+    to: stationService.getHotStations
+    relation: DEFINES
+  - from: REQ-2-1-2
+    to: GET /api/stations/hot
+    relation: DEFINES
+  - from: GET /api/stations/hot
+    to: stationService.getHotStations
+    relation: CALLS
+  - from: REQ-2-1-2
+    to: QuickSearchPanel
+    relation: DEFINES
+  - from: GET /api/stations/hot
+    to: QuickSearchPanel
+    relation: CALLS

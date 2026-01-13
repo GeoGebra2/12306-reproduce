@@ -18,3 +18,10 @@ UI-REQ-1-REGISTER-PAGE:
   upstream_ids:
     - ROOT-HOME-PAGE
   downstream_ids: []
+QuickSearchPanel:
+  related_req_id: REQ-2-1-2
+  path: frontend/src/pages/components/QuickSearchPanel.jsx
+  description: Updated QuickSearchPanel with hot stations and destination search
+  upstream_ids:
+    - GET /api/stations/hot
+  downstream_ids: []
