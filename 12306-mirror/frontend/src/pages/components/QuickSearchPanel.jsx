@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './QuickSearchPanel.css';
 
 const QuickSearchPanel = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState({
     fromStation: '',
     toStation: '',
@@ -25,8 +27,9 @@ const QuickSearchPanel = () => {
   };
 
   const handleSearch = () => {
-    console.log('Search params:', searchParams);
-    // TODO: Implement search navigation
+    // console.log('Search params:', searchParams);
+    const { fromStation, toStation, date } = searchParams;
+    navigate(`/ticket-list?from=${encodeURIComponent(fromStation)}&to=${encodeURIComponent(toStation)}&date=${encodeURIComponent(date)}`);
   };
 
   return (

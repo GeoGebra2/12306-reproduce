@@ -8,7 +8,8 @@ LoginPage:
   description: User login form page
 QuickSearchPanel:
   related_req_id: REQ-2
-  path: frontend/src/pages/components/QuickSearchPanel.jsx
-  description: Quick Search Panel for Home Page
-  upstream_ids: []
+  path: src/pages/components/QuickSearchPanel.jsx
+  description: Quick Search Panel for Ticket Search
+  upstream_ids:
+    - HomePage
   downstream_ids: []
