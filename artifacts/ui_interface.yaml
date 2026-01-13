@@ -13,3 +13,10 @@ QuickSearchPanel:
   upstream_ids:
     - HomePage
   downstream_ids: []
+UI-QUICK-SEARCH-PANEL:
+  related_req_id: REQ-2-1-1
+  path: 12306-mirror/frontend/src/pages/components/QuickSearchPanel.jsx
+  description: Quick Search Panel with Station Auto-complete
+  upstream_ids: []
+  downstream_ids:
+    - API-STATION-SEARCH

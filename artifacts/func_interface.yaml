@@ -18,3 +18,11 @@ database/init_db:
     - stations
     - trains
     - train_station_mapping
+FUNC-STATION-SEARCH:
+  related_req_id: REQ-2-1-1
+  path: 12306-mirror/backend/src/services/stationService.js
+  signature: searchStations(query)
+  upstream_ids:
+    - API-STATION-SEARCH
+  db_tables:
+    - stations

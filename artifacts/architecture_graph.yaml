@@ -95,6 +95,20 @@ nodes:
     type: UI
     path: src/pages/components/QuickSearchPanel.jsx
     description: Quick Search Panel for Ticket Search
+  UI-QUICK-SEARCH-PANEL:
+    type: UI
+    path: 12306-mirror/frontend/src/pages/components/QuickSearchPanel.jsx
+    description: Quick Search Panel with Station Auto-complete
+  API-STATION-SEARCH:
+    type: API
+    path: GET /api/stations
+    signature: GET /api/stations?q={query}
+  FUNC-STATION-SEARCH:
+    type: FUNC
+    path: 12306-mirror/backend/src/services/stationService.js
+    signature: searchStations(query)
+    db_tables:
+      - stations
 edges:
   - from: ROOT
     to: REQ-1
@@ -168,3 +182,18 @@ edges:
   - from: HomePage
     to: QuickSearchPanel
     relation: CALLS
+  - from: REQ-2-1-1
+    to: UI-QUICK-SEARCH-PANEL
+    relation: DEFINES
+  - from: UI-QUICK-SEARCH-PANEL
+    to: API-STATION-SEARCH
+    relation: CALLS
+  - from: REQ-2-1-1
+    to: API-STATION-SEARCH
+    relation: DEFINES
+  - from: API-STATION-SEARCH
+    to: FUNC-STATION-SEARCH
+    relation: CALLS
+  - from: REQ-2-1-1
+    to: FUNC-STATION-SEARCH
+    relation: DEFINES

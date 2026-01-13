@@ -10,3 +10,11 @@ POST /api/auth/login:
   signature: POST /login
   downstream_ids:
     - authService.login
+API-STATION-SEARCH:
+  related_req_id: REQ-2-1-1
+  path: GET /api/stations
+  signature: GET /api/stations?q={query}
+  upstream_ids:
+    - UI-QUICK-SEARCH-PANEL
+  downstream_ids:
+    - FUNC-STATION-SEARCH
