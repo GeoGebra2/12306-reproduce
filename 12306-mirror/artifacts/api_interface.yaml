@@ -16,3 +16,11 @@ API-REQ-1-REGISTER:
   signature: POST /api/auth/register
   upstream_ids: []
   downstream_ids: []
+API-STATION-HOT:
+  related_req_id: req_2_1_2_main
+  path: GET /api/stations/hot
+  signature: GET /api/stations/hot
+  upstream_ids:
+    - FUNC-STATION-HOT
+  downstream_ids:
+    - UI-QUICK-SEARCH-PANEL

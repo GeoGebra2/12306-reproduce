@@ -115,6 +115,16 @@ nodes:
     type: API
     path: backend/src/routes/auth.js
     signature: POST /api/auth/register
+  API-STATION-HOT:
+    type: API
+    path: GET /api/stations/hot
+    signature: GET /api/stations/hot
+  FUNC-STATION-HOT:
+    type: FUNC
+    path: 12306-mirror/backend/src/services/stationService.js
+    signature: getHotStations()
+    db_tables:
+      - stations
 edges:
   - from: ROOT
     to: REQ-1
@@ -205,4 +215,16 @@ edges:
     relation: DEFINES
   - from: REQ-1
     to: API-REQ-1-REGISTER
+    relation: DEFINES
+  - from: req_2_1_2_main
+    to: API-STATION-HOT
+    relation: DEFINES
+  - from: FUNC-STATION-HOT
+    to: API-STATION-HOT
+    relation: CALLS
+  - from: API-STATION-HOT
+    to: UI-QUICK-SEARCH-PANEL
+    relation: CALLS
+  - from: req_2_1_2_main
+    to: FUNC-STATION-HOT
     relation: DEFINES

@@ -32,7 +32,8 @@ function initTables() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT UNIQUE NOT NULL,
       code TEXT UNIQUE NOT NULL,
-      pinyin TEXT
+      pinyin TEXT,
+      hot INTEGER DEFAULT 0
     )`);
 
     // Trains Table (REQ-2)
@@ -65,13 +66,18 @@ function seedData() {
     if (row && row.count === 0) {
       console.log("Seeding initial data...");
       const stations = [
-        ['北京南', 'VNP', 'beijingnan'],
-        ['上海虹桥', 'AOH', 'shanghaihongqiao'],
-        ['南京南', 'NKH', 'nanjingnan'],
-        ['济南西', 'JGK', 'jinanxi'],
-        ['天津南', 'TIP', 'tianjinnan']
+        ['北京南', 'VNP', 'beijingnan', 1],
+        ['上海虹桥', 'AOH', 'shanghaihongqiao', 1],
+        ['南京南', 'NKH', 'nanjingnan', 0],
+        ['济南西', 'JGK', 'jinanxi', 0],
+        ['天津南', 'TIP', 'tianjinnan', 0],
+        ['广州南', 'IZQ', 'guangzhounan', 1],
+        ['深圳北', 'IOQ', 'shenzhenbei', 1],
+        ['成都东', 'ICW', 'chengdudong', 1],
+        ['杭州东', 'HGH', 'hangzhoudong', 1],
+        ['武汉', 'WHN', 'wuhan', 1]
       ];
-      const stmt = db.prepare("INSERT INTO stations (name, code, pinyin) VALUES (?, ?, ?)");
+      const stmt = db.prepare("INSERT INTO stations (name, code, pinyin, hot) VALUES (?, ?, ?, ?)");
       stations.forEach(s => stmt.run(s));
       stmt.finalize();
       

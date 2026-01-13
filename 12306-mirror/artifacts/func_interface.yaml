@@ -1,0 +1,7 @@
+FUNC-STATION-HOT:
+  related_req_id: req_2_1_2_main
+  path: 12306-mirror/backend/src/services/stationService.js
+  signature: getHotStations()
+  upstream_ids: []
+  db_tables:
+    - stations

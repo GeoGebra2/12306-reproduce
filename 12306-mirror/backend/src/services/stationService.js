@@ -24,6 +24,16 @@ const stationService = {
         }
       });
     });
+  },
+
+  getHotStations: async () => {
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT * FROM stations WHERE hot = 1 LIMIT 10`;
+      db.all(sql, [], (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      });
+    });
   }
 };
 

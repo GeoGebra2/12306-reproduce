@@ -34,6 +34,15 @@ const QuickSearchPanel = () => {
     }
   };
 
+  const fetchHotStations = async () => {
+    try {
+      const res = await axios.get('/api/stations/hot');
+      setSuggestions(res.data);
+    } catch (err) {
+      console.error("Failed to fetch hot stations", err);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSearchParams(prev => ({
@@ -43,7 +52,8 @@ const QuickSearchPanel = () => {
     
     if (name === 'fromStation' || name === 'toStation') {
         setActiveField(name);
-        fetchStations(value);
+        if (!value) fetchHotStations();
+        else fetchStations(value);
     }
   };
 
@@ -75,7 +85,10 @@ const QuickSearchPanel = () => {
                 placeholder="出发地" 
                 value={searchParams.fromStation}
                 onChange={handleChange}
-                onFocus={() => setActiveField('fromStation')}
+                onFocus={() => {
+                    setActiveField('fromStation');
+                    if (!searchParams.fromStation) fetchHotStations();
+                }}
                 autoComplete="off"
                 className="station-input"
             />
@@ -101,7 +114,10 @@ const QuickSearchPanel = () => {
                 placeholder="目的地" 
                 value={searchParams.toStation}
                 onChange={handleChange}
-                onFocus={() => setActiveField('toStation')}
+                onFocus={() => {
+                    setActiveField('toStation');
+                    if (!searchParams.toStation) fetchHotStations();
+                }}
                 autoComplete="off"
                 className="station-input"
             />
