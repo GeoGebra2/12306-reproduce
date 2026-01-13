@@ -62,6 +62,13 @@
 
 * **Level 3 - 前端全栈集成测试 (Full-Stack Component)**：
 在此阶段，必须编写一个包含 **Setup -> Render -> Interact -> Verify** 完整闭环的测试文件。
+
+* **Level 4 - 端到端验收测试 (E2E)**：
+* **要求**：
+    * 必须在真实网络环境下运行（非 Mock 环境），确保前端代理 (Proxy) 和 CORS 配置正确。
+    * 验证从 浏览器 -> 前端服务器 -> 后端 API -> 数据库 的完整链路。
+    * 只要项目环境允许，优先使用 Playwright/Cypress。
+
 * **环境构建 (Setup)**：
 * `beforeAll`: 启动后端 `app.listen(0)`。
 * `beforeAll`: **配置 Axios 拦截器 (Spy)**，将 `response.data` 捕获到 `lastApiResponse` 变量中，用于后续断言。

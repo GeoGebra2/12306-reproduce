@@ -250,6 +250,14 @@ children:
           - id: REQ-1-3-3
             name: 重置密码页
             description: 设置新密码并完成重置。
+            scenarios:
+              - id: REQ-1-3-3:SCE-0
+                name: 提交重置密码
+                prerequisites:
+                  - REQ-1-3-2 (短信验证通过)
+                steps:
+                  - action: 输入新密码并提交
+                    expectation: 调用重置密码接口，后端将数据库中该用户的密码更新为新密码。操作完成后，原密码即刻失效，用户必须使用新密码登录。
             ui_spec:
               page: "/forgot-password/reset"
               sections:
@@ -297,7 +305,7 @@ children:
       - id: REQ-2-1
         name: 首页快捷查询面板
         description: 快捷查询单程车票，快捷查询面板参考图片：[image](./reference/search/quick_search.png)
-        dependencies: []
+        dependencies: REQ-2
         scenarios:
           - id: REQ-2-1:SCE-1
             name: 加载快捷查询面板UI
@@ -364,7 +372,7 @@ children:
           - id: REQ-2-1-1
             name: 出发地快捷输入
             description: 点击出发地输入框，弹出快捷选择框，支持输入和快捷选择。出发地快捷选择参考图片：[image](./reference/search/quick_address.png)
-            dependencies: []
+            dependencies: REQ-2
             scenarios:
               - id: REQ-2-1-1:SCE-0
                 name: 输入出发地
@@ -387,7 +395,7 @@ children:
           - id: REQ-2-1-2
             name: 目的地快捷输入
             description: 点击目的地输入框，弹出快捷选择框，支持输入和快捷选择。目的地快捷选择参考图片：[image](./reference/search/quick_address.png)
-            dependencies: []
+            dependencies: REQ-2
             scenarios:
               - id: REQ-2-1-2:SCE-0
                 name: 输入目的地
@@ -410,7 +418,7 @@ children:
           - id: REQ-2-1-3
             name: 选择出发日期
             description: 点击出发日期输入框，弹出出发日期选择组件，参考图片：[image](./reference/search/quick_date.png)
-            dependencies: []
+            dependencies: REQ-2
             scenarios:
               - id: REQ-2-1-3:SCE-0
                 name: 选择出发日期
@@ -424,7 +432,7 @@ children:
       - id: REQ-2-2
         name: 车次列表页
         description: 展示车次数据，提供查询、筛选功能。参考图片：[image](./reference/search/result.png)
-        dependencies: []
+        dependencies: REQ-2
         scenarios:
           - id: REQ-2-2:SCE-0
             name: 车次列表页初始化
