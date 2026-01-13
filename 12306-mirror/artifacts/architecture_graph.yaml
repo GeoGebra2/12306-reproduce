@@ -143,6 +143,18 @@ nodes:
     type: UI
     path: frontend/src/pages/components/DatePicker.jsx
     description: Custom DatePicker component for selecting departure date, showing current and next month.
+  TicketSearchPage:
+    type: UI
+    path: frontend/src/pages/TicketSearchPage.jsx
+    description: 车次列表页容器，包含查询栏和列表区域
+  SearchQueryBar:
+    type: UI
+    path: frontend/src/pages/components/SearchQueryBar.jsx
+    description: 列表页顶部的车票查询工具栏
+  StationInput:
+    type: UI
+    path: frontend/src/pages/components/StationInput.jsx
+    description: 通用车站输入组件，支持自动补全和热门车站
 edges:
   - from: ROOT
     to: REQ-1
@@ -266,4 +278,37 @@ edges:
     relation: DEFINES
   - from: REQ-2-1-3:UI:DatePicker
     to: REQ-2-1
+    relation: CALLS
+  - from: REQ-2-2
+    to: TicketSearchPage
+    relation: DEFINES
+  - from: HomePage
+    to: TicketSearchPage
+    relation: CALLS
+  - from: TicketSearchPage
+    to: REQ-2-2-1
+    relation: CALLS
+  - from: TicketSearchPage
+    to: REQ-2-2-3
+    relation: CALLS
+  - from: REQ-2-2-1
+    to: SearchQueryBar
+    relation: DEFINES
+  - from: TicketSearchPage
+    to: SearchQueryBar
+    relation: CALLS
+  - from: SearchQueryBar
+    to: REQ-2-1-3:UI:DatePicker
+    relation: CALLS
+  - from: SearchQueryBar
+    to: StationInput
+    relation: CALLS
+  - from: REQ-2-1-1
+    to: StationInput
+    relation: DEFINES
+  - from: QuickSearchPanel
+    to: StationInput
+    relation: CALLS
+  - from: StationInput
+    to: API-STATION-HOT
     relation: CALLS

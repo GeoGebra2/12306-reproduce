@@ -32,3 +32,30 @@ REQ-2-1-3:UI:DatePicker:
   upstream_ids: []
   downstream_ids:
     - REQ-2-1
+TicketSearchPage:
+  related_req_id: REQ-2-2
+  path: frontend/src/pages/TicketSearchPage.jsx
+  description: 车次列表页容器，包含查询栏和列表区域
+  upstream_ids:
+    - HomePage
+  downstream_ids:
+    - REQ-2-2-1
+    - REQ-2-2-3
+SearchQueryBar:
+  related_req_id: REQ-2-2-1
+  path: frontend/src/pages/components/SearchQueryBar.jsx
+  description: 列表页顶部的车票查询工具栏
+  upstream_ids:
+    - TicketSearchPage
+  downstream_ids:
+    - REQ-2-1-3:UI:DatePicker
+    - StationInput
+StationInput:
+  related_req_id: REQ-2-1-1
+  path: frontend/src/pages/components/StationInput.jsx
+  description: 通用车站输入组件，支持自动补全和热门车站
+  upstream_ids:
+    - SearchQueryBar
+    - QuickSearchPanel
+  downstream_ids:
+    - API-STATION-HOT
