@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './QuickSearchPanel.css';
+import DatePicker from './DatePicker';
 
 const QuickSearchPanel = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const QuickSearchPanel = () => {
   });
   const [suggestions, setSuggestions] = useState([]);
   const [activeField, setActiveField] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleSwap = () => {
     setSearchParams(prev => ({
@@ -133,16 +135,27 @@ const QuickSearchPanel = () => {
         </div>
       </div>
       
-      <div className="date-input-group">
+      <div className="date-input-group" style={{position: 'relative'}}>
          <label htmlFor="date" className="sr-only">出发日期</label>
          <input 
-            type="date" 
+            type="text" 
             id="date"
             name="date" 
             value={searchParams.date}
-            onChange={handleChange}
+            readOnly
+            onClick={() => setShowDatePicker(!showDatePicker)}
             className="date-input"
+            placeholder="请选择日期"
          />
+         {showDatePicker && (
+            <DatePicker 
+                onSelect={(date) => {
+                    setSearchParams(prev => ({ ...prev, date }));
+                    setShowDatePicker(false);
+                }}
+                onClose={() => setShowDatePicker(false)}
+            />
+         )}
       </div>
 
       <div className="search-action">
