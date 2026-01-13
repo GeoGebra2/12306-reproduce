@@ -67,3 +67,11 @@ FilterPanel:
     - TicketSearchPage
   downstream_ids:
     - REQ-2-2-3
+TrainList:
+  related_req_id: REQ-2-2-3
+  path: frontend/src/pages/components/TrainList.jsx
+  description: 车次列表组件，展示查询到的车次信息
+  upstream_ids:
+    - TicketSearchPage
+  downstream_ids:
+    - GET /api/trains

@@ -57,7 +57,12 @@
     ui_ids:
       - FilterPanel
 - id: REQ-2-2-3
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - TrainList
+    api_ids:
+      - GET /api/trains
 - id: REQ-3
   status: unprocessed
 - id: REQ-3-1

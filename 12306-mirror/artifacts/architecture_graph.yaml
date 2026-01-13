@@ -159,6 +159,14 @@ nodes:
     type: UI
     path: frontend/src/pages/components/FilterPanel.jsx
     description: 车次筛选面板，提供车次类型和席别筛选功能
+  TrainList:
+    type: UI
+    path: frontend/src/pages/components/TrainList.jsx
+    description: 车次列表组件，展示查询到的车次信息
+  GET /api/trains:
+    type: API
+    path: backend/src/routes/trains.js
+    signature: GET /api/trains?from={from}&to={to}&date={date}
 edges:
   - from: ROOT
     to: REQ-1
@@ -325,3 +333,15 @@ edges:
   - from: FilterPanel
     to: REQ-2-2-3
     relation: CALLS
+  - from: REQ-2-2-3
+    to: TrainList
+    relation: DEFINES
+  - from: TicketSearchPage
+    to: TrainList
+    relation: CALLS
+  - from: TrainList
+    to: GET /api/trains
+    relation: CALLS
+  - from: REQ-2-2-3
+    to: GET /api/trains
+    relation: DEFINES

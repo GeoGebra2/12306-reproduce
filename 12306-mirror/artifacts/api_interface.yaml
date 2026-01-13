@@ -31,3 +31,10 @@ GET /api/stations/hot:
   upstream_ids: []
   downstream_ids:
     - stationService.getHotStations
+GET /api/trains:
+  related_req_id: REQ-2-2-3
+  path: backend/src/routes/trains.js
+  signature: GET /api/trains?from={from}&to={to}&date={date}
+  upstream_ids:
+    - TrainList
+  downstream_ids: []

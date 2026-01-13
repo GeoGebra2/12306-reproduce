@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SearchQueryBar from './components/SearchQueryBar';
 import FilterPanel from './components/FilterPanel';
+import TrainList from './components/TrainList';
 import './TicketSearchPage.css';
 
 const TicketSearchPage = () => {
+  const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState({ trainTypes: [], seatTypes: [] });
+
+  const fromStation = searchParams.get('from');
+  const toStation = searchParams.get('to');
+  const date = searchParams.get('date');
 
   return (
     <div className="ticket-search-page">
@@ -20,13 +27,12 @@ const TicketSearchPage = () => {
       </div>
 
       <main className="search-results">
-        {/* REQ-2-2-3 车次列表将在这里 */}
-        <div className="placeholder">
-            车次列表区域
-            <div style={{fontSize: '12px', color: '#999', marginTop: '10px'}}>
-                Debug: Filtered by {JSON.stringify(filters)}
-            </div>
-        </div>
+        <TrainList 
+            fromStation={fromStation}
+            toStation={toStation}
+            date={date}
+            filters={filters}
+        />
       </main>
     </div>
   );

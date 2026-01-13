@@ -17,6 +17,9 @@ app.use('/api/auth', authRoutes);
 const stationRoutes = require('./routes/stations');
 app.use('/api/stations', stationRoutes);
 
+const trainRoutes = require('./routes/trains');
+app.use('/api/trains', trainRoutes);
+
 
 app.get('/', (req, res) => {
   res.json({ code: 200, message: 'Backend Ready' });
