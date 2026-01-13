@@ -155,6 +155,10 @@ nodes:
     type: UI
     path: frontend/src/pages/components/StationInput.jsx
     description: 通用车站输入组件，支持自动补全和热门车站
+  FilterPanel:
+    type: UI
+    path: frontend/src/pages/components/FilterPanel.jsx
+    description: 车次筛选面板，提供车次类型和席别筛选功能
 edges:
   - from: ROOT
     to: REQ-1
@@ -311,4 +315,13 @@ edges:
     relation: CALLS
   - from: StationInput
     to: API-STATION-HOT
+    relation: CALLS
+  - from: REQ-2-2-2
+    to: FilterPanel
+    relation: DEFINES
+  - from: TicketSearchPage
+    to: FilterPanel
+    relation: CALLS
+  - from: FilterPanel
+    to: REQ-2-2-3
     relation: CALLS

@@ -59,3 +59,11 @@ StationInput:
     - QuickSearchPanel
   downstream_ids:
     - API-STATION-HOT
+FilterPanel:
+  related_req_id: REQ-2-2-2
+  path: frontend/src/pages/components/FilterPanel.jsx
+  description: 车次筛选面板，提供车次类型和席别筛选功能
+  upstream_ids:
+    - TicketSearchPage
+  downstream_ids:
+    - REQ-2-2-3

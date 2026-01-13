@@ -52,7 +52,10 @@
     ui_ids:
       - SearchQueryBar
 - id: REQ-2-2-2
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - FilterPanel
 - id: REQ-2-2-3
   status: unprocessed
 - id: REQ-3
