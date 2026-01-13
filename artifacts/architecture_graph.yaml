@@ -27,6 +27,14 @@ nodes:
     signature: login(username, password)
     db_tables:
       - users
+  database/init_db:
+    type: FUNC
+    path: 12306-mirror/backend/src/database/init_db.js
+    signature: initTables()
+    db_tables:
+      - stations
+      - trains
+      - train_station_mapping
 edges:
   - from: REQ-1-1
     to: RegisterPage
@@ -51,4 +59,7 @@ edges:
     relation: CALLS
   - from: REQ-1-2
     to: authService.login
+    relation: DEFINES
+  - from: REQ-2
+    to: database/init_db
     relation: DEFINES

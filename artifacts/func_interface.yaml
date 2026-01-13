@@ -10,3 +10,11 @@ authService.login:
   signature: login(username, password)
   db_tables:
     - users
+database/init_db:
+  related_req_id: REQ-2
+  path: 12306-mirror/backend/src/database/init_db.js
+  signature: initTables()
+  db_tables:
+    - stations
+    - trains
+    - train_station_mapping
