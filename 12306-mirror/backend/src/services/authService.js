@@ -33,7 +33,34 @@ const AuthService = {
 
   // 用户登录
   async login(username, password) {
-    throw new Error('Not Implemented');
+    if (!username || !password) {
+      throw new Error('Username and password are required');
+    }
+
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT * FROM users WHERE username = ? OR email = ? OR phone = ?`;
+      db.get(sql, [username, username, username], (err, row) => {
+        if (err) {
+          reject(err);
+        } else if (!row) {
+          reject(new Error('User not found'));
+        } else {
+          if (row.password === password) {
+            resolve({
+              success: true,
+              user: {
+                id: row.id,
+                username: row.username,
+                real_name: row.real_name,
+                type: row.type
+              }
+            });
+          } else {
+            reject(new Error('Invalid password'));
+          }
+        }
+      });
+    });
   }
 };
 

@@ -13,6 +13,20 @@ nodes:
     signature: register(userData)
     db_tables:
       - users
+  LoginPage:
+    type: UI
+    path: 12306-mirror/frontend/src/pages/LoginPage.jsx
+    description: User login form page
+  POST /api/auth/login:
+    type: API
+    path: 12306-mirror/backend/src/routes/auth.js
+    signature: POST /login
+  authService.login:
+    type: FUNC
+    path: 12306-mirror/backend/src/services/authService.js
+    signature: login(username, password)
+    db_tables:
+      - users
 edges:
   - from: REQ-1-1
     to: RegisterPage
@@ -25,4 +39,16 @@ edges:
     relation: CALLS
   - from: REQ-1-1
     to: authService.register
+    relation: DEFINES
+  - from: REQ-1-2
+    to: LoginPage
+    relation: DEFINES
+  - from: REQ-1-2
+    to: POST /api/auth/login
+    relation: DEFINES
+  - from: POST /api/auth/login
+    to: authService.login
+    relation: CALLS
+  - from: REQ-1-2
+    to: authService.login
     relation: DEFINES

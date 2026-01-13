@@ -2,3 +2,7 @@ RegisterPage:
   related_req_id: REQ-1-1
   path: 12306-mirror/frontend/src/pages/RegisterPage.jsx
   description: User registration form page
+LoginPage:
+  related_req_id: REQ-1-2
+  path: 12306-mirror/frontend/src/pages/LoginPage.jsx
+  description: User login form page

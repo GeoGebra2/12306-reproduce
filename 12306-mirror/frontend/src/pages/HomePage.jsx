@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -15,9 +16,9 @@ const HomePage = () => {
                 <button>搜索</button>
              </div>
              <div className="user-actions">
-                <a href="/center">我的12306</a>
-                <a href="/login">登录</a>
-                <a href="/register">注册</a>
+                <Link to="/center">我的12306</Link>
+                <Link to="/login">登录</Link>
+                <Link to="/register">注册</Link>
              </div>
           </div>
         </div>

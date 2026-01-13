@@ -17,7 +17,7 @@
 - id: REQ-1-1
   status: processed
 - id: REQ-1-2
-  status: unprocessed
+  status: processed
 - id: REQ-2
   status: unprocessed
 - id: REQ-2-1

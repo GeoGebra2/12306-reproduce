@@ -4,3 +4,9 @@ authService.register:
   signature: register(userData)
   db_tables:
     - users
+authService.login:
+  related_req_id: REQ-1-2
+  path: 12306-mirror/backend/src/services/authService.js
+  signature: login(username, password)
+  db_tables:
+    - users
