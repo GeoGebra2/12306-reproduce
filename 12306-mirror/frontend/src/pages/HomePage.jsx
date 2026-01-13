@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import QuickSearchPanel from './components/QuickSearchPanel';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -43,7 +44,7 @@ const HomePage = () => {
         </div>
         
         <div className="quick-search-panel-container">
-           <div className="quick-search-placeholder">Quick Search Panel (To be implemented in REQ-2)</div>
+           <QuickSearchPanel />
         </div>
       </main>
 

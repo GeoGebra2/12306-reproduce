@@ -35,6 +35,10 @@ nodes:
       - stations
       - trains
       - train_station_mapping
+  QuickSearchPanel:
+    type: UI
+    path: frontend/src/pages/components/QuickSearchPanel.jsx
+    description: Quick Search Panel for Home Page
 edges:
   - from: REQ-1-1
     to: RegisterPage
@@ -62,4 +66,7 @@ edges:
     relation: DEFINES
   - from: REQ-2
     to: database/init_db
+    relation: DEFINES
+  - from: REQ-2
+    to: QuickSearchPanel
     relation: DEFINES

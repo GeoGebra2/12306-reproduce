@@ -6,3 +6,9 @@ LoginPage:
   related_req_id: REQ-1-2
   path: 12306-mirror/frontend/src/pages/LoginPage.jsx
   description: User login form page
+QuickSearchPanel:
+  related_req_id: REQ-2
+  path: frontend/src/pages/components/QuickSearchPanel.jsx
+  description: Quick Search Panel for Home Page
+  upstream_ids: []
+  downstream_ids: []

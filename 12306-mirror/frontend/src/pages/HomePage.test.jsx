@@ -25,8 +25,10 @@ describe('HomePage', () => {
     // Check Banner
     expect(screen.getByText(/Banner Carousel/i)).toBeInTheDocument();
     
-    // Check Quick Search Placeholder
-    expect(screen.getByText(/Quick Search Panel/i)).toBeInTheDocument();
+    // Check Quick Search Panel
+    expect(screen.getByPlaceholderText(/出发地/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/目的地/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /查询/i })).toBeInTheDocument();
     
     // Check Footer
     expect(screen.getByText(/2024 12306-Mirror/i)).toBeInTheDocument();
