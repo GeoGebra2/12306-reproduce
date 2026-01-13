@@ -4,28 +4,19 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-
+ 
 app.use(cors());
 app.use(bodyParser.json());
 
-
+ 
 require('./database/init_db');
 
-const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
-
-const stationRoutes = require('./routes/stations');
-app.use('/api/stations', stationRoutes);
-
-const trainRoutes = require('./routes/trains');
-app.use('/api/trains', trainRoutes);
-
-
+ 
 app.get('/', (req, res) => {
   res.json({ code: 200, message: 'Backend Ready' });
 });
 
-
+ 
 if (require.main === module) {
   app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);

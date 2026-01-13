@@ -47,17 +47,141 @@ children:
               - action: 选择优惠（待）类型（成人/儿童/学生/残疾军人）
                 expectation: 下拉框选中对应类型。
               - action: 输入邮箱（可选）、选择手机区号并输入手机号码
-                expectation:
+                expectation: 邮箱可选；区号选择生效，手机号输入值可见。
               - action: 勾选“我已阅读并同意《用户注册协议》”
                 expectation: 复选框被选中。
               - action: 点击“下一步”按钮
                 expectation: 调用注册接口，后端验证通过，数据库插入用户记录，显示“注册成功”提示，随后跳转至登录页。
 
+        ui_spec:
+          page: "/register"
+          sections:
+            - id: "header_brand_search"
+              title: "顶部品牌与搜索"
+              content:
+                - "左侧Logo与\"中国铁路12306\"文字；中间搜索框与\"Q\"按钮；右侧无障碍/敬老版/English/我的12306/登录注册"
+            - id: "navbar"
+              title: "导航栏"
+              content:
+                - "与首页相同的横向导航条；默认\"首页\"高亮"
+            - id: "main_form_container"
+              title: "主体与表单容器"
+              content:
+                - "左侧注册表单白底固定宽度；右侧帮助区块当前移除"
+                - "表单顶部使用两步流程样式：步骤1填写账户信息，步骤2手机验证"
+                - "根容器背景#fff，最小高度100vh；头部高度约80px，左右padding 40px"
+                - "主体最大宽度1200px，水平居中；左侧表单容器蓝色1px边框，直角，无阴影"
+            - id: "step_indicator"
+              title: "步骤指示器UI"
+              content:
+                - "位于表单上方居中；2个步骤节点通过浅灰横线连接"
+                - "圆形步骤号：默认浅灰；激活为蓝色；已完成为绿色并带白色\"✓\""
+                - "步骤标题默认14px #666；激活变为#1890ff并略加粗"
+            - id: "step1_fields"
+              title: "步骤1表单字段与校验"
+              content:
+                - "字段：用户名、登录密码、确认密码、证件类型、姓名、证件号码、乘客类型、邮箱、手机（含区号）、服务条款勾选"
+                - "用户名校验：长度6-30；正则^[A-Za-z][A-Za-z0-9_]*$；占用提示与可用性标记"
+                - "姓名校验：允许中文/英文/\".\"/空格；有效长度3-30（中文计2）"
+                - "身份证18位校验：^\\d{17}[0-9Xx]$"
+                - "密码规则：≥6位；字母/数字/下划线至少两类；强度条1~3格"
+                - "确认密码不能为空且需一致"
+                - "手机号11位数字；邮箱格式基本校验"
+                - "未勾选条款点击下一步提示并标红"
+                - "网格布局：标签/输入/提示三列；输入统一高30px，焦点蓝色描边与外发光"
+                - "操作按钮：下一步按钮高约30px，橙色#ff9f1a；hover更深#ff8c00；圆角8px，字号12px"
+            - id: "step2_sms"
+              title: "步骤2验证码验证与提交"
+              content:
+                - "发送验证码前需手机号合法；成功后60秒倒计时"
+                - "验证：未发送提示；为空或非6位提示；调用verify接口校验"
+                - "完成注册按钮：高48px，最小宽240px，左右内边距60px，橙色风格"
+                - "提交：先二次校验；必要时自动触发验证码二次校验；成功自动登录并跳转/profile；失败映射字段或弹窗提示"
       - id: REQ-1-2
         name: 用户登录
         description: 验证用户身份并建立会话。登录表单参考图片：[image](./reference/auth/login.png)
         dependencies:
           - REQ-1-1
+        ui_spec:
+          page: "/login"
+          sections:
+            - id: "layout_overview"
+              title: "整体布局"
+              content:
+                - "页面背景浅灰；顶部蓝色品牌区，下方轮播叠加登录卡片"
+                - "内容水平居中；最大宽度与首页一致；高度自适应窗口"
+            - id: "brand_header"
+              title: "顶部品牌区域"
+              content:
+                - "左侧 Logo：图片\"./assets/auth/铁路12306-512x512.png\"，约48×48，左对齐"
+                - "文本信息："
+                - "  - 上行：\"中国铁路12306\"，20px，加粗，深灰"
+                - "  - 下行：\"12306 CHINA RAILWAY\"，12px，次要灰"
+                - "Logo 与文字水平排列，垂直居中"
+                - "右侧欢迎语：\"欢迎登录12306\""
+              assets:
+                logo: "./assets/auth/铁路12306-512x512.png"
+            - id: "main_area"
+              title: "主体区域（轮播+登录面板）"
+              content:
+                - "轮播区域全宽，高约600px，自动轮播两张宣传图，隐藏箭头"
+                - "登录面板绝对定位：距右约40px、距顶约36px；宽约380px；白色背景"
+                - "面板描边：1px 实线 #8bb4ff；无圆角与阴影"
+                - "登录内容分为顶部选项卡与下方卡片内容"
+              assets:
+                banner1: "./assets/auth/banner-login-2.jpg"
+                banner2: "./assets/auth/login-banner-1.jpg"
+            - id: "carousel"
+              title: "登录轮播区域"
+              content:
+                - "图片：\"./assets/auth/banner-login-2.jpg\"、\"./assets/auth/login-banner-1.jpg\""
+                - "自动播放，间隔约5秒；object-fit: cover；居左中心"
+              assets:
+                banner1: "./assets/auth/banner-login-2.jpg"
+                banner2: "./assets/auth/login-banner-1.jpg"
+            - id: "tabs"
+              title: "选项卡区域"
+              content:
+                - "位置：面板顶部，宽约380px，高约78px"
+                - "包含\"账户登录\"与\"扫码登录\"两个按钮，中间竖线分隔"
+                - "容器底部1px #eee 分割线"
+                - "未选中：文字#666，18px，透明背景，无边框，垂直padding约8px"
+                - "选中：文字#2a78f6，加粗；底部2px #2a78f6下划线"
+                - "点击切换activeLoginTab；hover保持按钮形态"
+            - id: "account_form"
+              title: "账户登录表单"
+              content:
+                - "卡片padding：24px/24px/18px/24px；表单宽度填满"
+                - "字段顺序：用户名/邮箱/手机号、密码、立即登录、底部链接、服务说明"
+                - "间距：form-group间距约6px；按钮与底部链接间保留少量间距"
+                - "用户名输入：placeholder\"用户名/邮箱/手机号\"；宽约320px，高约44px；左右内边距16px；默认边框#e0e0e0"
+                - "焦点态：边框#2a78f6；外侧2px浅蓝发光"
+                - "用户名校验：字母开头≤30字符；或邮箱基本格式；错误时红色边框与12px红色错误文案"
+                - "密码输入：placeholder\"请输入密码\"；尺寸与用户名一致；最少6位；错误态红色边框与错误文案"
+                - "登录按钮：文本\"立即登录\"；宽100%，高约44px；橙色#ff8c00，白字，18px，加粗，直角"
+                - "按钮交互：hover加深#ff7a00并上移1px；禁用态灰底灰字指针不可用"
+                - "点击行为：阻止默认；先前端校验；通过后禁用按钮文本改\"登录中...\"并调用登录接口"
+                - "结果处理：成功则写入全局状态并跳转/弹提示；常见失败提示：用户不存在/密码错误/账户禁用；异常统一\"登录失败，请重试\"；完成后解除禁用"
+            - id: "bottom_links"
+              title: "底部链接区域"
+              content:
+                - "居中排列：\"忘记密码？\" | \"注册12306账号\""
+                - "\"忘记密码？\"为a链接，约10px，#1890ff；hover#096dd9；跳转到/forgot-password"
+                - "分隔符\"|\"颜色#ccc，左右各约4px间距"
+                - "\"注册12306账号\"为透明文字按钮，10px，#1890ff 下划线；hover#096dd9；调用注册跳转"
+            - id: "service_note"
+              title: "服务说明区域"
+              content:
+                - "表单底部浅灰分割线下展示统一服务时间说明"
+                - "\"铁路12306每日5:00至次日1:00（周二为5:00至24:00）提供购票、改签、变更到站业务办理， 全天均可办理退票等其他服务。\""
+            - id: "qr_login"
+              title: "扫码登录模式"
+              content:
+                - "选项卡切换：activeLoginTab在account/qr间切换"
+                - "二维码占位：216×216，浅色斜线条纹背景，1px #ccd6e3 边框，aria-label说明"
+                - "提示文案：\"打开12306手机APP 扫描二维码\"，14px，#555；其中\"12306\"高亮#2a78f6加粗"
+                - "底部注册按钮为蓝色文字按钮，点击行为同账户登录"
+                - "优势文案：\"扫一扫登录\"、\"更快\"、\"更安全\"，横向排列，间距约12px，#888，13px"
         scenarios:
           - id: REQ-1-2:SCE-0
             name: 进入登录页
@@ -75,12 +199,87 @@ children:
               - action: 确保“账号登录”标签处于激活状态
                 expectation: 显示用户名和密码输入框。
               - action: 输入用户名/邮箱/手机号
-                expectation:
+                expectation: 输入值显示在对应输入框中。
               - action: 输入密码（可点击“显示/隐藏”切换可见性）
-                expectation:
+                expectation: 密码掩码显示，可见性切换生效。
               - action: 点击“立即登录”按钮
                 expectation: 调用登录接口，系统验证通过，后端返回登录成功响应，建立Session，跳转到首页。
 
+      - id: REQ-1-3
+        name: 找回密码流程
+        description: 包含填写账号、短信验证、重置密码与完成提示四个页面。
+        dependencies:
+          - REQ-1
+        children:
+          - id: REQ-1-3-1
+            name: 填写账号页
+            description: 输入账号并进入短信验证。
+            ui_spec:
+              page: "/forgot-password"
+              sections:
+                - id: "structure"
+                  title: "页面结构与布局"
+                  content:
+                    - "顶部品牌与导航与首页一致"
+                    - "主体为第一步表单：账号输入、图形验证码占位、下一步按钮"
+                    - "根容器浅灰#f5f5f5，最小高度100vh"
+                - id: "tabs_steps"
+                  title: "找回方式与步骤条"
+                  content:
+                    - "标签宽980×高70白底，含三标签：人脸/手机/邮箱；当前选中浅蓝#73c7e9白字，未选中深蓝#2d87c6"
+                    - "步骤条使用浅灰进度线与圆形步骤节点；当前步骤深蓝#1f6fb4加粗"
+                - id: "form_rows"
+                  title: "表单行与输入样式"
+                  content:
+                    - "行grid列宽：140px/自适应/提示列；输入宽280×高32浅灰边框；提示淡黄色背景与#ffd597描边"
+          - id: REQ-1-3-2
+            name: 短信验证页
+            description: 输入验证码并进入重置密码。
+            ui_spec:
+              page: "/forgot-password/verify"
+              sections:
+                - id: "verify_form"
+                  title: "验证码输入与按钮"
+                  content:
+                    - "标签列更宽：220px；验证码输入宽220；获取验证码按钮高32深蓝#1f6fb4白字"
+                    - "国家区号灰色，手机号橙色#ff8c00突出"
+                - id: "hint"
+                  title: "提示文案"
+                  content:
+                    - "小号12px灰色#999；校验通过提示橙色#ff8c00"
+          - id: REQ-1-3-3
+            name: 重置密码页
+            description: 设置新密码并完成重置。
+            ui_spec:
+              page: "/forgot-password/reset"
+              sections:
+                - id: "reset_form"
+                  title: "表单与布局"
+                  content:
+                    - "复用忘记密码整体布局；当前步骤高亮在第三步"
+                    - "每行grid：140px 1fr auto；输入宽280×高32；提示淡黄块；错误红字#e23a3a"
+                - id: "submit_btn"
+                  title: "完成按钮"
+                  content:
+                    - "橙色渐变白字；禁用态降低透明度并禁用鼠标指针"
+          - id: REQ-1-3-4
+            name: 完成提示页
+            description: 展示完成信息并提供去登录入口。
+            ui_spec:
+              page: "/forgot-password/done"
+              sections:
+                - id: "success"
+                  title: "成功提示与步骤"
+                  content:
+                    - "四步骤全部显示，第四步激活并显示白色\"✓\""
+                    - "提示框橙色边框与白底；提示文字橙色#ff8c00，14px；右侧登录链接为蓝色文字下划线"
+                    - "辅助提示灰色小号文字与蓝色链接"
+                - id: "brand"
+                  title: "品牌展示"
+                  content:
+                    - "中间区域使用品牌Logo图片"
+                  assets:
+                    logo: "./assets/auth/铁路12306-512x512.png"
   - id: REQ-2
     name: 车票查询模块
     description: 查询检索车票。
@@ -107,6 +306,60 @@ children:
             steps:
               - action: 访问首页
                 expectation: 页面正确渲染快捷查询面板组件，包含出发地、目的地、日期选择及查询按钮。
+        ui_spec:
+          page: "/"
+          sections:
+            - id: "brand_search"
+              title: "顶部品牌与搜索"
+              content:
+                - "左侧Logo\"./assets/home-train/铁路12306-512x512.png\"约40×40"
+                - "上行\"中国铁路12306\"22px#333；下行\"12306 CHINA RAILWAY\"12px#999"
+                - "中部搜索输入白底浅灰边；占位符\"搜索车票、 餐饮、 常旅客、 相关规章\"；右侧\"Q\"按钮"
+                - "右侧链接：无障碍/敬老版/English/我的12306/登录注册；hover高亮"
+              assets:
+                logo: "./assets/home-train/铁路12306-512x512.png"
+            - id: "navbar"
+              title: "导航栏"
+              content:
+                - "高度约40px，背景#3399FF；导航项白字14px；hover或激活半透明白色高亮条"
+            - id: "carousel"
+              title: "轮播图"
+              content:
+                - "Carousel展示主视觉；自动轮播间隔约4秒；object-fit: cover"
+              assets:
+                carousel:
+                  - "./assets/home-train/Carousel_1.jpg"
+                  - "./assets/home-train/Carousel_2.jpg"
+                  - "./assets/home-train/Carousel_3.jpg"
+                  - "./assets/home-train/Carousel_4.jpg"
+                  - "./assets/home-train/Carousel_5.jpg"
+                  - "./assets/home-train/Carousel_6.jpg"
+            - id: "booking_form"
+              title: "车票预订面板"
+              content:
+                - "左下叠加；两列网格：侧边标签列约100px，右侧表单卡片约410×350白底"
+                - "车票类型标签行宽约360×高32；选中\"单程\"高亮底部2px蓝下划线"
+                - "出发地/目的地输入宽约340×高32；交换按钮圆形蓝色；日期输入高约30px"
+                - "校验：字段为空弹提示；出发与目的地相同弹\"不能相同\""
+                - "查询按钮宽约340×高30，橙色渐变白字；hover蓝色系渐变并上浮蓝色阴影"
+            - id: "hero_services"
+              title: "快捷服务按钮"
+              content:
+                - "按钮横排居中；浅蓝或白底蓝描边；hover颜色加深"
+            - id: "promo_grid"
+              title: "图文服务入口"
+              content:
+                - "2×2 栅格；每图卡约590×160，圆角8px与轻微阴影；背景cover居中"
+              assets:
+                promo:
+                  - "./assets/home-train/abanner01.jpg"
+                  - "./assets/home-train/abanner02.jpg"
+                  - "./assets/home-train/abanner03.jpg"
+                  - "./assets/home-train/abanner04.jpg"
+            - id: "notice_tabs"
+              title: "通知栏"
+              content:
+                - "选项卡：最新发布/常见问题/信用信息；切换不同内容"
         children:
           - id: REQ-2-1-1
             name: 出发地快捷输入
@@ -189,6 +442,34 @@ children:
                 expectation: 展示下拉菜单，其中包含“单程”选项
               - action: 点击“单程”选项
                 expectation: 页面展示车次列表页。
+        ui_spec:
+          page: "/train-list"
+          sections:
+            - id: "train_list_header"
+              title: "列表头部"
+              content:
+                - "深蓝渐变条背景；底部2px较深蓝边框；列标题白色13px"
+                - "可排序列hover出现浅色背景"
+            - id: "train_rows"
+              title: "列表行"
+              content:
+                - "每行高约40.5px；左右对齐flex布局"
+                - "奇偶行背景交错：白色与浅蓝#f0f8ff；hover统一高亮#f8f9fa"
+            - id: "train_info"
+              title: "车次信息与徽标"
+              content:
+                - "左侧车次号与类型徽标彩色圆角矩形，白字约14px"
+                - "中部上下两行布局显示站名与时间"
+            - id: "seats"
+              title: "席别列"
+              content:
+                - "每席别宽约66px，居中"
+                - "有票绿色#00aa44加粗；无票灰色#ccc；候补橙色#ff6600加粗"
+            - id: "actions"
+              title: "操作区"
+              content:
+                - "\"预订\"按钮蓝色#0066cc，白字，圆角4px，高约24px；hover变深#0052a3"
+                - "无票状态按钮disabled灰色，鼠标不可点击"
         children:
           - id: REQ-2-2-1
             name: 车票查询框
@@ -198,7 +479,7 @@ children:
               - REQ-2-1-2
               - REQ-2-1-3
             scenarios:
-              - id: REQ-2-1:SCE-1
+              - id: REQ-2-2-1:SCE-1
                 name: 列表页查询单程车票
                 prerequisites:
                   - REQ-2-2:SCE-0 (位于列表页)
@@ -284,10 +565,20 @@ children:
                 expectation: 在数据库创建 `passengers` 表（包含id, name, id_type, id_no, phone, user_id等）。
               - action: 点击“乘车人”选项卡并选择“查看乘车人”
                 expectation: 调用获取乘车人列表接口，展示用户已添加的乘车人列表。
+        ui_spec:
+          page: "/profile"
+          sections:
+            - id: "passenger_table"
+              title: "乘车人表格布局与样式"
+              content:
+                - "外层1px浅灰边框，圆角6px；表头与表体grid布局"
+                - "默认列宽：80 140 180 160 180 1fr；改签模式增加选择列"
+                - "表头约40px浅灰背景；数据行约38.5px，行间1px浅灰线"
+                - "关键字段加粗；票价右对齐红色#ff4d4f；下拉框焦点蓝描边与外发光"
         children:
           - id: REQ-3-2-1
             name: 添加乘车人
-            description: 添加新的乘车人，添加乘车人表单参考图片：[image](./reference/center/add_passenger.png)
+            description: 添加新的乘车人，添加乘车人表单参考图片：[image](./reference/center/add_passanger.png)
             dependencies: []
             scenarios:
               - id: REQ-3-2-1:SCE-0
@@ -304,7 +595,7 @@ children:
                     expectation: 调用添加API，校验通过，添加乘车人到数据库并刷新列表。
           - id: REQ-3-2-2
             name: 删除乘车人
-            description: 删除已添加的乘车人，不能删除账号本人，删除确认框参考图片：[image](./reference/center/delete_passenger.png)
+            description: 删除已添加的乘车人，不能删除账号本人，删除确认框参考图片：[image](./reference/center/delete_passanger.png)
             dependencies: []
             scenarios:
               - id: REQ-3-2-2:SCE-0
@@ -336,7 +627,7 @@ children:
     children:
       - id: REQ-4-1
         name: 订单管理页
-        description: 查看订单列表框架。参考图片：[image](./reference/order/order.png)
+        description: 查看订单列表框架。参考图片：[image](./reference/order/orders.png)
         dependencies: []
         scenarios:
           - id: REQ-4-1:SCE-0
@@ -355,6 +646,40 @@ children:
           - REQ-2-2
           - REQ-1-2
           - REQ-3-1
+        ui_spec:
+          page: "/order"
+          sections:
+            - id: "order_header"
+              title: "顶部品牌与导航及订单头部"
+              content:
+                - "Header与首页一致；下方Navbar激活\"tickets\""
+                - "订单头部渐变背景#4a90e2→#357abd；白字；内边距25px 30px；左右flex布局"
+                - "标题24px，字重600，轻微文字阴影"
+            - id: "order_container"
+              title: "页面容器与背景"
+              content:
+                - "纯白背景min-height:100vh；主体容器max-width:1200px居中，圆角12px，无投影，overflow:hidden"
+            - id: "train_info"
+              title: "列车与席别信息"
+              content:
+                - "摘要展示车次、站点、时刻、日期（含周几）、历时"
+                - "seatInfo展示价格与余票：无票/有票（>10）/{1~10}张"
+                - "折扣=当前价/基准价×10；显示{折扣}折（<10）"
+                - "信息区域宽980px居中；白到浅灰渐变；底部1px灰分隔线"
+                - "概要卡片：1px #e6f0fc 边框，圆角8px；标题栏背景#3399FF，高约32px，白字12px"
+                - "席别横向滚动，gap 12px，支持overflow-x"
+            - id: "passengers"
+              title: "乘车人管理与表格"
+              content:
+                - "初次加载获取后端列表；必要时自动注入本人记录"
+                - "改签模式自动勾选并生成ticketInfos；普通模式默认勾选第一位"
+                - "表格：灰边框圆角6px；grid列宽定义；关键列加粗；票价红色#ff4d4f"
+            - id: "actions"
+              title: "票种/席别/提交"
+              content:
+                - "票种：成人/儿童/学生；切换不改价格逻辑"
+                - "席别变更联动价格与可用性校正"
+                - "提交前校验与确认弹窗；改签模式启用改签确认弹窗"
         scenarios:
           - id: REQ-4-2:SCE-0
             name: 预订车次
@@ -408,3 +733,107 @@ children:
                 expectation: 调用支付API，模拟支付成功，更新数据库订单状态。
               - action: 点击“未出行订单”
                 expectation: 展示未出行订单选项卡，包含支付后的订单。
+        ui_spec:
+          page: "/pay-order"
+          sections:
+            - id: "pay_banner"
+              title: "顶部提示横幅"
+              content:
+                - "白底1px #3399FF 边框；左侧圆形图标28×28浅蓝#e6f7ff；右侧支持倒计时高亮"
+                - "倒计时文字橙色#ff8c00加粗；分秒字号18px"
+            - id: "pay_cards"
+              title: "订单信息与乘客表格"
+              content:
+                - "卡片边框1px #3399FF，直角；标题栏蓝色渐变白字"
+                - "车次与站点行加粗，站名后\"站\"字小号灰色"
+                - "乘客表格外层浅蓝#e6f0fc圆角6px；grid列宽定义；表头与行高度规范"
+            - id: "pay_actions"
+              title: "金额与操作"
+              content:
+                - "总金额橙色#de8920右对齐"
+                - "按钮区居中排布；立即支付按钮亮橙#fa8c16，hover更深#f57c00"
+            - id: "payment_modal"
+              title: "支付弹窗"
+              content:
+                - "遮罩全屏半透明黑；弹窗白底圆角8px，最大宽600px，90%视口高"
+                - "订单概要与详细信息区分；二维码区200×200圆角6px浅灰描边"
+                - "状态视图：processing蓝加载环；success绿勾；failed红叉与重新支付按钮"
+              assets:
+                alipay_logo: "./assets/order/ordercheck.png"
+
+  - id: REQ-5
+    name: 餐饮服务模块
+    description: 餐饮相关页面与订餐流程的UI与交互。
+    dependencies:
+      - REQ-1
+    children:
+      - id: REQ-5-1
+        name: 餐饮服务首页
+        description: 展示餐饮服务入口与品牌信息。
+        ui_spec:
+          page: "/catering"
+          sections:
+            - id: "hero"
+              title: "顶部横幅与搜索"
+              content:
+                - "主区域高度约380px，背景图覆盖并居中；半透明黑遮罩叠加文案与搜索条"
+                - "标题28px加粗；副标题24px白字居中"
+              assets:
+                bg: "./assets/profile-and-catering/catering-bg-Carousel_5.jpg"
+            - id: "brand_logo"
+              title: "品牌信息"
+              content:
+                - "顶部区域显示12306品牌Logo"
+              assets:
+                logo: "./assets/profile-and-catering/铁路12306-512x512.png"
+      - id: REQ-5-2
+        name: 订餐预订页面
+        description: 展示自营冷链餐与品牌列表并支持下单。
+        ui_spec:
+          page: "/catering/book"
+          sections:
+            - id: "layout"
+              title: "页面布局"
+              content:
+                - "顶部Header与Navbar一致；主体三列：左侧列车与进度，中间餐品列表，右侧品牌与订单摘要"
+            - id: "self_goods"
+              title: "自营冷链餐"
+              content:
+                - "固定展示三款：15元/30元/40元，支持数量选择与加入购物车"
+              assets:
+                goods:
+                  - "./assets/profile-and-catering/Food-列车自营商品-15元.jpg"
+                  - "./assets/profile-and-catering/Food-列车自营商品-30元.jpg"
+                  - "./assets/profile-and-catering/Food-列车自营商品-40元.jpg"
+            - id: "brands"
+              title: "品牌餐饮商列表"
+              content:
+                - "展示永和大王/老娘舅/麦当劳/康师傅/德克士/真功夫等品牌Logo与状态"
+                - "点击品牌跳转到/vendor并传递品牌信息"
+              assets:
+                brand_logos:
+                  - "./assets/profile-and-catering/Food-永和大王.jpg"
+                  - "./assets/profile-and-catering/Food-老娘舅.jpg"
+                  - "./assets/profile-and-catering/Food-麦当劳.jpg"
+                  - "./assets/profile-and-catering/Food-康师傅.jpg"
+                  - "./assets/profile-and-catering/Food-德克士.jpg"
+                  - "./assets/profile-and-catering/Food-真功夫.jpg"
+            - id: "fallback_images"
+              title: "兜底图"
+              content:
+                - "商品缺失使用image.png；品牌Logo缺失使用logo-12306.svg"
+              assets:
+                fallback_image: "./assets/profile-and-catering/image.png"
+                fallback_logo: "./assets/profile-and-catering/logo-12306.svg"
+      - id: REQ-5-3
+        name: 品牌详情页面
+        description: 展示品牌Logo与商品列表。
+        ui_spec:
+          page: "/catering/vendor"
+          sections:
+            - id: "brand_header"
+              title: "品牌信息"
+              content:
+                - "顶部展示品牌Logo与店铺名称；中部商品列表；底部合作说明"
+              assets:
+                example_logo: "./assets/profile-and-catering/Food-永和大王.jpg"
