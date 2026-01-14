@@ -9,6 +9,82 @@ scenarios:
     steps:
       - action: 默认打开首页
         expectation: 初始化项目脚手架；页面加载完成，显示首页布局。
+ui_spec:
+  page: "/"
+  sections:
+    - id: "brand_search"
+      title: "顶部品牌与搜索"
+      content:
+        - "左侧Logo图片：src=\"/铁路12306-512x512.png\"，尺寸约40px×40px"
+        - "品牌文字上行：\"中国铁路12306\"，字号约22px，字体加粗，颜色为#333"
+        - "品牌文字下行：\"12306 CHINA RAILWAY\"，字号约12px，颜色为#999"
+        - "Logo 与文字水平排列，整体垂直居中"
+        - "中间搜索输入框：白底浅灰边框，占位符\"搜索车票、 餐饮、 常旅客、 相关规章\"，宽度占据可用空间"
+        - "搜索按钮：右侧文本\"Q\"，扁平风格，字号约14px"
+        - "右侧链接：\"无障碍\" | \"敬老版\" | \"English\" | \"我的12306\" | 登录/注册"
+        - "链接文字颜色#666，hover变#1890ff"
+        - "登录/注册按钮：登录(蓝边蓝字#0066cc，hover蓝底白字)，注册(灰边灰字，hover背景#f5f5f5)"
+        - "已登录状态：显示\"您好，{用户姓名}\"(蓝色带下划线)和\"退出\"按钮(灰色边框)"
+        - "退出功能：点击弹出confirm确认，确认后logout并刷新"
+      assets:
+        logo: "./assets/home-train/铁路12306-512x512.png"
+    - id: "navbar"
+      title: "导航栏"
+      content:
+        - "整体高度约40px，背景#3399FF"
+        - "导航项横向等分布局，文字白色，字号约14px"
+        - "hover 或当前激活项时，背景出现半透明白色高亮条"
+    - id: "carousel"
+      title: "轮播图"
+      content:
+        - "铺满主视觉区域宽度，高度约为大屏全宽视觉高度"
+        - "自动轮播，间隔约4秒"
+        - "图片 object-fit: cover"
+      assets:
+        carousel:
+          - "./assets/home-train/Carousel_1.jpg"
+          - "./assets/home-train/Carousel_2.jpg"
+          - "./assets/home-train/Carousel_3.jpg"
+          - "./assets/home-train/Carousel_4.jpg"
+          - "./assets/home-train/Carousel_5.jpg"
+          - "./assets/home-train/Carousel_6.jpg"
+    - id: "booking_form"
+      title: "车票预订面板"
+      content:
+        - "容器叠加在轮播图左下区域"
+        - "布局：左侧侧边标签列(约60px) + 右侧表单卡片(约450px)，总宽约510px，高约350px"
+        - "左侧标签列：背景纯蓝#2a76ff，文字白色16px加粗，仅保留\"车票\"标签，选中态半透明白底"
+        - "右侧面板：白底，顶部约20px内边距"
+        - "车票类型标签：\"单程\"(选中蓝字#2a76ff加粗带下划线) | \"往返\" | \"中转换乘\" | \"退改签\"(禁用)"
+        - "表单区域：宽约360px，padding 16px 20px 20px"
+        - "输入框：出发地/目的地(宽340px高32px)，出发日期(type=date高30px)"
+        - "交换按钮：圆形蓝色背景#0066cc，hover深蓝#0052a3"
+        - "查询按钮：宽340px高30px，橙色渐变#f79414，hover蓝色渐变#096dd9~#0050b3并上浮"
+        - "校验：空值提示\"请填写完整的出行信息\"；起止相同提示\"出发地和目的地不能相同\""
+    - id: "hero_services"
+      title: "快捷服务按钮"
+      content:
+        - "位于轮播区下方，横向排列，居中，总宽限制1200px"
+        - "样式：扁平化蓝色按钮，浅蓝/白底蓝描边，文字深色14px，hover加深"
+        - "内容：重点旅客预约、遗失物品查找、约车服务、便民托运等"
+    - id: "promo_grid"
+      title: "图文服务入口"
+      content:
+        - "2×2 栅格布局，每个图卡宽约590px，高约160px"
+        - "带圆角8px和轻微阴影，背景图片cover填充"
+      assets:
+        promo:
+          - "./assets/home-train/abanner01.jpg"
+          - "./assets/home-train/abanner02.jpg"
+          - "./assets/home-train/abanner03.jpg"
+          - "./assets/home-train/abanner04.jpg"
+    - id: "notice_tab"
+      title: "通知栏"
+      content:
+        - "选项卡：最新发布 | 常见问题 | 信用信息"
+        - "最新发布：公告列表(标题+日期)"
+        - "常见问题：两列列表展示"
+        - "信用信息：占位卡片\"暂无法公开数据\""
 children:
   - id: REQ-1
     name: 用户认证模块
@@ -314,60 +390,7 @@ children:
             steps:
               - action: 访问首页
                 expectation: 页面正确渲染快捷查询面板组件，包含出发地、目的地、日期选择及查询按钮。
-        ui_spec:
-          page: "/"
-          sections:
-            - id: "brand_search"
-              title: "顶部品牌与搜索"
-              content:
-                - "左侧Logo\"./assets/home-train/铁路12306-512x512.png\"约40×40"
-                - "上行\"中国铁路12306\"22px#333；下行\"12306 CHINA RAILWAY\"12px#999"
-                - "中部搜索输入白底浅灰边；占位符\"搜索车票、 餐饮、 常旅客、 相关规章\"；右侧\"Q\"按钮"
-                - "右侧链接：无障碍/敬老版/English/我的12306/登录注册；hover高亮"
-              assets:
-                logo: "./assets/home-train/铁路12306-512x512.png"
-            - id: "navbar"
-              title: "导航栏"
-              content:
-                - "高度约40px，背景#3399FF；导航项白字14px；hover或激活半透明白色高亮条"
-            - id: "carousel"
-              title: "轮播图"
-              content:
-                - "Carousel展示主视觉；自动轮播间隔约4秒；object-fit: cover"
-              assets:
-                carousel:
-                  - "./assets/home-train/Carousel_1.jpg"
-                  - "./assets/home-train/Carousel_2.jpg"
-                  - "./assets/home-train/Carousel_3.jpg"
-                  - "./assets/home-train/Carousel_4.jpg"
-                  - "./assets/home-train/Carousel_5.jpg"
-                  - "./assets/home-train/Carousel_6.jpg"
-            - id: "booking_form"
-              title: "车票预订面板"
-              content:
-                - "左下叠加；两列网格：侧边标签列约100px，右侧表单卡片约410×350白底"
-                - "车票类型标签行宽约360×高32；选中\"单程\"高亮底部2px蓝下划线"
-                - "出发地/目的地输入宽约340×高32；交换按钮圆形蓝色；日期输入高约30px"
-                - "校验：字段为空弹提示；出发与目的地相同弹\"不能相同\""
-                - "查询按钮宽约340×高30，橙色渐变白字；hover蓝色系渐变并上浮蓝色阴影"
-            - id: "hero_services"
-              title: "快捷服务按钮"
-              content:
-                - "按钮横排居中；浅蓝或白底蓝描边；hover颜色加深"
-            - id: "promo_grid"
-              title: "图文服务入口"
-              content:
-                - "2×2 栅格；每图卡约590×160，圆角8px与轻微阴影；背景cover居中"
-              assets:
-                promo:
-                  - "./assets/home-train/abanner01.jpg"
-                  - "./assets/home-train/abanner02.jpg"
-                  - "./assets/home-train/abanner03.jpg"
-                  - "./assets/home-train/abanner04.jpg"
-            - id: "notice_tabs"
-              title: "通知栏"
-              content:
-                - "选项卡：最新发布/常见问题/信用信息；切换不同内容"
+
         children:
           - id: REQ-2-1-1
             name: 出发地快捷输入
