@@ -21,3 +21,10 @@ API-AUTH-CHECK-USER:
   upstream_ids:
     - UI-FORGOT-PASSWORD-PAGE
   downstream_ids: []
+API-AUTH-VERIFY-CODE:
+  related_req_id: REQ-1-3-2
+  path: backend/src/routes/auth.js
+  signature: POST /api/auth/verify-code
+  upstream_ids:
+    - UI-FORGOT-PASSWORD-PAGE
+  downstream_ids: []

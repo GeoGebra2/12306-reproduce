@@ -156,4 +156,22 @@ describe('Auth API', () => {
             expect(res2.status).toBe(404);
             expect(res2.body).toHaveProperty('message', 'User not found');
           });
+
+          it('should verify SMS code (verify-code)', async () => {
+            // 1. Verify correct code
+            const res = await request(app)
+              .post('/api/auth/verify-code')
+              .send({ username: 'checkuser', code: '123456' });
+            
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('verified', true);
+
+            // 2. Verify wrong code
+            const res2 = await request(app)
+              .post('/api/auth/verify-code')
+              .send({ username: 'checkuser', code: '000000' });
+            
+            expect(res2.status).toBe(400);
+            expect(res2.body).toHaveProperty('message', '验证码错误');
+          });
         });

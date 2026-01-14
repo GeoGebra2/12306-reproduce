@@ -84,4 +84,19 @@ router.post('/check-user', (req, res) => {
   });
 });
 
+// POST /api/auth/verify-code
+router.post('/verify-code', (req, res) => {
+  const { username, code } = req.body;
+  if (!username || !code) {
+    return res.status(400).json({ message: 'Missing parameters' });
+  }
+  
+  // Mock verification
+  if (code === '123456') {
+    return res.status(200).json({ verified: true });
+  } else {
+    return res.status(400).json({ message: '验证码错误' });
+  }
+});
+
 module.exports = router;

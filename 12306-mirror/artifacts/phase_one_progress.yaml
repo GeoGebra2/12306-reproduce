@@ -30,7 +30,10 @@
     api_ids:
       - API-AUTH-CHECK-USER
 - id: REQ-1-3-2
-  status: unprocessed
+  status: processed
+  artifacts:
+    api_ids:
+      - API-AUTH-VERIFY-CODE
 - id: REQ-1-3-3
   status: unprocessed
 - id: REQ-1-3-4
