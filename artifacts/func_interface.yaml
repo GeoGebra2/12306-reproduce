@@ -1,0 +1,9 @@
+init_ticket_db:
+  related_req_id: REQ-2
+  path: backend/src/database/init_db.js
+  signature: init_db_ticket_tables
+  upstream_ids: []
+  db_tables:
+    - stations
+    - trains
+    - train_station_mapping
