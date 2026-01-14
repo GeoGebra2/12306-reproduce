@@ -1,8 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [date, setDate] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if(from && to && date) {
+      navigate(`/tickets?from=${from}&to=${to}&date=${date}`);
+    }
+  };
+
   return (
     <div className="home-page">
       {/* 1. Top Brand & Search */}
@@ -70,21 +82,35 @@ const HomePage = () => {
                   <span>中转换乘</span>
                   <span className="disabled">退改签</span>
               </div>
-              <form>
+              <form onSubmit={handleSearch}>
                   <div className="form-row">
                       <div className="form-group from-station">
                           <label>出发地</label>
-                          <input type="text" placeholder="简拼/全拼/汉字" />
+                          <input 
+                            type="text" 
+                            placeholder="简拼/全拼/汉字" 
+                            value={from}
+                            onChange={(e) => setFrom(e.target.value)}
+                          />
                       </div>
                       <div className="exchange-icon">⇋</div>
                       <div className="form-group to-station">
                           <label>目的地</label>
-                          <input type="text" placeholder="简拼/全拼/汉字" />
+                          <input 
+                            type="text" 
+                            placeholder="简拼/全拼/汉字" 
+                            value={to}
+                            onChange={(e) => setTo(e.target.value)}
+                          />
                       </div>
                   </div>
                   <div className="form-group date-input">
                       <label>出发日</label>
-                      <input type="date" />
+                      <input 
+                        type="date" 
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                      />
                   </div>
                   <div className="form-group student-check">
                       <label><input type="checkbox" /> 学生优惠票</label>

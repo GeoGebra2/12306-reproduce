@@ -74,6 +74,36 @@ const db = new sqlite3.Database(dbPath, (err) => {
             ];
             trains.forEach(t => stmt.run(t));
             stmt.finalize();
+
+            // Seed mappings after trains
+            setTimeout(() => {
+                db.get("SELECT count(*) as count FROM train_station_mapping", (err, row) => {
+                    if (!err && row && row.count === 0) {
+                        console.log('Seeding train mappings...');
+                        // Assume IDs: G1=1, BeijingNan=1, ShanghaiHongqiao=2
+                        // We should lookup IDs ideally, but for seeding simplicity we might rely on order or lookup.
+                        // Let's use subqueries to be safe.
+                        const insertMapping = db.prepare(`
+                            INSERT INTO train_station_mapping (train_id, station_id, arrival_time, departure_time, stop_order)
+                            SELECT t.id, s.id, ?, ?, ?
+                            FROM trains t, stations s
+                            WHERE t.train_number = ? AND s.name = ?
+                        `);
+                        
+                        const mappings = [
+                            // G1: 北京南 -> 上海虹桥
+                            ['09:00', '09:00', 1, 'G1', '北京南'],
+                            ['13:00', '13:00', 2, 'G1', '上海虹桥'],
+                            // G2: 上海虹桥 -> 北京南
+                            ['14:00', '14:00', 1, 'G2', '上海虹桥'],
+                            ['18:00', '18:00', 2, 'G2', '北京南']
+                        ];
+                        
+                        mappings.forEach(m => insertMapping.run(m));
+                        insertMapping.finalize();
+                    }
+                });
+            }, 1000); // Wait a bit for trains/stations to be inserted
         }
       });
     });

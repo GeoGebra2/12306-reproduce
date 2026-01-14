@@ -47,6 +47,12 @@
   status: processed
 - id: REQ-2
   status: processed
+  artifacts:
+    ui_ids:
+      - ui_ticket_list_page
+    api_ids:
+      - api_tickets_query
+      - api_tickets_stations
 - id: REQ-2-1
   status: unprocessed
 - id: REQ-2-1-1

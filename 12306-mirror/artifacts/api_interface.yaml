@@ -51,3 +51,16 @@ api_auth_reset_password:
     - ui_forgot_password_page
   downstream_ids:
     - func_auth_update_password
+api_tickets_query:
+  related_req_id: REQ-2
+  path: backend/src/routes/tickets.js
+  signature: GET /api/tickets/query
+  upstream_ids:
+    - ui_ticket_list_page
+  downstream_ids: []
+api_tickets_stations:
+  related_req_id: REQ-2
+  path: backend/src/routes/tickets.js
+  signature: GET /api/tickets/stations
+  upstream_ids: []
+  downstream_ids: []

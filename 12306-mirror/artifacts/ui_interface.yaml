@@ -41,3 +41,11 @@ ui_forgot_password_page:
   downstream_ids:
     - api_auth_check_user
     - api_auth_reset_password
+ui_ticket_list_page:
+  related_req_id: REQ-2
+  path: frontend/src/pages/TicketListPage.jsx
+  description: Ticket List Page displaying search results
+  upstream_ids:
+    - ui_home_page
+  downstream_ids:
+    - api_tickets_query

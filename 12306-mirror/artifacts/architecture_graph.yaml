@@ -185,6 +185,18 @@ nodes:
     type: API
     path: backend/src/routes/auth.js
     signature: POST /api/auth/reset-password
+  ui_ticket_list_page:
+    type: UI
+    path: frontend/src/pages/TicketListPage.jsx
+    description: Ticket List Page displaying search results
+  api_tickets_query:
+    type: API
+    path: backend/src/routes/tickets.js
+    signature: GET /api/tickets/query
+  api_tickets_stations:
+    type: API
+    path: backend/src/routes/tickets.js
+    signature: GET /api/tickets/stations
 edges:
   - from: ROOT
     to: REQ-1
@@ -366,3 +378,18 @@ edges:
   - from: api_auth_reset_password
     to: func_auth_update_password
     relation: CALLS
+  - from: REQ-2
+    to: ui_ticket_list_page
+    relation: DEFINES
+  - from: ui_home_page
+    to: ui_ticket_list_page
+    relation: CALLS
+  - from: ui_ticket_list_page
+    to: api_tickets_query
+    relation: CALLS
+  - from: REQ-2
+    to: api_tickets_query
+    relation: DEFINES
+  - from: REQ-2
+    to: api_tickets_stations
+    relation: DEFINES
