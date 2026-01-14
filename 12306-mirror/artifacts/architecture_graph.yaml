@@ -145,6 +145,10 @@ nodes:
     type: UI
     path: frontend/src/pages/RegisterPage.jsx
     description: 用户注册页面容器
+  API-AUTH-REGISTER:
+    type: API
+    path: backend/src/routes/auth.js
+    signature: POST /api/auth/register
 edges:
   - from: ROOT
     to: REQ-1
@@ -256,4 +260,13 @@ edges:
     relation: DEFINES
   - from: HomePage
     to: RegisterPage
+    relation: CALLS
+  - from: REQ-1
+    to: API-AUTH-REGISTER
+    relation: DEFINES
+  - from: UI-REGISTER-PAGE
+    to: API-AUTH-REGISTER
+    relation: CALLS
+  - from: API-AUTH-REGISTER
+    to: FUNC-INIT-DB
     relation: CALLS

@@ -1,17 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const db = require('./database/init_db');
+const authRoutes = require('./routes/auth');
+
 const app = express();
 const port = 3000;
 
- 
 app.use(cors());
 app.use(bodyParser.json());
 
- 
-require('./database/init_db');
+app.use('/api/auth', authRoutes);
 
- 
 app.get('/', (req, res) => {
   res.json({ code: 200, message: 'Backend Ready' });
 });
