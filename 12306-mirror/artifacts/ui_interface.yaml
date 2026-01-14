@@ -1,0 +1,6 @@
+HomePage:
+  related_req_id: ROOT
+  path: frontend/src/pages/HomePage.jsx
+  description: 12306 首页组件，包含顶部导航、轮播图、车票查询面板等。
+  upstream_ids: []
+  downstream_ids: []
