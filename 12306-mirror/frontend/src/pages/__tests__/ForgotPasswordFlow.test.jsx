@@ -13,7 +13,7 @@ describe('Forgot Password Flow Infrastructure', () => {
     );
     // Use regex to match partial text
     expect(screen.getByText('找回密码', { selector: '.page-title' })).toBeInTheDocument();
-    expect(screen.getByText(/Step 1/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /填写账号/ })).toBeInTheDocument();
   });
 
   it('navigates from login to forgot password', () => {

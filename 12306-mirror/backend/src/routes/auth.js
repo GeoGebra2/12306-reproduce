@@ -61,4 +61,27 @@ router.post('/login', (req, res) => {
   });
 });
 
+// POST /api/auth/check-user
+router.post('/check-user', (req, res) => {
+  const { username } = req.body;
+  
+  if (!username) {
+    return res.status(400).json({ message: 'Username is required' });
+  }
+
+  const sql = "SELECT id, username FROM users WHERE username = ? OR phone = ?";
+  // Currently we only have username/phone stored in specific columns.
+  
+  db.get(sql, [username, username], (err, row) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (row) {
+      return res.status(200).json({ exists: true, userId: row.id, username: row.username });
+    } else {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  });
+});
+
 module.exports = router;

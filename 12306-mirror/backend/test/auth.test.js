@@ -115,13 +115,45 @@ describe('Auth API', () => {
   });
 
   it('should fail login with non-existent user', async () => {
-    const res = await request(app)
-      .post('/api/auth/login')
-      .send({
-        username: 'nonexistent',
-        password: 'password123'
-      });
+            const res = await request(app)
+              .post('/api/auth/login')
+              .send({
+                username: 'nonexistent',
+                password: 'password123'
+              });
 
-    expect(res.status).toBe(401); // Or 404, but 401 is safer for security
-  });
-});
+            expect(res.status).toBe(401); // Or 404, but 401 is safer for security
+          });
+
+          it('should check if user exists (check-user)', async () => {
+            // 1. Register
+            await request(app)
+              .post('/api/auth/register')
+              .send({
+                username: 'checkuser',
+                password: 'password123',
+                idType: '1',
+                idCard: '110101199001017777',
+                realName: 'Check User',
+                phone: '13900139007',
+                userType: 'passenger'
+              });
+
+            // 2. Check existing user
+            const res = await request(app)
+              .post('/api/auth/check-user')
+              .send({ username: 'checkuser' });
+            
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('exists', true);
+            expect(res.body).toHaveProperty('userId');
+
+            // 3. Check non-existing user
+            const res2 = await request(app)
+              .post('/api/auth/check-user')
+              .send({ username: 'nobody' });
+            
+            expect(res2.status).toBe(404);
+            expect(res2.body).toHaveProperty('message', 'User not found');
+          });
+        });
