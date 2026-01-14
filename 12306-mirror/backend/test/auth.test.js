@@ -174,4 +174,41 @@ describe('Auth API', () => {
             expect(res2.status).toBe(400);
             expect(res2.body).toHaveProperty('message', '验证码错误');
           });
+
+          it('should reset password successfully', async () => {
+            // 0. Register user first (since beforeEach clears DB)
+            await request(app)
+              .post('/api/auth/register')
+              .send({
+                username: 'resetuser',
+                password: 'password123',
+                idType: '1',
+                idCard: '110101199001016666',
+                realName: 'Reset User',
+                phone: '13900139006',
+                userType: 'passenger'
+              });
+
+            // 1. Reset password
+            const res = await request(app)
+              .post('/api/auth/reset-password')
+              .send({ username: 'resetuser', newPassword: 'newpassword123' });
+            
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('success', true);
+
+            // 2. Login with OLD password (should fail)
+            const resLoginOld = await request(app)
+              .post('/api/auth/login')
+              .send({ username: 'resetuser', password: 'password123' });
+            
+            expect(resLoginOld.status).toBe(401);
+
+            // 3. Login with NEW password (should success)
+            const resLoginNew = await request(app)
+              .post('/api/auth/login')
+              .send({ username: 'resetuser', password: 'newpassword123' });
+            
+            expect(resLoginNew.status).toBe(200);
+          });
         });

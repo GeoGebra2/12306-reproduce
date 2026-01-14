@@ -99,4 +99,23 @@ router.post('/verify-code', (req, res) => {
   }
 });
 
+// POST /api/auth/reset-password
+router.post('/reset-password', (req, res) => {
+  const { username, newPassword } = req.body;
+  if (!username || !newPassword) {
+    return res.status(400).json({ message: 'Missing parameters' });
+  }
+
+  const sql = "UPDATE users SET password = ? WHERE username = ?";
+  db.run(sql, [newPassword, username], function(err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ success: true });
+  });
+});
+
 module.exports = router;

@@ -28,3 +28,10 @@ API-AUTH-VERIFY-CODE:
   upstream_ids:
     - UI-FORGOT-PASSWORD-PAGE
   downstream_ids: []
+API-AUTH-RESET-PASSWORD:
+  related_req_id: REQ-1-3-3
+  path: backend/src/routes/auth.js
+  signature: POST /api/auth/reset-password
+  upstream_ids:
+    - UI-FORGOT-PASSWORD-PAGE
+  downstream_ids: []

@@ -50,6 +50,31 @@ const ForgotPasswordPage = () => {
     }
   };
 
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleStep3Submit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (newPassword !== confirmPassword) {
+      setError('两次输入的密码不一致');
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const res = await axios.post('/api/auth/reset-password', { username, newPassword });
+      if (res.status === 200 && res.data.success) {
+        setStep(4);
+      }
+    } catch (err) {
+      setError('重置密码失败，请稍后重试');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div id="forgot_password_page" className="forgot-password-page">
       <header className="forgot-password-header">
@@ -116,6 +141,40 @@ const ForgotPasswordPage = () => {
             <div className="step-3-container">
               <h2>重置密码 (Step 3)</h2>
               <p>Current User: {username}</p>
+              <form onSubmit={handleStep3Submit} className="forgot-form">
+                <div className="form-group">
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="请输入新密码"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="请确认新密码"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                {error && <div className="error-message">{error}</div>}
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? '提交中...' : '确定'}
+                </button>
+              </form>
+            </div>
+          )}
+
+          {step === 4 && (
+            <div className="step-4-container">
+              <h2>重置成功</h2>
+              <p>您的密码已重置成功，请使用新密码登录。</p>
+              <Link to="/login" className="btn-primary">立即登录</Link>
             </div>
           )}
         </div>
