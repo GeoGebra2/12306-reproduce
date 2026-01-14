@@ -458,12 +458,19 @@ children:
         dependencies: REQ-2
         scenarios:
           - id: REQ-2-2:SCE-0
-            name: 车次列表页初始化
+            name: 车次列表页初始化与参数解析
             prerequisites:
               - ROOT:SCE-0
             steps:
               - action: 建立页面路由
                 expectation: 创建 /search 路由及页面骨架。
+              - action: 解析URL参数
+                expectation: |
+                  使用useSearchParams获取from、to、date；
+                  若无date默认使用当天；
+                  若为改签模式(location.state.isChangeMode)，锁定from/toStation，仅允许修改日期。
+              - action: 城市/车站解析
+                expectation: 若from/to为城市名，则映射为具体车站列表，存入fromStations/toStations。
           - id: REQ-2-2:SCE-1
             name: 首页点击进入车次列表
             prerequisites:
@@ -473,77 +480,115 @@ children:
                 expectation: 展示下拉菜单，其中包含“单程”选项
               - action: 点击“单程”选项
                 expectation: 页面展示车次列表页。
+          - id: REQ-2-2:SCE-2
+            name: 选择车次与预订
+            prerequisites:
+              - REQ-2-2:SCE-0
+            steps:
+              - action: 点击“预订”按钮
+                expectation: |
+                  未登录：弹出LoginModal；登录成功后关闭弹窗并跳转/order。
+                  已登录：直接跳转/order，携带车次信息。
+                  改签模式：跳转/order时保留原订单信息及isChangeMode标记。
         ui_spec:
           page: "/train-list"
           sections:
             - id: "train_list_header"
               title: "列表头部"
               content:
-                - "深蓝渐变条背景；底部2px较深蓝边框；列标题白色13px"
-                - "可排序列hover出现浅色背景"
+                - "背景为深蓝色渐变条（#2f7fd6），底部有2px 较深蓝边框"
+                - "各列标题采用白色文字，字号约13px，左右有适度内边距"
+                - "可排序列（车次号、时间、历时）在hover时出现浅色背景"
             - id: "train_rows"
               title: "列表行"
               content:
-                - "每行高约40.5px；左右对齐flex布局"
-                - "奇偶行背景交错：白色与浅蓝#f0f8ff；hover统一高亮#f8f9fa"
+                - "每行高度约40.5px，左右对齐的flex 布局"
+                - "奇偶行背景交错：白色与浅蓝#f0f8ff，hover 时统一高亮为#f8f9fa"
             - id: "train_info"
               title: "车次信息与徽标"
               content:
-                - "左侧车次号与类型徽标彩色圆角矩形，白字约14px"
-                - "中部上下两行布局显示站名与时间"
+                - "左侧显示车次号与车次类型徽标：类型徽标使用彩色圆角矩形，文字白色、字号约14px"
+                - "中部展示出发/到达站名称与时间，采用上下两行布局"
             - id: "seats"
               title: "席别列"
               content:
-                - "每席别宽约66px，居中"
-                - "有票绿色#00aa44加粗；无票灰色#ccc；候补橙色#ff6600加粗"
+                - "每个席别占用宽度约66px，文字居中"
+                - "有票（seat-available）：绿色#00aa44，加粗；显示'有'或'{N}张'"
+                - "无票（seat-unavailable）：'无'，灰色#ccc"
+                - "候补（seat-waitlist）：'候补'，橙色#ff6600，加粗"
             - id: "actions"
               title: "操作区"
               content:
-                - "\"预订\"按钮蓝色#0066cc，白字，圆角4px，高约24px；hover变深#0052a3"
-                - "无票状态按钮disabled灰色，鼠标不可点击"
+                - "预订按钮：背景为蓝色#0066cc，文字白色，圆角4px，高度约24px；hover 时背景变深为#0052a3"
+                - "无票状态下按钮使用.disabled 样式，背景灰色且鼠标为不可点击形态"
         children:
           - id: REQ-2-2-1
-            name: 车票查询框
+            name: 车票查询条件组件
             description: 位于车票列表页上方的查询框，用于输入查询条件（如出发地、目的地、出发日期）。参考图片：[image](./reference/search/query.png)
             dependencies:
               - REQ-2-1-1
               - REQ-2-1-2
               - REQ-2-1-3
+            ui_spec:
+              page: "/train-list"
+              sections:
+                - id: "search_conditions_layout"
+                  title: "主体布局"
+                  content:
+                    - "背景为淡蓝色条（#eef6ff），边框为1px 实线 #cfe1ff，圆角6px"
+                    - "内部采用网格布局：依次为行程类型列、站点选择区、日期选择区、乘客类型区、车次类型区、查询按钮"
+                - id: "station_inputs"
+                  title: "车站输入"
+                  content:
+                    - "使用.station-input 样式，宽约122px，高约30px，边框为1px 浅灰#ddd，圆角4px"
+                    - "focus 时边框变为#1890ff，并出现浅蓝色描边阴影；未填写时标红"
+                    - "交换按钮：圆形蓝色按钮，直径约36px，背景#0066cc"
+                - id: "date_input"
+                  title: "日期选择"
+                  content:
+                    - "日期输入框高度约30px，圆角6px，边框为1px #d9d9d9"
+                    - "改签模式下使用.disabled 样式：背景#f5f5f5，文字#aaa，禁止编辑"
+                - id: "city_modal"
+                  title: "城市选择弹层"
+                  content:
+                    - "点击输入弹出宽约860px 的白色弹层"
+                    - "左侧范围选择列（境内/境外）；右侧城市列表（热门/ABCDE分类）"
+                    - "城市列表以6列栅格展示，hover 高亮#2a76ff"
             scenarios:
               - id: REQ-2-2-1:SCE-1
                 name: 列表页查询单程车票
                 prerequisites:
                   - REQ-2-2:SCE-0 (位于列表页)
                 steps:
-                  - action: REQ-2-1-1:SCE-0(输入出发地)
-                    expectation: 输入框显示有效的城市名称
-                  - action: REQ-2-1-2:SCE-0(输入目的地)
-                    expectation: 输入框显示有效的城市名称
-                  - action: REQ-2-1-3:SCE-0(选择出发日期)
-                    expectation: 日期控件显示已选日期。
+                  - action: 修改查询条件
+                    expectation: |
+                      非改签模式：允许修改出发/到达站。
+                      改签模式：仅允许修改日期，站点锁定。
+                  - action: 城市选择联动
+                    expectation: 点击输入框弹出城市选择层，选择后映射为具体车站列表。
                   - action: 点击“查询”按钮
-                    expectation: 触发查询逻辑，更新URL参数。
+                    expectation: 将最新条件写入URL查询参数并使用replace=true更新路由；触发数据加载。
           - id: REQ-2-2-2
-            name: 车次筛选
-            description: 位于车次列表中查询框下方的筛选框，用于根据条件筛选车次（车次类型、车次席别）。参考图片：[image](./reference/search/filter.png)
+            name: 横向筛选组件
+            description: 位于车次列表中查询框下方的筛选框，用于根据条件筛选车次。参考图片：[image](./reference/search/filter.png)
             dependencies: []
             scenarios:
               - id: REQ-2-2-2:SCE-0
-                name: 筛选车次
+                name: 筛选车次逻辑
                 prerequisites:
-                  - REQ-2-2:SCE-0 (已查询到车次列表)
+                  - REQ-2-2:SCE-0
                 steps:
                   - action: 选择车次类型（G-高铁/D-动车/Z-直达/T-特快/K-快速）
                     expectation: 筛选框显示选中的车次类型，前端过滤列表仅展示选中类型的车次。
                   - action: 选择车次席别（商务座/一等座/二等座/一等卧/二等卧/软卧/硬卧）
                     expectation: 筛选框显示选中的车次席别，前端过滤列表仅展示选中席别对应的车次。
           - id: REQ-2-2-3
-            name: 车次列表
-            description: 位于车次列表页下方，核心功能，调用后端接口展示符合筛选条件的车次列表，参考图片：[image](./reference/search/result.png)
+            name: 车次数据加载与映射
+            description: 核心功能，调用后端接口展示符合筛选条件的车次列表。
             dependencies: []
             scenarios: 
               - id: REQ-2-2-3:SCE-0
-                name: 展示符合筛选条件的车次列表
+                name: 数据加载与状态处理
                 prerequisites:
                   - REQ-2-2-1:SCE-0 (已触发查询)
                 steps:
