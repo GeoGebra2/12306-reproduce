@@ -131,6 +131,20 @@ nodes:
     type: UI
     path: frontend/src/pages/HomePage.jsx
     description: 12306 首页组件，包含顶部导航、轮播图、车票查询面板等。
+  init_db:
+    type: FUNC
+    path: backend/src/database/init_db.js
+    signature: db.serialize()
+    db_tables:
+      - users
+  LoginPage:
+    type: UI
+    path: frontend/src/pages/LoginPage.jsx
+    description: 用户登录页面容器
+  RegisterPage:
+    type: UI
+    path: frontend/src/pages/RegisterPage.jsx
+    description: 用户注册页面容器
 edges:
   - from: ROOT
     to: REQ-1
@@ -228,3 +242,18 @@ edges:
   - from: ROOT
     to: HomePage
     relation: DEFINES
+  - from: REQ-1
+    to: init_db
+    relation: DEFINES
+  - from: REQ-1
+    to: LoginPage
+    relation: DEFINES
+  - from: HomePage
+    to: LoginPage
+    relation: CALLS
+  - from: REQ-1
+    to: RegisterPage
+    relation: DEFINES
+  - from: HomePage
+    to: RegisterPage
+    relation: CALLS

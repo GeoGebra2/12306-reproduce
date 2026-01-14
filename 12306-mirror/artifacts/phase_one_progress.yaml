@@ -4,7 +4,13 @@
     ui_ids:
       - HomePage
 - id: REQ-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    func_ids:
+      - init_db
+    ui_ids:
+      - LoginPage
+      - RegisterPage
 - id: REQ-1-1
   status: unprocessed
 - id: REQ-1-2

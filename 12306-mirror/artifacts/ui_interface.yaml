@@ -4,3 +4,17 @@ HomePage:
   description: 12306 首页组件，包含顶部导航、轮播图、车票查询面板等。
   upstream_ids: []
   downstream_ids: []
+LoginPage:
+  related_req_id: REQ-1
+  path: frontend/src/pages/LoginPage.jsx
+  description: 用户登录页面容器
+  upstream_ids:
+    - HomePage
+  downstream_ids: []
+RegisterPage:
+  related_req_id: REQ-1
+  path: frontend/src/pages/RegisterPage.jsx
+  description: 用户注册页面容器
+  upstream_ids:
+    - HomePage
+  downstream_ids: []
