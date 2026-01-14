@@ -157,6 +157,10 @@ nodes:
     type: UI
     path: frontend/src/pages/LoginPage.jsx
     description: Login Page
+  UI-FORGOT-PASSWORD-PAGE:
+    type: UI
+    path: frontend/src/pages/ForgotPasswordPage.jsx
+    description: Container page for forgot password flow
 edges:
   - from: ROOT
     to: REQ-1
@@ -292,4 +296,10 @@ edges:
     relation: DEFINES
   - from: UI-HOME-PAGE
     to: UI-LOGIN-PAGE
+    relation: CALLS
+  - from: REQ-1-3
+    to: UI-FORGOT-PASSWORD-PAGE
+    relation: DEFINES
+  - from: UI-LOGIN-PAGE
+    to: UI-FORGOT-PASSWORD-PAGE
     relation: CALLS

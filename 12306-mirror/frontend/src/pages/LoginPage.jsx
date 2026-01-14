@@ -74,8 +74,8 @@ const LoginPage = () => {
                         <button type="submit">立即登录</button>
                     </div>
                     <div className="form-footer">
-                        <Link to="/register">注册账号</Link> | <a href="#">忘记密码？</a>
-                    </div>
+                            <Link to="/register">注册账号</Link> | <Link to="/forgot-password">忘记密码？</Link>
+                        </div>
                 </form>
             </div>
         </div>

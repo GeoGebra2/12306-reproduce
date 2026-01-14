@@ -26,3 +26,10 @@ UI-LOGIN-PAGE:
     - UI-HOME-PAGE
   downstream_ids:
     - API-AUTH-LOGIN
+UI-FORGOT-PASSWORD-PAGE:
+  related_req_id: REQ-1-3
+  path: frontend/src/pages/ForgotPasswordPage.jsx
+  description: Container page for forgot password flow
+  upstream_ids:
+    - UI-LOGIN-PAGE
+  downstream_ids: []
