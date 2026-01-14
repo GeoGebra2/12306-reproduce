@@ -18,3 +18,11 @@ RegisterPage:
   upstream_ids:
     - HomePage
   downstream_ids: []
+UI-LOGIN-PAGE:
+  related_req_id: REQ-1
+  path: frontend/src/pages/LoginPage.jsx
+  description: Login Page
+  upstream_ids:
+    - UI-HOME-PAGE
+  downstream_ids:
+    - API-AUTH-LOGIN

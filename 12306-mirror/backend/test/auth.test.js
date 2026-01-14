@@ -61,4 +61,67 @@ describe('Auth API', () => {
     expect(res.status).toBe(409);
     expect(res.body.message).toMatch(/exists/);
   });
+
+  it('should login successfully with correct credentials', async () => {
+    // 1. Register a user
+    await request(app)
+      .post('/api/auth/register')
+      .send({
+        username: 'loginuser',
+        password: 'password123',
+        idType: '1',
+        idCard: '110101199001019999',
+        realName: 'Login User',
+        phone: '13900139000',
+        userType: 'passenger'
+      });
+
+    // 2. Login
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({
+        username: 'loginuser',
+        password: 'password123'
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty('id');
+    expect(res.body.username).toBe('loginuser');
+  });
+
+  it('should fail login with incorrect password', async () => {
+    // 1. Register
+    await request(app)
+      .post('/api/auth/register')
+      .send({
+        username: 'loginuser2',
+        password: 'password123',
+        idType: '1',
+        idCard: '110101199001018888',
+        realName: 'Login User 2',
+        phone: '13900139002',
+        userType: 'passenger'
+      });
+
+    // 2. Login with wrong password
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({
+        username: 'loginuser2',
+        password: 'wrongpassword'
+      });
+
+    expect(res.status).toBe(401);
+  });
+
+  it('should fail login with non-existent user', async () => {
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({
+        username: 'nonexistent',
+        password: 'password123'
+      });
+
+    expect(res.status).toBe(401); // Or 404, but 401 is safer for security
+  });
 });

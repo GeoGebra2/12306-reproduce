@@ -11,8 +11,10 @@
     ui_ids:
       - LoginPage
       - RegisterPage
+      - UI-LOGIN-PAGE
     api_ids:
       - API-AUTH-REGISTER
+      - API-AUTH-LOGIN
 - id: REQ-1-1
   status: processed
 - id: REQ-1-2

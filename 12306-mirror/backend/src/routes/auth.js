@@ -39,4 +39,26 @@ router.post('/register', (req, res) => {
   });
 });
 
+// POST /api/auth/login
+router.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Missing credentials' });
+  }
+
+  const sql = "SELECT id, username, type, real_name FROM users WHERE username = ? AND password = ?";
+  db.get(sql, [username, password], (err, row) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (!row) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+    
+    // Login successful
+    res.status(200).json(row);
+  });
+});
+
 module.exports = router;

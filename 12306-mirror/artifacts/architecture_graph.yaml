@@ -149,6 +149,14 @@ nodes:
     type: API
     path: backend/src/routes/auth.js
     signature: POST /api/auth/register
+  API-AUTH-LOGIN:
+    type: API
+    path: backend/src/routes/auth.js
+    signature: POST /api/auth/login
+  UI-LOGIN-PAGE:
+    type: UI
+    path: frontend/src/pages/LoginPage.jsx
+    description: Login Page
 edges:
   - from: ROOT
     to: REQ-1
@@ -269,4 +277,19 @@ edges:
     relation: CALLS
   - from: API-AUTH-REGISTER
     to: FUNC-INIT-DB
+    relation: CALLS
+  - from: REQ-1
+    to: API-AUTH-LOGIN
+    relation: DEFINES
+  - from: UI-LOGIN-PAGE
+    to: API-AUTH-LOGIN
+    relation: CALLS
+  - from: API-AUTH-LOGIN
+    to: FUNC-INIT-DB
+    relation: CALLS
+  - from: REQ-1
+    to: UI-LOGIN-PAGE
+    relation: DEFINES
+  - from: UI-HOME-PAGE
+    to: UI-LOGIN-PAGE
     relation: CALLS

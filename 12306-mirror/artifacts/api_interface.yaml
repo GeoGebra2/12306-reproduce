@@ -6,3 +6,11 @@ API-AUTH-REGISTER:
     - UI-REGISTER-PAGE
   downstream_ids:
     - FUNC-INIT-DB
+API-AUTH-LOGIN:
+  related_req_id: REQ-1
+  path: backend/src/routes/auth.js
+  signature: POST /api/auth/login
+  upstream_ids:
+    - UI-LOGIN-PAGE
+  downstream_ids:
+    - FUNC-INIT-DB
