@@ -17,6 +17,9 @@ const ForgotPasswordPage = () => {
     try {
       const res = await axios.post('/api/auth/check-user', { username });
       if (res.status === 200 && res.data.exists) {
+        if (res.data.username) {
+          setUsername(res.data.username);
+        }
         setStep(2);
       }
     } catch (err) {
