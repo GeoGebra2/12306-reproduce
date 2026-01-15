@@ -37,7 +37,7 @@ const HomePage = () => {
             <span>|</span>
             <a href="#">English</a>
             <span>|</span>
-            <a href="#">我的12306</a>
+            <Link to="/center">我的12306</Link>
             <span>|</span>
             <Link to="/login" className="login-btn">登录</Link>
             <Link to="/register" className="register-btn">注册</Link>
@@ -72,7 +72,7 @@ const HomePage = () => {
           <div className="booking-sidebar">
               <div className="active">车票</div>
               <div>常用查询</div>
-              <div>订餐</div>
+              <div onClick={() => navigate('/catering')}>订餐</div>
               <div>计次·定期票</div>
           </div>
           <div className="booking-panel">

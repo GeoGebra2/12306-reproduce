@@ -15,6 +15,7 @@ router.get('/stations', (req, res) => {
 // GET /api/tickets/query
 router.get('/query', (req, res) => {
     const { from, to, date } = req.query;
+    console.log('Query tickets:', { from, to, date });
 
     if (!from || !to || !date) {
         return res.status(400).json({ error: 'Missing required parameters: from, to, date' });

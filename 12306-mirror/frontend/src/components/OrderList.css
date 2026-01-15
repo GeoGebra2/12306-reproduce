@@ -1,0 +1,133 @@
+.order-list-component {
+    padding: 20px;
+}
+
+.order-tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.order-tabs button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #666;
+    border-bottom: 2px solid transparent;
+}
+
+.order-tabs button.active {
+    color: #3399FF;
+    border-bottom-color: #3399FF;
+    font-weight: bold;
+}
+
+.order-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.order-header {
+    background: #f9f9f9;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    border-radius: 8px 8px 0 0;
+}
+
+.order-status {
+    font-weight: bold;
+}
+
+.status-unpaid { color: #ff8c00; }
+.status-paid { color: #52c41a; }
+.status-cancelled { color: #999; }
+
+.order-items {
+    padding: 15px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.order-item:last-child {
+    margin-bottom: 0;
+}
+
+.train-info {
+    display: flex;
+    gap: 10px;
+    color: #333;
+}
+
+.train-no {
+    font-weight: bold;
+    width: 60px;
+}
+
+.passenger-info {
+    color: #666;
+    width: 150px;
+    text-align: center;
+}
+
+.price {
+    font-weight: bold;
+    color: #ff4d4f;
+    width: 80px;
+    text-align: right;
+}
+
+.order-footer {
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-price {
+    font-weight: bold;
+    color: #ff4d4f;
+    font-size: 16px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-cancel {
+    border: 1px solid #ddd;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #666;
+}
+
+.btn-pay {
+    border: none;
+    background: #ff8c00;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-pay:hover {
+    background: #e67e00;
+}

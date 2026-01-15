@@ -23,6 +23,11 @@ const LoginPage = () => {
     try {
       const response = await axios.post('/api/auth/login', formData);
       if (response.status === 200) {
+        // Save user info for session simulation
+        if (response.data.id) {
+          localStorage.setItem('userId', response.data.id);
+          localStorage.setItem('username', response.data.username);
+        }
         alert('登录成功！');
         navigate('/');
       }

@@ -46,6 +46,84 @@ const db = new sqlite3.Database(dbPath, (err) => {
         FOREIGN KEY(station_id) REFERENCES stations(id)
       )`);
 
+      // Create passengers table (REQ-3-2)
+      db.run(`CREATE TABLE IF NOT EXISTS passengers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        name TEXT,
+        type TEXT DEFAULT '成人',
+        id_type TEXT DEFAULT '1',
+        id_card TEXT,
+        phone TEXT,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+      )`);
+
+      // Create orders table (REQ-4)
+      db.run(`CREATE TABLE IF NOT EXISTS orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        status TEXT DEFAULT 'Unpaid', -- Unpaid, Paid, Cancelled
+        total_price REAL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+      )`);
+
+      // Create order_items table (REQ-4)
+      db.run(`CREATE TABLE IF NOT EXISTS order_items (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_id INTEGER,
+        passenger_id INTEGER,
+        passenger_name TEXT,
+        train_number TEXT,
+        departure_date TEXT,
+        from_station TEXT,
+        to_station TEXT,
+        start_time TEXT,
+        end_time TEXT,
+        seat_type TEXT,
+        price REAL,
+        FOREIGN KEY(order_id) REFERENCES orders(id)
+      )`);
+
+      // Create catering_brands table (REQ-5)
+      db.run(`CREATE TABLE IF NOT EXISTS catering_brands (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        logo_url TEXT
+      )`);
+
+      // Create catering_items table (REQ-5)
+      db.run(`CREATE TABLE IF NOT EXISTS catering_items (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        price REAL,
+        type TEXT, -- 'self' or 'brand'
+        brand_id INTEGER,
+        image_url TEXT,
+        FOREIGN KEY(brand_id) REFERENCES catering_brands(id)
+      )`);
+
+      // Create catering_orders table (REQ-5)
+      db.run(`CREATE TABLE IF NOT EXISTS catering_orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        status TEXT DEFAULT 'Created', -- Created, Paid
+        total_price REAL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+      )`);
+
+      // Create catering_order_items table (REQ-5)
+      db.run(`CREATE TABLE IF NOT EXISTS catering_order_items (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_id INTEGER,
+        item_id INTEGER,
+        quantity INTEGER,
+        price REAL,
+        FOREIGN KEY(order_id) REFERENCES catering_orders(id),
+        FOREIGN KEY(item_id) REFERENCES catering_items(id)
+      )`);
+
       // Seed data
       db.get("SELECT count(*) as count FROM stations", (err, row) => {
         if (!err && row && row.count === 0) {
@@ -73,10 +151,8 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 ['G101', 'G']
             ];
             trains.forEach(t => stmt.run(t));
-            stmt.finalize();
-
-            // Seed mappings after trains
-            setTimeout(() => {
+            stmt.finalize(() => {
+                // Seed mappings after trains are inserted
                 db.get("SELECT count(*) as count FROM train_station_mapping", (err, row) => {
                     if (!err && row && row.count === 0) {
                         console.log('Seeding train mappings...');
@@ -103,7 +179,52 @@ const db = new sqlite3.Database(dbPath, (err) => {
                         insertMapping.finalize();
                     }
                 });
-            }, 1000); // Wait a bit for trains/stations to be inserted
+            });
+        }
+      });
+
+      // Seed catering data
+      db.get("SELECT count(*) as count FROM catering_brands", (err, row) => {
+        if (!err && row && row.count === 0) {
+            console.log('Seeding catering data...');
+            const brandStmt = db.prepare("INSERT INTO catering_brands (name, logo_url) VALUES (?, ?)");
+            const brands = [
+                ['永和大王', '/assets/profile-and-catering/Food-永和大王.jpg'],
+                ['老娘舅', '/assets/profile-and-catering/Food-老娘舅.jpg'],
+                ['麦当劳', '/assets/profile-and-catering/Food-麦当劳.jpg'],
+                ['康师傅', '/assets/profile-and-catering/Food-康师傅.jpg'],
+                ['德克士', '/assets/profile-and-catering/Food-德克士.jpg'],
+                ['真功夫', '/assets/profile-and-catering/Food-真功夫.jpg']
+            ];
+            brands.forEach(b => brandStmt.run(b));
+            brandStmt.finalize(() => {
+                // Insert items
+                // Self-operated
+                const items = [
+                    ['冷链盒饭A', 15, 'self', null, '/assets/profile-and-catering/Food-列车自营商品-15元.jpg'],
+                    ['冷链盒饭B', 30, 'self', null, '/assets/profile-and-catering/Food-列车自营商品-30元.jpg'],
+                    ['冷链盒饭C', 40, 'self', null, '/assets/profile-and-catering/Food-列车自营商品-40元.jpg']
+                ];
+                const itemStmt = db.prepare("INSERT INTO catering_items (name, price, type, brand_id, image_url) VALUES (?, ?, ?, ?, ?)");
+                items.forEach(i => itemStmt.run(i));
+                itemStmt.finalize();
+                
+                // Brand Items using subqueries
+                const brandItemStmt = db.prepare(`
+                    INSERT INTO catering_items (name, price, type, brand_id, image_url) 
+                    SELECT ?, ?, 'brand', id, ? FROM catering_brands WHERE name = ?
+                `);
+                
+                const brandItems = [
+                    ['香芋派', 8, '/assets/profile-and-catering/麦当劳-香芋派.jpg', '麦当劳'],
+                    ['鸡牛双堡双人餐', 68, '/assets/profile-and-catering/麦当劳-鸡牛双堡双人餐乘运款.jpg', '麦当劳'],
+                    ['新台式卤肉饭', 35, '/assets/profile-and-catering/老娘舅-新台式卤肉饭.jpg', '老娘舅'],
+                    ['经典脆爽双鸡堡套餐', 32, '/assets/profile-and-catering/德克士-经典脆爽双鸡堡套餐.jpg', '德克士']
+                ];
+                
+                brandItems.forEach(bi => brandItemStmt.run(bi));
+                brandItemStmt.finalize();
+            });
         }
       });
     });

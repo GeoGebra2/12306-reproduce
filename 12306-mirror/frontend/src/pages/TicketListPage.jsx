@@ -79,7 +79,19 @@ const TicketListPage = () => {
                                         <span className="count">有</span>
                                     </div>
                                     <div className="action-area">
-                                        <button className="book-btn">预订</button>
+                                        <Link 
+                                            to="/order"
+                                            state={{ 
+                                                trainInfo: {
+                                                    ...ticket,
+                                                    date
+                                                } 
+                                            }}
+                                            className="book-btn"
+                                            style={{ display: 'inline-block', textDecoration: 'none', textAlign: 'center', lineHeight: '30px' }} // Quick fix for style
+                                        >
+                                            预订
+                                        </Link>
                                     </div>
                                 </div>
                             ))
