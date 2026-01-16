@@ -14,7 +14,48 @@ vi.mock('axios');
 
 describe('ForgotPasswordPage Flow', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
+    });
+
+    it('completes the full flow: check -> verify -> reset', async () => {
+        // Mock API responses for the full flow
+        axios.post.mockImplementation((url) => {
+            if (url.includes('check-user')) return Promise.resolve({ data: { success: true, phone: '138****8888' } });
+            if (url.includes('verify-code')) return Promise.resolve({ data: { success: true } });
+            if (url.includes('reset-password')) return Promise.resolve({ data: { success: true } });
+            return Promise.reject(new Error(`Unknown URL: ${url}`));
+        });
+
+        render(
+            <BrowserRouter>
+                <ForgotPasswordPage />
+            </BrowserRouter>
+        );
+
+        // Step 1 -> Step 2
+        fireEvent.change(screen.getByPlaceholderText('用户名/邮箱/手机号'), { target: { value: 'testuser' } });
+        fireEvent.click(screen.getByText('下一步'));
+        await waitFor(() => {
+            expect(screen.getByText('2. 验证身份')).toHaveClass('active');
+            expect(screen.getByText('验证码已发送至: 138****8888')).toBeInTheDocument();
+        });
+
+        // Step 2 -> Step 3
+        fireEvent.change(screen.getByPlaceholderText('请输入验证码'), { target: { value: '123456' } });
+        fireEvent.click(screen.getByText('下一步'));
+        await waitFor(() => {
+            expect(screen.getByText('3. 重置密码')).toHaveClass('active');
+        });
+
+        // Step 3 -> Step 4
+        fireEvent.change(screen.getByPlaceholderText('输入新密码'), { target: { value: 'newpass123' } });
+        fireEvent.change(screen.getByPlaceholderText('确认新密码'), { target: { value: 'newpass123' } });
+        fireEvent.click(screen.getByText('确定'));
+
+        await waitFor(() => {
+            expect(screen.getByText('4. 完成')).toHaveClass('active');
+            expect(screen.getByText('密码重置成功！')).toBeInTheDocument();
+        });
     });
 
     it('renders step 1 initially', () => {
