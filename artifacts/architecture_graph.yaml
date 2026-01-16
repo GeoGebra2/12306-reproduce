@@ -157,6 +157,16 @@ nodes:
     signature: initTables()
     db_tables:
       - users
+  API_USER_REGISTER:
+    type: API
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\backend\src\routes\users.js
+    signature: POST /api/users/register
+  FUNC_USER_REGISTER:
+    type: FUNC
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\backend\src\controllers\userController.js
+    signature: register(req, res)
+    db_tables:
+      - users
 edges:
   - from: ROOT
     to: REQ-1
@@ -278,3 +288,15 @@ edges:
   - from: REQ-1
     to: INIT_DB_USERS
     relation: DEFINES
+  - from: REQ-1-1
+    to: API_USER_REGISTER
+    relation: DEFINES
+  - from: REGISTER_PAGE
+    to: API_USER_REGISTER
+    relation: CALLS
+  - from: REQ-1-1
+    to: FUNC_USER_REGISTER
+    relation: DEFINES
+  - from: API_USER_REGISTER
+    to: FUNC_USER_REGISTER
+    relation: CALLS

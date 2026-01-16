@@ -5,3 +5,11 @@ INIT_DB_USERS:
   upstream_ids: []
   db_tables:
     - users
+FUNC_USER_REGISTER:
+  related_req_id: REQ-1-1
+  path: D:\软件工程与项目管理\tdd-framework\12306-mirror\backend\src\controllers\userController.js
+  signature: register(req, res)
+  upstream_ids:
+    - API_USER_REGISTER
+  db_tables:
+    - users

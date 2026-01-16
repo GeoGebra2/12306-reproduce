@@ -1,0 +1,7 @@
+API_USER_REGISTER:
+  related_req_id: REQ-1-1
+  path: D:\软件工程与项目管理\tdd-framework\12306-mirror\backend\src\routes\users.js
+  signature: POST /api/users/register
+  upstream_ids:
+    - REGISTER_PAGE
+  downstream_ids: []

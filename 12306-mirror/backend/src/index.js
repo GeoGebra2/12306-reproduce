@@ -5,8 +5,12 @@ const app = express();
 const port = 3000;
 
  
+const userRoutes = require('./routes/users');
+
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use('/api/users', userRoutes);
 
  
 require('./database/init_db');

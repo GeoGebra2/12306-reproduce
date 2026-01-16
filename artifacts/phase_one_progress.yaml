@@ -12,7 +12,12 @@
     func_ids:
       - INIT_DB_USERS
 - id: REQ-1-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    api_ids:
+      - API_USER_REGISTER
+    func_ids:
+      - FUNC_USER_REGISTER
 - id: REQ-1-2
   status: unprocessed
 - id: REQ-1-3
