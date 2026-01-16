@@ -59,3 +59,9 @@ UI-BOOKING-FORM-DESTINATION:
   upstream_ids:
     - API-STATIONS-SEARCH
   downstream_ids: []
+UI-BOOKING-FORM-DATE:
+  related_req_id: REQ-2-1-3
+  path: frontend/src/components/BookingForm.jsx
+  description: Booking Form with Departure Date Selection
+  upstream_ids: []
+  downstream_ids: []
