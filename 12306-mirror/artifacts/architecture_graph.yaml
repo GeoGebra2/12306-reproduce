@@ -165,6 +165,45 @@ nodes:
     signature: POST /api/users/register
     db_tables:
       - users
+  API-USERS-LOGIN:
+    type: FUNC
+    path: backend/src/routes/users.js
+    signature: POST /api/users/login
+    db_tables:
+      - users
+  FUNC-USER-CHECK-EXISTS:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: exports.checkUserExists
+    db_tables:
+      - users
+  FUNC-USER-VERIFY-CODE:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: exports.verifyCode
+    db_tables: []
+  FUNC-USER-RESET-PASSWORD:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: exports.resetPassword
+    db_tables:
+      - users
+  API-USER-CHECK-EXISTS:
+    type: API
+    path: /api/users/forgot/check-user
+    signature: POST /api/users/forgot/check-user
+  API-USER-VERIFY-CODE:
+    type: API
+    path: /api/users/forgot/verify-code
+    signature: POST /api/users/forgot/verify-code
+  API-USER-RESET-PASSWORD:
+    type: API
+    path: /api/users/forgot/reset-password
+    signature: POST /api/users/forgot/reset-password
+  UI-FORGOT-PASSWORD-PAGE:
+    type: UI
+    path: frontend/src/pages/ForgotPasswordPage.jsx
+    description: User forgot password flow page with 4 steps
 edges:
   - from: ROOT
     to: REQ-1
@@ -307,3 +346,54 @@ edges:
   - from: UI-REGISTER-PAGE
     to: API-USERS-REGISTER
     relation: CALLS
+  - from: REQ-1-2
+    to: API-USERS-LOGIN
+    relation: DEFINES
+  - from: UI-LOGIN-PAGE
+    to: API-USERS-LOGIN
+    relation: CALLS
+  - from: REQ-1-3
+    to: FUNC-USER-CHECK-EXISTS
+    relation: DEFINES
+  - from: DB-USERS-TABLE
+    to: FUNC-USER-CHECK-EXISTS
+    relation: CALLS
+  - from: REQ-1-3
+    to: FUNC-USER-VERIFY-CODE
+    relation: DEFINES
+  - from: REQ-1-3
+    to: FUNC-USER-RESET-PASSWORD
+    relation: DEFINES
+  - from: DB-USERS-TABLE
+    to: FUNC-USER-RESET-PASSWORD
+    relation: CALLS
+  - from: REQ-1-3
+    to: API-USER-CHECK-EXISTS
+    relation: DEFINES
+  - from: FUNC-USER-CHECK-EXISTS
+    to: API-USER-CHECK-EXISTS
+    relation: CALLS
+  - from: API-USER-CHECK-EXISTS
+    to: UI-FORGOT-PASSWORD-PAGE
+    relation: CALLS
+  - from: REQ-1-3
+    to: API-USER-VERIFY-CODE
+    relation: DEFINES
+  - from: FUNC-USER-VERIFY-CODE
+    to: API-USER-VERIFY-CODE
+    relation: CALLS
+  - from: API-USER-VERIFY-CODE
+    to: UI-FORGOT-PASSWORD-PAGE
+    relation: CALLS
+  - from: REQ-1-3
+    to: API-USER-RESET-PASSWORD
+    relation: DEFINES
+  - from: FUNC-USER-RESET-PASSWORD
+    to: API-USER-RESET-PASSWORD
+    relation: CALLS
+  - from: API-USER-RESET-PASSWORD
+    to: UI-FORGOT-PASSWORD-PAGE
+    relation: CALLS
+  - from: REQ-1-3
+    to: UI-FORGOT-PASSWORD-PAGE
+    relation: DEFINES

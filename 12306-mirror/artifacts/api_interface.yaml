@@ -1,0 +1,24 @@
+API-USER-CHECK-EXISTS:
+  related_req_id: REQ-1-3
+  path: /api/users/forgot/check-user
+  signature: POST /api/users/forgot/check-user
+  upstream_ids:
+    - FUNC-USER-CHECK-EXISTS
+  downstream_ids:
+    - UI-FORGOT-PASSWORD-PAGE
+API-USER-VERIFY-CODE:
+  related_req_id: REQ-1-3
+  path: /api/users/forgot/verify-code
+  signature: POST /api/users/forgot/verify-code
+  upstream_ids:
+    - FUNC-USER-VERIFY-CODE
+  downstream_ids:
+    - UI-FORGOT-PASSWORD-PAGE
+API-USER-RESET-PASSWORD:
+  related_req_id: REQ-1-3
+  path: /api/users/forgot/reset-password
+  signature: POST /api/users/forgot/reset-password
+  upstream_ids:
+    - FUNC-USER-RESET-PASSWORD
+  downstream_ids:
+    - UI-FORGOT-PASSWORD-PAGE

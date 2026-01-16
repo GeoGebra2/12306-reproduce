@@ -36,3 +36,12 @@ UI-REGISTER-PAGE:
     - UI-ROOT
   downstream_ids:
     - UI-HEADER-BRAND-SEARCH
+UI-FORGOT-PASSWORD-PAGE:
+  related_req_id: REQ-1-3
+  path: frontend/src/pages/ForgotPasswordPage.jsx
+  description: User forgot password flow page with 4 steps
+  upstream_ids:
+    - API-USER-CHECK-EXISTS
+    - API-USER-VERIFY-CODE
+    - API-USER-RESET-PASSWORD
+  downstream_ids: []

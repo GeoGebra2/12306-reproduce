@@ -6,3 +6,33 @@ API-USERS-REGISTER:
     - UI-REGISTER-PAGE
   db_tables:
     - users
+API-USERS-LOGIN:
+  related_req_id: REQ-1-2
+  path: backend/src/routes/users.js
+  signature: POST /api/users/login
+  upstream_ids:
+    - UI-LOGIN-PAGE
+  db_tables:
+    - users
+FUNC-USER-CHECK-EXISTS:
+  related_req_id: REQ-1-3
+  path: backend/src/controllers/userController.js
+  signature: exports.checkUserExists
+  upstream_ids:
+    - DB-USERS-TABLE
+  db_tables:
+    - users
+FUNC-USER-VERIFY-CODE:
+  related_req_id: REQ-1-3
+  path: backend/src/controllers/userController.js
+  signature: exports.verifyCode
+  upstream_ids: []
+  db_tables: []
+FUNC-USER-RESET-PASSWORD:
+  related_req_id: REQ-1-3
+  path: backend/src/controllers/userController.js
+  signature: exports.resetPassword
+  upstream_ids:
+    - DB-USERS-TABLE
+  db_tables:
+    - users
