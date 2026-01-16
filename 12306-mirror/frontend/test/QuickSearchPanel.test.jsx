@@ -103,4 +103,30 @@ describe('Quick Search Panel (BookingForm)', () => {
     // Suggestions should disappear
     expect(screen.queryByText('北京')).not.toBeInTheDocument();
   });
+
+  it('shows hot stations (all stations) when input is focused', async () => {
+    const mockStations = [
+      { id: 1, name: '北京南', code: 'VNP' },
+      { id: 2, name: '上海虹桥', code: 'AOH' }
+    ];
+    axios.get.mockResolvedValue({ data: mockStations });
+
+    render(
+      <BrowserRouter>
+        <BookingForm />
+      </BrowserRouter>
+    );
+
+    const fromInput = screen.getByPlaceholderText(/出发地/i);
+    fireEvent.focus(fromInput);
+
+    // Wait for API call (empty query)
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith('/api/stations', { params: { q: '' } });
+    });
+
+    // Check if hot stations are displayed
+    expect(await screen.findByText('北京南')).toBeInTheDocument();
+    expect(await screen.findByText('上海虹桥')).toBeInTheDocument();
+  });
 });

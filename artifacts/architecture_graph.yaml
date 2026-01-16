@@ -227,6 +227,10 @@ nodes:
     type: UI
     path: frontend/src/components/BookingForm.jsx
     description: Homepage booking form with station autocomplete and swap functionality
+  UI-BOOKING-FORM-ENHANCED:
+    type: UI
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\components\BookingForm.jsx
+    description: Booking Form with Station Autocomplete and Hot Stations
 edges:
   - from: ROOT
     to: REQ-1
@@ -434,4 +438,10 @@ edges:
     relation: DEFINES
   - from: API-STATIONS-LIST
     to: UI-BOOKING-FORM
+    relation: CALLS
+  - from: REQ-2-1-1
+    to: UI-BOOKING-FORM-ENHANCED
+    relation: DEFINES
+  - from: UI-BOOKING-FORM-ENHANCED
+    to: API-STATIONS-LIST
     relation: CALLS

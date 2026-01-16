@@ -40,16 +40,18 @@ const BookingForm = () => {
   };
 
   const fetchSuggestions = async (query) => {
-    if (!query) {
-      setSuggestions([]);
-      return;
-    }
     try {
-      const response = await axios.get('/api/stations', { params: { q: query } });
+      const response = await axios.get('/api/stations', { params: { q: query || '' } });
       setSuggestions(response.data);
     } catch (error) {
       console.error('Error fetching stations:', error);
     }
+  };
+
+  const handleFocus = (e) => {
+    const { name, value } = e.target;
+    setActiveField(name);
+    fetchSuggestions(value);
   };
 
   const handleChange = (e) => {
@@ -107,7 +109,7 @@ const BookingForm = () => {
                 className="station-input" 
                 value={searchParams.fromStation}
                 onChange={handleChange}
-                onFocus={() => setActiveField('fromStation')}
+                onFocus={handleFocus}
                 autoComplete="off"
                 />
                 {activeField === 'fromStation' && suggestions.length > 0 && (
@@ -148,7 +150,7 @@ const BookingForm = () => {
                 className="station-input" 
                 value={searchParams.toStation}
                 onChange={handleChange}
-                onFocus={() => setActiveField('toStation')}
+                onFocus={handleFocus}
                 autoComplete="off"
                 />
                  {activeField === 'toStation' && suggestions.length > 0 && (

@@ -59,10 +59,12 @@
     ui_ids:
       - UI-BOOKING-FORM
 - id: REQ-2-1-1
-  status: unprocessed
+  status: processed
   artifacts:
     api_ids:
       - API-STATIONS-LIST
+    ui_ids:
+      - UI-BOOKING-FORM-ENHANCED
 - id: REQ-2-1-2
   status: unprocessed
 - id: REQ-2-1-3

@@ -36,3 +36,10 @@ UI-BOOKING-FORM:
   upstream_ids:
     - API-STATIONS-LIST
   downstream_ids: []
+UI-BOOKING-FORM-ENHANCED:
+  related_req_id: REQ-2-1-1
+  path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\components\BookingForm.jsx
+  description: Booking Form with Station Autocomplete and Hot Stations
+  upstream_ids: []
+  downstream_ids:
+    - API-STATIONS-LIST
