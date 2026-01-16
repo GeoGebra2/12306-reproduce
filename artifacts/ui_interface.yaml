@@ -6,11 +6,12 @@ HOME_PAGE:
   downstream_ids: []
 LOGIN_PAGE:
   related_req_id: REQ-1
-  path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\LoginPage.jsx
-  description: 用户登录页面容器
+  path: frontend/src/pages/LoginPage.jsx
+  description: Login Page
   upstream_ids:
     - HOME_PAGE
-  downstream_ids: []
+  downstream_ids:
+    - API_USER_LOGIN
 REGISTER_PAGE:
   related_req_id: REQ-1
   path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\RegisterPage.jsx

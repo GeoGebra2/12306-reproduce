@@ -145,8 +145,8 @@ nodes:
     description: 首页容器，包含导航、轮播、搜索等子模块
   LOGIN_PAGE:
     type: UI
-    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\LoginPage.jsx
-    description: 用户登录页面容器
+    path: frontend/src/pages/LoginPage.jsx
+    description: Login Page
   REGISTER_PAGE:
     type: UI
     path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\RegisterPage.jsx
@@ -165,6 +165,16 @@ nodes:
     type: FUNC
     path: D:\软件工程与项目管理\tdd-framework\12306-mirror\backend\src\controllers\userController.js
     signature: register(req, res)
+    db_tables:
+      - users
+  API_USER_LOGIN:
+    type: API
+    path: /api/users/login
+    signature: POST /api/users/login
+  FUNC_USER_LOGIN:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: login(req, res)
     db_tables:
       - users
 edges:
@@ -300,3 +310,18 @@ edges:
   - from: API_USER_REGISTER
     to: FUNC_USER_REGISTER
     relation: CALLS
+  - from: REQ-1-2
+    to: LOGIN_PAGE
+    relation: DEFINES
+  - from: LOGIN_PAGE
+    to: API_USER_LOGIN
+    relation: CALLS
+  - from: REQ-1-2
+    to: API_USER_LOGIN
+    relation: DEFINES
+  - from: API_USER_LOGIN
+    to: FUNC_USER_LOGIN
+    relation: CALLS
+  - from: REQ-1-2
+    to: FUNC_USER_LOGIN
+    relation: DEFINES

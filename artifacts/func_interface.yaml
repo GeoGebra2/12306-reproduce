@@ -13,3 +13,11 @@ FUNC_USER_REGISTER:
     - API_USER_REGISTER
   db_tables:
     - users
+FUNC_USER_LOGIN:
+  related_req_id: REQ-1-2
+  path: backend/src/controllers/userController.js
+  signature: login(req, res)
+  upstream_ids:
+    - API_USER_LOGIN
+  db_tables:
+    - users

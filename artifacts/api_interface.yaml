@@ -5,3 +5,11 @@ API_USER_REGISTER:
   upstream_ids:
     - REGISTER_PAGE
   downstream_ids: []
+API_USER_LOGIN:
+  related_req_id: REQ-1-2
+  path: /api/users/login
+  signature: POST /api/users/login
+  upstream_ids:
+    - LOGIN_PAGE
+  downstream_ids:
+    - FUNC_USER_LOGIN
