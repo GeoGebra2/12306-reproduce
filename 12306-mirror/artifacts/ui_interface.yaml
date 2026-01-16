@@ -66,3 +66,11 @@ UI-BOOKING-FORM-DATE:
   description: Booking Form with Departure Date Selection
   upstream_ids: []
   downstream_ids: []
+UI-SEARCH-FILTER:
+  related_req_id: REQ-2-2-1
+  path: frontend/src/components/TrainList/SearchFilter.jsx
+  description: Search Filter Component on Train List Page (From/To/Date inputs with autocomplete)
+  upstream_ids:
+    - API-STATIONS-SEARCH
+  downstream_ids:
+    - UI-TRAIN-LIST-PAGE

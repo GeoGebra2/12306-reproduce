@@ -220,6 +220,10 @@ nodes:
     type: API
     path: backend/src/routes/stations.js
     signature: GET /api/stations?q={query}
+  UI-SEARCH-FILTER:
+    type: UI
+    path: frontend/src/components/TrainList/SearchFilter.jsx
+    description: Search Filter Component on Train List Page (From/To/Date inputs with autocomplete)
 edges:
   - from: ROOT
     to: REQ-1
@@ -436,4 +440,13 @@ edges:
     relation: CALLS
   - from: UI-BOOKING-FORM-DEPARTURE
     to: UI-ROOT
+    relation: CALLS
+  - from: REQ-2-2-1
+    to: UI-SEARCH-FILTER
+    relation: DEFINES
+  - from: API-STATIONS-SEARCH
+    to: UI-SEARCH-FILTER
+    relation: CALLS
+  - from: UI-SEARCH-FILTER
+    to: UI-TRAIN-LIST-PAGE
     relation: CALLS

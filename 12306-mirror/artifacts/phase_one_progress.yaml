@@ -66,7 +66,10 @@
 - id: REQ-2-2
   status: processed
 - id: REQ-2-2-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-SEARCH-FILTER
 - id: REQ-2-2-2
   status: unprocessed
 - id: REQ-2-2-3
