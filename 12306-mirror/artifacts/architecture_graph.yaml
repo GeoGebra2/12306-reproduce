@@ -159,6 +159,12 @@ nodes:
     type: UI
     path: frontend/src/pages/RegisterPage.jsx
     description: Register Page Skeleton
+  API-USERS-REGISTER:
+    type: FUNC
+    path: backend/src/routes/users.js
+    signature: POST /api/users/register
+    db_tables:
+      - users
 edges:
   - from: ROOT
     to: REQ-1
@@ -294,4 +300,10 @@ edges:
     relation: DEFINES
   - from: UI-ROOT
     to: UI-REGISTER-PAGE
+    relation: CALLS
+  - from: REQ-1-1
+    to: API-USERS-REGISTER
+    relation: DEFINES
+  - from: UI-REGISTER-PAGE
+    to: API-USERS-REGISTER
     relation: CALLS

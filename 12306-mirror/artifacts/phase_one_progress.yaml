@@ -12,7 +12,10 @@
       - UI-LOGIN-PAGE
       - UI-REGISTER-PAGE
 - id: REQ-1-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    func_ids:
+      - API-USERS-REGISTER
 - id: REQ-1-2
   status: unprocessed
 - id: REQ-1-3

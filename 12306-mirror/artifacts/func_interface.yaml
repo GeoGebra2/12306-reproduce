@@ -1,0 +1,8 @@
+API-USERS-REGISTER:
+  related_req_id: REQ-1-1
+  path: backend/src/routes/users.js
+  signature: POST /api/users/register
+  upstream_ids:
+    - UI-REGISTER-PAGE
+  db_tables:
+    - users
