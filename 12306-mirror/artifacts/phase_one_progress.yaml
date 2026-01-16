@@ -5,7 +5,12 @@
       - UI-ROOT
       - UI-HOME
 - id: REQ-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-HEADER-BRAND-SEARCH
+      - UI-LOGIN-PAGE
+      - UI-REGISTER-PAGE
 - id: REQ-1-1
   status: unprocessed
 - id: REQ-1-2

@@ -147,6 +147,18 @@ nodes:
     type: UI
     path: frontend/src/pages/HomePage.jsx
     description: Home Page Component
+  UI-HEADER-BRAND-SEARCH:
+    type: UI
+    path: frontend/src/components/HeaderBrandSearch.jsx
+    description: Header component with Login/Register links
+  UI-LOGIN-PAGE:
+    type: UI
+    path: frontend/src/pages/LoginPage.jsx
+    description: Login Page Skeleton
+  UI-REGISTER-PAGE:
+    type: UI
+    path: frontend/src/pages/RegisterPage.jsx
+    description: Register Page Skeleton
 edges:
   - from: ROOT
     to: REQ-1
@@ -258,4 +270,28 @@ edges:
     relation: DEFINES
   - from: UI-HOME
     to: UI-ROOT
+    relation: CALLS
+  - from: REQ-1
+    to: UI-HEADER-BRAND-SEARCH
+    relation: DEFINES
+  - from: UI-HOME
+    to: UI-HEADER-BRAND-SEARCH
+    relation: CALLS
+  - from: UI-LOGIN-PAGE
+    to: UI-HEADER-BRAND-SEARCH
+    relation: CALLS
+  - from: UI-REGISTER-PAGE
+    to: UI-HEADER-BRAND-SEARCH
+    relation: CALLS
+  - from: REQ-1
+    to: UI-LOGIN-PAGE
+    relation: DEFINES
+  - from: UI-ROOT
+    to: UI-LOGIN-PAGE
+    relation: CALLS
+  - from: REQ-1
+    to: UI-REGISTER-PAGE
+    relation: DEFINES
+  - from: UI-ROOT
+    to: UI-REGISTER-PAGE
     relation: CALLS

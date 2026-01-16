@@ -11,3 +11,28 @@ UI-HOME:
   upstream_ids: []
   downstream_ids:
     - UI-ROOT
+UI-HEADER-BRAND-SEARCH:
+  related_req_id: REQ-1
+  path: frontend/src/components/HeaderBrandSearch.jsx
+  description: Header component with Login/Register links
+  upstream_ids:
+    - UI-HOME
+    - UI-LOGIN-PAGE
+    - UI-REGISTER-PAGE
+  downstream_ids: []
+UI-LOGIN-PAGE:
+  related_req_id: REQ-1
+  path: frontend/src/pages/LoginPage.jsx
+  description: Login Page Skeleton
+  upstream_ids:
+    - UI-ROOT
+  downstream_ids:
+    - UI-HEADER-BRAND-SEARCH
+UI-REGISTER-PAGE:
+  related_req_id: REQ-1
+  path: frontend/src/pages/RegisterPage.jsx
+  description: Register Page Skeleton
+  upstream_ids:
+    - UI-ROOT
+  downstream_ids:
+    - UI-HEADER-BRAND-SEARCH
