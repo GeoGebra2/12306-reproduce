@@ -45,7 +45,7 @@
 - id: REQ-2
   status: processed
 - id: REQ-2-1
-  status: unprocessed
+  status: processed
 - id: REQ-2-1-1
   status: unprocessed
 - id: REQ-2-1-2
