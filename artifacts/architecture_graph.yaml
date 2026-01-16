@@ -177,6 +177,40 @@ nodes:
     signature: login(req, res)
     db_tables:
       - users
+  FORGOT_PASSWORD_PAGE:
+    type: UI
+    path: frontend/src/pages/ForgotPasswordPage.jsx
+    description: Forgot Password Page
+  API_USER_CHECK:
+    type: API
+    path: /api/users/forgot/check-user
+    signature: POST /api/users/forgot/check-user
+  API_USER_VERIFY_CODE:
+    type: API
+    path: /api/users/forgot/verify-code
+    signature: POST /api/users/forgot/verify-code
+  API_USER_RESET_PASSWORD:
+    type: API
+    path: /api/users/forgot/reset-password
+    signature: POST /api/users/forgot/reset-password
+  FUNC_USER_CHECK:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: checkUserExists(req, res)
+    db_tables:
+      - users
+  FUNC_USER_VERIFY_CODE:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: verifyCode(req, res)
+    db_tables:
+      - users
+  FUNC_USER_RESET_PASSWORD:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: resetPassword(req, res)
+    db_tables:
+      - users
 edges:
   - from: ROOT
     to: REQ-1
@@ -324,4 +358,46 @@ edges:
     relation: CALLS
   - from: REQ-1-2
     to: FUNC_USER_LOGIN
+    relation: DEFINES
+  - from: REQ-1-3
+    to: FORGOT_PASSWORD_PAGE
+    relation: DEFINES
+  - from: LOGIN_PAGE
+    to: FORGOT_PASSWORD_PAGE
+    relation: CALLS
+  - from: FORGOT_PASSWORD_PAGE
+    to: API_USER_CHECK
+    relation: CALLS
+  - from: FORGOT_PASSWORD_PAGE
+    to: API_USER_VERIFY_CODE
+    relation: CALLS
+  - from: FORGOT_PASSWORD_PAGE
+    to: API_USER_RESET_PASSWORD
+    relation: CALLS
+  - from: REQ-1-3
+    to: API_USER_CHECK
+    relation: DEFINES
+  - from: API_USER_CHECK
+    to: FUNC_USER_CHECK
+    relation: CALLS
+  - from: REQ-1-3
+    to: API_USER_VERIFY_CODE
+    relation: DEFINES
+  - from: API_USER_VERIFY_CODE
+    to: FUNC_USER_VERIFY_CODE
+    relation: CALLS
+  - from: REQ-1-3
+    to: API_USER_RESET_PASSWORD
+    relation: DEFINES
+  - from: API_USER_RESET_PASSWORD
+    to: FUNC_USER_RESET_PASSWORD
+    relation: CALLS
+  - from: REQ-1-3
+    to: FUNC_USER_CHECK
+    relation: DEFINES
+  - from: REQ-1-3
+    to: FUNC_USER_VERIFY_CODE
+    relation: DEFINES
+  - from: REQ-1-3
+    to: FUNC_USER_RESET_PASSWORD
     relation: DEFINES

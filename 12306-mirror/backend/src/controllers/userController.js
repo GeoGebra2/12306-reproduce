@@ -67,3 +67,45 @@ exports.login = (req, res) => {
     }
   });
 };
+
+exports.checkUserExists = (req, res) => {
+  const { account } = req.body;
+  if (!account) return res.status(400).json({ success: false, message: 'Account is required' });
+
+  const sql = `SELECT * FROM users WHERE username = ? OR phone = ?`;
+  db.get(sql, [account, account], (err, user) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    
+    // Mask phone
+    const maskedPhone = user.phone ? user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') : 'Unknown';
+    
+    res.json({ success: true, phone: maskedPhone });
+  });
+};
+
+exports.verifyCode = (req, res) => {
+  const { code } = req.body;
+  // Mock verification
+  if (code === '123456') {
+    res.json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: 'Invalid code' });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { account, newPassword } = req.body;
+  if (!account || !newPassword) return res.status(400).json({ success: false, message: 'Missing fields' });
+  
+  try {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const sql = `UPDATE users SET password = ? WHERE username = ? OR phone = ?`;
+    db.run(sql, [hashedPassword, account, account], function(err) {
+      if (err) return res.status(500).json({ success: false, message: err.message });
+      res.json({ success: true, message: 'Password updated' });
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
