@@ -37,7 +37,11 @@ describe('TrainListPage', () => {
         end_station: '上海虹桥',
         start_time: '08:00',
         end_time: '12:00',
-        duration: '4h'
+        duration: '4h',
+        tickets: [
+             { seat_type: '二等座', price: 553, count: 10 },
+             { seat_type: '一等座', price: 933, count: 5 }
+        ]
       }
     ];
     axios.get.mockResolvedValue({ data: mockTrains });
@@ -61,6 +65,12 @@ describe('TrainListPage', () => {
     expect(await screen.findByText('G1')).toBeInTheDocument();
     expect(screen.getAllByText('北京南').length).toBeGreaterThan(0);
     expect(screen.getAllByText('上海虹桥').length).toBeGreaterThan(0);
+    
+    // Verify Tickets Render (REQ-2-2-3)
+    // There might be multiple "二等座" (filter bar + list item), so check we have them
+    expect(screen.getAllByText('二等座').length).toBeGreaterThan(0);
+    expect(screen.getByText('¥553')).toBeInTheDocument();
+    expect(screen.getAllByText('有').length).toBeGreaterThan(0);
   });
 
   it('renders empty state when no trains found', async () => {

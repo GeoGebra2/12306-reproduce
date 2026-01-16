@@ -25,8 +25,43 @@ router.get('/', (req, res) => {
             console.error('Error querying trains:', err);
             return res.status(500).json({ error: 'Database error' });
         }
-        res.json(rows);
+        
+        // Enhance rows with mock ticket info
+        const enhancedRows = rows.map(train => {
+            return {
+                ...train,
+                tickets: generateMockTickets(train.train_number)
+            };
+        });
+
+        res.json(enhancedRows);
     });
 });
+
+function generateMockTickets(trainNumber) {
+    const type = trainNumber.charAt(0).toUpperCase();
+    const tickets = [];
+
+    if (['G', 'C'].includes(type)) {
+        tickets.push({ seat_type: '商务座', price: 1748, count: Math.floor(Math.random() * 5) });
+        tickets.push({ seat_type: '一等座', price: 933, count: Math.floor(Math.random() * 20) });
+        tickets.push({ seat_type: '二等座', price: 553, count: Math.floor(Math.random() * 100) });
+    } else if (['D'].includes(type)) {
+        tickets.push({ seat_type: '一等卧', price: 370, count: Math.floor(Math.random() * 10) });
+        tickets.push({ seat_type: '二等卧', price: 280, count: Math.floor(Math.random() * 20) });
+        tickets.push({ seat_type: '二等座', price: 220, count: Math.floor(Math.random() * 100) });
+        tickets.push({ seat_type: '无座', price: 220, count: Math.floor(Math.random() * 50) });
+    } else if (['Z', 'T', 'K'].includes(type)) {
+        tickets.push({ seat_type: '软卧', price: 400, count: Math.floor(Math.random() * 10) });
+        tickets.push({ seat_type: '硬卧', price: 260, count: Math.floor(Math.random() * 30) });
+        tickets.push({ seat_type: '硬座', price: 150, count: Math.floor(Math.random() * 100) });
+        tickets.push({ seat_type: '无座', price: 150, count: Math.floor(Math.random() * 50) });
+    } else {
+         // Default for others
+        tickets.push({ seat_type: '硬座', price: 50, count: Math.floor(Math.random() * 50) });
+    }
+    
+    return tickets;
+}
 
 module.exports = router;

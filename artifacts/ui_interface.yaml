@@ -71,3 +71,10 @@ UI-SEARCH-FILTER:
   upstream_ids: []
   downstream_ids:
     - UI-TRAIN-LIST-PAGE
+UI-TRAIN-ITEM:
+  related_req_id: REQ-2-2-3
+  path: frontend/src/components/TrainList/TrainItem.jsx
+  description: Train Item Component displaying train details and ticket availability
+  upstream_ids:
+    - UI-TRAIN-LIST-PAGE
+  downstream_ids: []

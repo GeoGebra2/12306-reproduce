@@ -247,6 +247,14 @@ nodes:
     type: UI
     path: frontend/src/components/TrainList/SearchFilter.jsx
     description: Search Filter Component for Train List (From, To, Date)
+  UI-TRAIN-ITEM:
+    type: UI
+    path: frontend/src/components/TrainList/TrainItem.jsx
+    description: Train Item Component displaying train details and ticket availability
+  API-TICKETS-SEARCH:
+    type: API
+    path: backend/src/routes/tickets.js
+    signature: GET /api/tickets?from={from}&to={to}&date={date}
 edges:
   - from: ROOT
     to: REQ-1
@@ -484,4 +492,16 @@ edges:
     relation: CALLS
   - from: API-TICKETS-SEARCH
     to: UI-TRAIN-FILTER-BAR
+    relation: CALLS
+  - from: REQ-2-2-3
+    to: UI-TRAIN-ITEM
+    relation: DEFINES
+  - from: UI-TRAIN-LIST-PAGE
+    to: UI-TRAIN-ITEM
+    relation: CALLS
+  - from: REQ-2-2-3
+    to: API-TICKETS-SEARCH
+    relation: DEFINES
+  - from: API-TICKETS-SEARCH
+    to: UI-TRAIN-LIST-PAGE
     relation: CALLS

@@ -21,9 +21,20 @@ const TrainItem = ({ train }) => {
                 <div className="end-time">{train.end_time}</div>
             </div>
             <div className="train-col duration">{train.duration}</div>
-            <div className="train-col">
-                <div className="seat-type">二等座: 有</div>
-                <div className="seat-type">一等座: 有</div>
+            <div className="train-col seat-list">
+                {train.tickets && train.tickets.length > 0 ? (
+                    train.tickets.map((ticket, index) => (
+                        <div key={index} className="seat-type">
+                            <span className="seat-name">{ticket.seat_type}</span>
+                            <span className="seat-price">¥{ticket.price}</span>
+                            <span className={`seat-count ${ticket.count === 0 ? 'no-ticket' : ''}`}>
+                                {ticket.count > 0 ? '有' : '无'}
+                            </span>
+                        </div>
+                    ))
+                ) : (
+                    <div className="seat-type">暂无余票信息</div>
+                )}
             </div>
             <div className="train-col">
                 <button className="btn-book" onClick={handleBook}>预订</button>

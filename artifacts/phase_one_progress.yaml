@@ -88,7 +88,12 @@
     ui_ids:
       - UI-TRAIN-FILTER-BAR
 - id: REQ-2-2-3
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-TRAIN-ITEM
+    api_ids:
+      - API-TICKETS-SEARCH
 - id: REQ-3
   status: unprocessed
 - id: REQ-3-1

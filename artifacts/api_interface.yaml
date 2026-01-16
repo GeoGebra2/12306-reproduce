@@ -45,3 +45,10 @@ API-STATIONS-LIST:
     - DB-STATIONS
   downstream_ids:
     - REQ-2-1
+API-TICKETS-SEARCH:
+  related_req_id: REQ-2-2-3
+  path: backend/src/routes/tickets.js
+  signature: GET /api/tickets?from={from}&to={to}&date={date}
+  upstream_ids: []
+  downstream_ids:
+    - UI-TRAIN-LIST-PAGE
