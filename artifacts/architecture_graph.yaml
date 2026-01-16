@@ -235,6 +235,10 @@ nodes:
     type: UI
     path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\components\BookingForm.jsx
     description: Booking Form with Destination Autocomplete and Hot Stations
+  UI-BOOKING-FORM-DATE:
+    type: UI
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\components\BookingForm.jsx
+    description: Booking Form with Date Selection
 edges:
   - from: ROOT
     to: REQ-1
@@ -455,3 +459,6 @@ edges:
   - from: UI-BOOKING-FORM-DESTINATION
     to: API-STATIONS-LIST
     relation: CALLS
+  - from: REQ-2-1-3
+    to: UI-BOOKING-FORM-DATE
+    relation: DEFINES

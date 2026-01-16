@@ -187,4 +187,25 @@ describe('Quick Search Panel (BookingForm)', () => {
     expect(await screen.findByText('北京南')).toBeInTheDocument();
     expect(await screen.findByText('上海虹桥')).toBeInTheDocument();
   });
+
+  it('allows selecting departure date (REQ-2-1-3)', () => {
+    // Mock axios
+    axios.get.mockResolvedValue({ data: [] });
+
+    render(
+      <BrowserRouter>
+        <BookingForm />
+      </BrowserRouter>
+    );
+
+    const dateInput = document.querySelector('input[type="date"]');
+    expect(dateInput).toBeInTheDocument();
+
+    // Check if min attribute is set to today (approximately)
+    const today = new Date().toISOString().split('T')[0];
+    expect(dateInput).toHaveAttribute('min', today); 
+
+    fireEvent.change(dateInput, { target: { value: '2025-12-25' } });
+    expect(dateInput.value).toBe('2025-12-25');
+  });
 });

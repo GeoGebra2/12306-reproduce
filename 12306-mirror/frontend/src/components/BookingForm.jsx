@@ -169,6 +169,7 @@ const BookingForm = () => {
               className="date-input" 
               value={searchParams.date}
               onChange={handleChange}
+              min={new Date().toISOString().split('T')[0]}
             />
           </div>
           <div className="form-row">
