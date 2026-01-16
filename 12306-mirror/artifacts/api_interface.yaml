@@ -22,3 +22,11 @@ API-USER-RESET-PASSWORD:
     - FUNC-USER-RESET-PASSWORD
   downstream_ids:
     - UI-FORGOT-PASSWORD-PAGE
+API-STATIONS-SEARCH:
+  related_req_id: REQ-2-1-1
+  path: backend/src/routes/stations.js
+  signature: GET /api/stations?q={query}
+  upstream_ids:
+    - DB-TABLE-STATIONS
+  downstream_ids:
+    - UI-BOOKING-FORM-DEPARTURE

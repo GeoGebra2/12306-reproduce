@@ -51,6 +51,8 @@
   artifacts:
     ui_ids:
       - UI-BOOKING-FORM-DEPARTURE
+    api_ids:
+      - API-STATIONS-SEARCH
 - id: REQ-2-1-2
   status: processed
   artifacts:
@@ -62,7 +64,7 @@
     ui_ids:
       - UI-BOOKING-FORM-DATE
 - id: REQ-2-2
-  status: unprocessed
+  status: processed
 - id: REQ-2-2-1
   status: unprocessed
 - id: REQ-2-2-2

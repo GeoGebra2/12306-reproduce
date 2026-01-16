@@ -48,10 +48,11 @@ UI-FORGOT-PASSWORD-PAGE:
 UI-BOOKING-FORM-DEPARTURE:
   related_req_id: REQ-2-1-1
   path: frontend/src/components/BookingForm.jsx
-  description: Booking Form with Departure Station Quick Input and Autocomplete
+  description: Booking form with departure station autocomplete and hot stations
   upstream_ids:
     - API-STATIONS-SEARCH
-  downstream_ids: []
+  downstream_ids:
+    - UI-ROOT
 UI-BOOKING-FORM-DESTINATION:
   related_req_id: REQ-2-1-2
   path: frontend/src/components/BookingForm.jsx
