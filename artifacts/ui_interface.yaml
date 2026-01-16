@@ -63,3 +63,10 @@ UI-TRAIN-FILTER-BAR:
   upstream_ids: []
   downstream_ids:
     - UI-TRAIN-LIST-PAGE
+UI-SEARCH-FILTER:
+  related_req_id: REQ-2-2-1
+  path: frontend/src/components/TrainList/SearchFilter.jsx
+  description: Search Filter Component for Train List (From, To, Date)
+  upstream_ids: []
+  downstream_ids:
+    - UI-TRAIN-LIST-PAGE

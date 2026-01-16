@@ -243,6 +243,10 @@ nodes:
     type: UI
     path: frontend/src/components/TrainList/TrainFilterBar.jsx
     description: Horizontal Filter Component for Train List (Type, Seat, Stations)
+  UI-SEARCH-FILTER:
+    type: UI
+    path: frontend/src/components/TrainList/SearchFilter.jsx
+    description: Search Filter Component for Train List (From, To, Date)
 edges:
   - from: ROOT
     to: REQ-1
@@ -470,5 +474,11 @@ edges:
     to: UI-TRAIN-FILTER-BAR
     relation: DEFINES
   - from: UI-TRAIN-FILTER-BAR
+    to: UI-TRAIN-LIST-PAGE
+    relation: CALLS
+  - from: REQ-2-2-1
+    to: UI-SEARCH-FILTER
+    relation: DEFINES
+  - from: UI-SEARCH-FILTER
     to: UI-TRAIN-LIST-PAGE
     relation: CALLS
