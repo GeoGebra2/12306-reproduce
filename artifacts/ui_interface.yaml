@@ -78,3 +78,27 @@ UI-TRAIN-ITEM:
   upstream_ids:
     - UI-TRAIN-LIST-PAGE
   downstream_ids: []
+UI-PROFILE-LAYOUT:
+  related_req_id: REQ-3
+  path: frontend/src/components/Profile/ProfileLayout.jsx
+  description: 个人中心布局组件，包含顶部导航和侧边栏
+  upstream_ids:
+    - UI-NAVBAR
+    - UI-HEADER
+  downstream_ids:
+    - UI-PROFILE-SIDEBAR
+UI-PROFILE-SIDEBAR:
+  related_req_id: REQ-3
+  path: frontend/src/components/Profile/Sidebar.jsx
+  description: 个人中心侧边栏导航组件
+  upstream_ids:
+    - UI-PROFILE-LAYOUT
+  downstream_ids: []
+UI-PROFILE-PAGE:
+  related_req_id: REQ-3
+  path: frontend/src/pages/ProfilePage.jsx
+  description: 个人中心主页面容器，管理子路由
+  upstream_ids:
+    - UI-APP
+  downstream_ids:
+    - UI-PROFILE-LAYOUT

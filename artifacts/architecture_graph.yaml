@@ -255,6 +255,18 @@ nodes:
     type: API
     path: backend/src/routes/tickets.js
     signature: GET /api/tickets?from={from}&to={to}&date={date}
+  UI-PROFILE-LAYOUT:
+    type: UI
+    path: frontend/src/components/Profile/ProfileLayout.jsx
+    description: 个人中心布局组件，包含顶部导航和侧边栏
+  UI-PROFILE-SIDEBAR:
+    type: UI
+    path: frontend/src/components/Profile/Sidebar.jsx
+    description: 个人中心侧边栏导航组件
+  UI-PROFILE-PAGE:
+    type: UI
+    path: frontend/src/pages/ProfilePage.jsx
+    description: 个人中心主页面容器，管理子路由
 edges:
   - from: ROOT
     to: REQ-1
@@ -504,4 +516,28 @@ edges:
     relation: DEFINES
   - from: API-TICKETS-SEARCH
     to: UI-TRAIN-LIST-PAGE
+    relation: CALLS
+  - from: REQ-3
+    to: UI-PROFILE-LAYOUT
+    relation: DEFINES
+  - from: UI-NAVBAR
+    to: UI-PROFILE-LAYOUT
+    relation: CALLS
+  - from: UI-HEADER
+    to: UI-PROFILE-LAYOUT
+    relation: CALLS
+  - from: UI-PROFILE-LAYOUT
+    to: UI-PROFILE-SIDEBAR
+    relation: CALLS
+  - from: REQ-3
+    to: UI-PROFILE-SIDEBAR
+    relation: DEFINES
+  - from: REQ-3
+    to: UI-PROFILE-PAGE
+    relation: DEFINES
+  - from: UI-APP
+    to: UI-PROFILE-PAGE
+    relation: CALLS
+  - from: UI-PROFILE-PAGE
+    to: UI-PROFILE-LAYOUT
     relation: CALLS

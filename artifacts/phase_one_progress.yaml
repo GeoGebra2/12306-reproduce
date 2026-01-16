@@ -95,7 +95,12 @@
     api_ids:
       - API-TICKETS-SEARCH
 - id: REQ-3
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-PROFILE-LAYOUT
+      - UI-PROFILE-SIDEBAR
+      - UI-PROFILE-PAGE
 - id: REQ-3-1
   status: unprocessed
 - id: REQ-3-2
