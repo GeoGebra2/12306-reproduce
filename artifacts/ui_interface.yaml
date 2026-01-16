@@ -1,0 +1,6 @@
+HOME_PAGE:
+  related_req_id: ROOT
+  path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\HomePage.jsx
+  description: 首页容器，包含导航、轮播、搜索等子模块
+  upstream_ids: []
+  downstream_ids: []

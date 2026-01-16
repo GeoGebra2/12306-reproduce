@@ -1,0 +1,59 @@
+/* HeaderBrandSearch */
+.header-brand-search { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: #fff; }
+.brand-container { display: flex; align-items: center; }
+.logo { width: 40px; height: 40px; margin-right: 10px; }
+.brand-title { font-size: 22px; font-weight: bold; color: #333; }
+.brand-subtitle { font-size: 12px; color: #999; }
+.search-container { display: flex; border: 1px solid #ddd; }
+.search-input { border: none; padding: 5px; outline: none; width: 300px; }
+.search-btn { background: #fff; border: none; cursor: pointer; }
+.header-links a { margin: 0 5px; color: #666; text-decoration: none; font-size: 12px; }
+.header-links a:hover { color: #1890ff; }
+.login-link { color: #0066cc; border: 1px solid #0066cc; padding: 2px 5px; border-radius: 4px; text-decoration: none; font-size: 12px; margin-left: 5px; }
+.register-link { color: #666; border: 1px solid #ddd; padding: 2px 5px; border-radius: 4px; text-decoration: none; font-size: 12px; margin-left: 5px; }
+
+/* Navbar */
+.navbar { background: #3399FF; height: 40px; }
+.nav-list { display: flex; list-style: none; padding: 0; margin: 0; justify-content: center; height: 100%; }
+.nav-item { display: flex; align-items: center; padding: 0 20px; }
+.nav-item a { color: #fff; text-decoration: none; font-size: 14px; }
+.nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.2); }
+
+/* Main Visual */
+.main-visual { position: relative; width: 100%; height: 450px; overflow: hidden; }
+
+/* Carousel */
+.carousel { width: 100%; height: 100%; }
+.carousel-img { width: 100%; height: 100%; object-fit: cover; }
+
+/* BookingForm */
+.booking-form-container { position: absolute; top: 30px; left: 100px; width: 510px; height: 350px; display: flex; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; }
+.booking-sidebar { width: 60px; background: #2a76ff; display: flex; flex-direction: column; }
+.sidebar-item { color: #fff; padding: 10px 5px; text-align: center; cursor: pointer; font-size: 14px; font-weight: bold; }
+.sidebar-item.active { background: rgba(255,255,255,0.2); }
+.booking-panel { flex: 1; background: #fff; padding: 20px; }
+.ticket-types { display: flex; gap: 10px; margin-bottom: 20px; }
+.ticket-types .type { cursor: pointer; font-size: 14px; }
+.ticket-types .type.active { color: #2a76ff; font-weight: bold; border-bottom: 2px solid #2a76ff; }
+.form-fields { display: flex; flex-direction: column; gap: 15px; }
+.form-row { display: flex; gap: 10px; align-items: center; }
+.station-input { flex: 1; height: 32px; padding: 5px; border: 1px solid #ccc; }
+.swap-btn { width: 30px; height: 30px; border-radius: 50%; background: #0066cc; color: #fff; border: none; cursor: pointer; }
+.date-input { width: 100%; height: 30px; padding: 5px; border: 1px solid #ccc; }
+.query-btn { width: 100%; height: 40px; background: linear-gradient(to right, #f79414, #ff8c00); color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+
+/* HeroServices */
+.hero-services { display: flex; justify-content: center; gap: 20px; padding: 20px; background: #f8f8f8; }
+.service-btn { padding: 10px 20px; background: #fff; border: 1px solid #3399FF; color: #333; border-radius: 4px; cursor: pointer; }
+
+/* PromoGrid */
+.promo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+.promo-item img { width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+/* NoticeTab */
+.notice-tab { max-width: 1200px; margin: 20px auto; padding: 20px; border: 1px solid #eee; background: #fff; }
+.tab-header { display: flex; gap: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+.tab-item { cursor: pointer; font-size: 14px; }
+.tab-item.active { color: #3399FF; font-weight: bold; }
+.notice-list { list-style: none; padding: 0; }
+.notice-list li { display: flex; justify-content: space-between; padding: 5px 0; font-size: 14px; color: #666; }
