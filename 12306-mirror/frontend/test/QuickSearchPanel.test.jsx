@@ -31,6 +31,9 @@ describe('Quick Search Panel (BookingForm)', () => {
   });
 
   it('allows entering search criteria', () => {
+    // Mock axios to avoid unhandled rejection in fetchSuggestions
+    axios.get.mockResolvedValue({ data: [] });
+
     render(
       <BrowserRouter>
         <BookingForm />
@@ -51,6 +54,9 @@ describe('Quick Search Panel (BookingForm)', () => {
   });
 
   it('swaps stations when swap button is clicked', () => {
+    // Mock axios
+    axios.get.mockResolvedValue({ data: [] });
+
     render(
       <BrowserRouter>
         <BookingForm />
@@ -119,6 +125,58 @@ describe('Quick Search Panel (BookingForm)', () => {
 
     const fromInput = screen.getByPlaceholderText(/出发地/i);
     fireEvent.focus(fromInput);
+
+    // Wait for API call (empty query)
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith('/api/stations', { params: { q: '' } });
+    });
+
+    // Check if hot stations are displayed
+    expect(await screen.findByText('北京南')).toBeInTheDocument();
+    expect(await screen.findByText('上海虹桥')).toBeInTheDocument();
+  });
+
+  it('shows autocomplete for destination input', async () => {
+    const mockStations = [
+      { id: 2, name: '上海虹桥', code: 'AOH' },
+      { id: 3, name: '上海', code: 'SHH' }
+    ];
+    axios.get.mockResolvedValue({ data: mockStations });
+
+    render(
+      <BrowserRouter>
+        <BookingForm />
+      </BrowserRouter>
+    );
+
+    const toInput = screen.getByPlaceholderText(/目的地/i);
+    fireEvent.change(toInput, { target: { value: 'Shang' } });
+
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith('/api/stations', { params: { q: 'Shang' } });
+    });
+
+    expect(await screen.findByText('上海虹桥')).toBeInTheDocument();
+    
+    fireEvent.click(screen.getByText('上海虹桥'));
+    expect(toInput.value).toBe('上海虹桥');
+  });
+
+  it('shows hot stations (all stations) when destination input is focused', async () => {
+    const mockStations = [
+      { id: 1, name: '北京南', code: 'VNP' },
+      { id: 2, name: '上海虹桥', code: 'AOH' }
+    ];
+    axios.get.mockResolvedValue({ data: mockStations });
+
+    render(
+      <BrowserRouter>
+        <BookingForm />
+      </BrowserRouter>
+    );
+
+    const toInput = screen.getByPlaceholderText(/目的地/i);
+    fireEvent.focus(toInput);
 
     // Wait for API call (empty query)
     await waitFor(() => {

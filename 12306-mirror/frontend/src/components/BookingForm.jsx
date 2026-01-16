@@ -85,6 +85,33 @@ const BookingForm = () => {
     // navigate('/tickets', { state: searchParams });
   };
 
+  const SuggestionsList = ({ suggestions, onSelect }) => (
+    <ul className="suggestions-list" style={{
+        position: 'absolute',
+        top: '100%',
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        backgroundColor: 'white',
+        border: '1px solid #ccc',
+        listStyle: 'none',
+        padding: 0,
+        margin: 0,
+        maxHeight: '200px',
+        overflowY: 'auto'
+    }}>
+        {suggestions.map(station => (
+        <li 
+            key={station.id || station.code} 
+            onClick={() => onSelect(station.name)}
+            style={{ padding: '8px', cursor: 'pointer', borderBottom: '1px solid #eee' }}
+        >
+            {station.name}
+        </li>
+        ))}
+    </ul>
+  );
+
   return (
     <div className="booking-form-container" data-testid="booking-form">
       <div className="booking-sidebar">
@@ -113,30 +140,7 @@ const BookingForm = () => {
                 autoComplete="off"
                 />
                 {activeField === 'fromStation' && suggestions.length > 0 && (
-                <ul className="suggestions-list" style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    zIndex: 10,
-                    backgroundColor: 'white',
-                    border: '1px solid #ccc',
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    maxHeight: '200px',
-                    overflowY: 'auto'
-                }}>
-                    {suggestions.map(station => (
-                    <li 
-                        key={station.id || station.code} 
-                        onClick={() => handleSelectStation(station.name)}
-                        style={{ padding: '8px', cursor: 'pointer', borderBottom: '1px solid #eee' }}
-                    >
-                        {station.name}
-                    </li>
-                    ))}
-                </ul>
+                  <SuggestionsList suggestions={suggestions} onSelect={handleSelectStation} />
                 )}
             </div>
             
@@ -154,30 +158,7 @@ const BookingForm = () => {
                 autoComplete="off"
                 />
                  {activeField === 'toStation' && suggestions.length > 0 && (
-                <ul className="suggestions-list" style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    zIndex: 10,
-                    backgroundColor: 'white',
-                    border: '1px solid #ccc',
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    maxHeight: '200px',
-                    overflowY: 'auto'
-                }}>
-                    {suggestions.map(station => (
-                    <li 
-                        key={station.id || station.code} 
-                        onClick={() => handleSelectStation(station.name)}
-                        style={{ padding: '8px', cursor: 'pointer', borderBottom: '1px solid #eee' }}
-                    >
-                        {station.name}
-                    </li>
-                    ))}
-                </ul>
+                  <SuggestionsList suggestions={suggestions} onSelect={handleSelectStation} />
                 )}
             </div>
           </div>
