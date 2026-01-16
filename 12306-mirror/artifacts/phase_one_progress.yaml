@@ -71,7 +71,7 @@
     ui_ids:
       - UI-SEARCH-FILTER
 - id: REQ-2-2-2
-  status: unprocessed
+  status: processed
 - id: REQ-2-2-3
   status: unprocessed
 - id: REQ-3

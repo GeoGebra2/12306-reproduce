@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import SearchFilter from '../components/TrainList/SearchFilter';
+import TrainFilterBar from '../components/TrainList/TrainFilterBar';
 import TrainItem from '../components/TrainList/TrainItem';
 import '../components/TrainList/TrainList.css';
 
 const TrainListPage = () => {
     const [searchParams] = useSearchParams();
     const [trains, setTrains] = useState([]);
+    const [filteredTrains, setFilteredTrains] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const from = searchParams.get('from');
@@ -26,6 +28,7 @@ const TrainListPage = () => {
                     params: { from, to, date }
                 });
                 setTrains(res.data);
+                setFilteredTrains(res.data); // Initial set
             } catch (error) {
                 console.error("Failed to fetch trains", error);
             } finally {
@@ -36,10 +39,19 @@ const TrainListPage = () => {
         fetchTrains();
     }, [from, to, date]);
 
+    const handleFilterChange = (filtered) => {
+        setFilteredTrains(filtered);
+    };
+
     return (
         <div className="train-list-page">
             <SearchFilter from={from} to={to} date={date} />
             
+            {/* Show FilterBar only if we have results or if we want to show it always (but usually requires data for dynamic filters) */}
+            {trains.length > 0 && (
+                <TrainFilterBar trains={trains} onFilterChange={handleFilterChange} />
+            )}
+
             <div className="train-list-header">
                 <div className="train-col">车次</div>
                 <div className="train-col">出发/到达车站</div>
@@ -52,8 +64,8 @@ const TrainListPage = () => {
             <div className="train-list-body">
                 {loading ? (
                     <div>Loading...</div>
-                ) : trains.length > 0 ? (
-                    trains.map(train => <TrainItem key={train.id} train={train} />)
+                ) : filteredTrains.length > 0 ? (
+                    filteredTrains.map(train => <TrainItem key={train.id} train={train} />)
                 ) : (
                     <div style={{textAlign: 'center', padding: '20px'}}>
                         {(!from || !to) ? '请选择出发地和目的地' : '没有找到符合条件的车次'}

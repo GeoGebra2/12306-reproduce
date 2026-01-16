@@ -56,3 +56,10 @@ UI-BOOKING-FORM-DATE:
   description: Booking Form with Date Selection
   upstream_ids: []
   downstream_ids: []
+UI-TRAIN-FILTER-BAR:
+  related_req_id: REQ-2-2-2
+  path: frontend/src/components/TrainList/TrainFilterBar.jsx
+  description: Horizontal Filter Component for Train List (Type, Seat, Stations)
+  upstream_ids: []
+  downstream_ids:
+    - UI-TRAIN-LIST-PAGE

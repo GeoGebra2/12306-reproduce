@@ -239,6 +239,10 @@ nodes:
     type: UI
     path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\components\BookingForm.jsx
     description: Booking Form with Date Selection
+  UI-TRAIN-FILTER-BAR:
+    type: UI
+    path: frontend/src/components/TrainList/TrainFilterBar.jsx
+    description: Horizontal Filter Component for Train List (Type, Seat, Stations)
 edges:
   - from: ROOT
     to: REQ-1
@@ -462,3 +466,9 @@ edges:
   - from: REQ-2-1-3
     to: UI-BOOKING-FORM-DATE
     relation: DEFINES
+  - from: REQ-2-2-2
+    to: UI-TRAIN-FILTER-BAR
+    relation: DEFINES
+  - from: UI-TRAIN-FILTER-BAR
+    to: UI-TRAIN-LIST-PAGE
+    relation: CALLS

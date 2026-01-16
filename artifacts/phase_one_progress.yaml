@@ -76,11 +76,14 @@
     ui_ids:
       - UI-BOOKING-FORM-DATE
 - id: REQ-2-2
-  status: unprocessed
+  status: processed
 - id: REQ-2-2-1
   status: unprocessed
 - id: REQ-2-2-2
   status: unprocessed
+  artifacts:
+    ui_ids:
+      - UI-TRAIN-FILTER-BAR
 - id: REQ-2-2-3
   status: unprocessed
 - id: REQ-3
