@@ -6,11 +6,13 @@ const port = 3000;
 
  
 const userRoutes = require('./routes/users');
+const stationRoutes = require('./routes/stations');
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/api/users', userRoutes);
+app.use('/api/stations', stationRoutes);
 
  
 require('./database/init_db');

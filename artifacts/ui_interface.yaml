@@ -29,3 +29,10 @@ FORGOT_PASSWORD_PAGE:
     - API_USER_CHECK
     - API_USER_VERIFY_CODE
     - API_USER_RESET_PASSWORD
+UI-BOOKING-FORM:
+  related_req_id: REQ-2-1
+  path: frontend/src/components/BookingForm.jsx
+  description: Homepage booking form with station autocomplete and swap functionality
+  upstream_ids:
+    - API-STATIONS-LIST
+  downstream_ids: []

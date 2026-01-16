@@ -219,6 +219,14 @@ nodes:
       - stations
       - trains
       - train_station_mapping
+  API-STATIONS-LIST:
+    type: API
+    path: /api/stations
+    signature: GET /api/stations?q={query}
+  UI-BOOKING-FORM:
+    type: UI
+    path: frontend/src/components/BookingForm.jsx
+    description: Homepage booking form with station autocomplete and swap functionality
 edges:
   - from: ROOT
     to: REQ-1
@@ -412,3 +420,18 @@ edges:
   - from: REQ-2
     to: INIT_DB_TICKETS
     relation: DEFINES
+  - from: REQ-2-1-1
+    to: API-STATIONS-LIST
+    relation: DEFINES
+  - from: DB-STATIONS
+    to: API-STATIONS-LIST
+    relation: CALLS
+  - from: API-STATIONS-LIST
+    to: REQ-2-1
+    relation: CALLS
+  - from: REQ-2-1
+    to: UI-BOOKING-FORM
+    relation: DEFINES
+  - from: API-STATIONS-LIST
+    to: UI-BOOKING-FORM
+    relation: CALLS

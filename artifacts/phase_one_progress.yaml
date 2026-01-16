@@ -54,9 +54,15 @@
     func_ids:
       - INIT_DB_TICKETS
 - id: REQ-2-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-BOOKING-FORM
 - id: REQ-2-1-1
   status: unprocessed
+  artifacts:
+    api_ids:
+      - API-STATIONS-LIST
 - id: REQ-2-1-2
   status: unprocessed
 - id: REQ-2-1-3
