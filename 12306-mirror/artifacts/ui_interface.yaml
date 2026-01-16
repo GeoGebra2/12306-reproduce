@@ -52,3 +52,10 @@ UI-BOOKING-FORM-DEPARTURE:
   upstream_ids:
     - API-STATIONS-SEARCH
   downstream_ids: []
+UI-BOOKING-FORM-DESTINATION:
+  related_req_id: REQ-2-1-2
+  path: frontend/src/components/BookingForm.jsx
+  description: Booking Form with Destination Station Quick Input and Autocomplete
+  upstream_ids:
+    - API-STATIONS-SEARCH
+  downstream_ids: []

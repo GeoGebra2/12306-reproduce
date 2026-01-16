@@ -208,6 +208,10 @@ nodes:
     type: UI
     path: frontend/src/components/BookingForm.jsx
     description: Booking Form with Departure Station Quick Input and Autocomplete
+  UI-BOOKING-FORM-DESTINATION:
+    type: UI
+    path: frontend/src/components/BookingForm.jsx
+    description: Booking Form with Destination Station Quick Input and Autocomplete
 edges:
   - from: ROOT
     to: REQ-1
@@ -406,4 +410,10 @@ edges:
     relation: DEFINES
   - from: API-STATIONS-SEARCH
     to: UI-BOOKING-FORM-DEPARTURE
+    relation: CALLS
+  - from: REQ-2-1-2
+    to: UI-BOOKING-FORM-DESTINATION
+    relation: DEFINES
+  - from: API-STATIONS-SEARCH
+    to: UI-BOOKING-FORM-DESTINATION
     relation: CALLS
