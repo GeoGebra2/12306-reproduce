@@ -1,0 +1,72 @@
+.train-list-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.train-list-header {
+    display: flex;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    color: #666;
+}
+
+.train-item {
+    display: flex;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.train-col {
+    flex: 1;
+    text-align: center;
+}
+
+.train-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.time-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.start-time, .end-time {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.stations-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.duration {
+    color: #999;
+}
+
+.btn-book {
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-book:hover {
+    background-color: #005a9e;
+}
+
+.search-filter {
+    background: #eef1f6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #298cce;
+}

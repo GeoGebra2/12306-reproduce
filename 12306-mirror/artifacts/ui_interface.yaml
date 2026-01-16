@@ -1,0 +1,13 @@
+UI-ROOT:
+  related_req_id: ROOT
+  path: frontend/src/App.jsx
+  description: Root Application Component
+  upstream_ids: []
+  downstream_ids: []
+UI-HOME:
+  related_req_id: ROOT
+  path: frontend/src/pages/HomePage.jsx
+  description: Home Page Component
+  upstream_ids: []
+  downstream_ids:
+    - UI-ROOT

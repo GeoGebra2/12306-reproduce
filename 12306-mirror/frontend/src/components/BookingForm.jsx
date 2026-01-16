@@ -80,9 +80,9 @@ const BookingForm = () => {
 
   const handleSearch = () => {
     // Navigate to results page with params
-    // For now just log or do nothing as results page not implemented
-    console.log('Search:', searchParams);
-    // navigate('/tickets', { state: searchParams });
+    // REQ-2-2: Navigate to Train List
+    const { fromStation, toStation, date } = searchParams;
+    navigate(`/search?from=${encodeURIComponent(fromStation)}&to=${encodeURIComponent(toStation)}&date=${date}`);
   };
 
   const SuggestionsList = ({ suggestions, onSelect }) => (
