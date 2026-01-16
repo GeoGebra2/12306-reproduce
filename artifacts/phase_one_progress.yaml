@@ -83,7 +83,7 @@
     ui_ids:
       - UI-SEARCH-FILTER
 - id: REQ-2-2-2
-  status: unprocessed
+  status: processed
   artifacts:
     ui_ids:
       - UI-TRAIN-FILTER-BAR

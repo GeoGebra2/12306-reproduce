@@ -5,6 +5,7 @@ const TrainFilterBar = ({ trains, onFilterChange }) => {
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedDepStations, setSelectedDepStations] = useState([]);
     const [selectedArrStations, setSelectedArrStations] = useState([]);
+    const [selectedSeatTypes, setSelectedSeatTypes] = useState([]);
 
     // Derived unique stations from current trains list
     const depStations = useMemo(() => {
@@ -24,6 +25,10 @@ const TrainFilterBar = ({ trains, onFilterChange }) => {
         { label: 'T-特快', value: ['T'] },
         { label: 'K-快速', value: ['K'] },
         { label: 'QT-其他', value: ['OTHER'] } // Matches digits or others
+    ];
+
+    const seatTypes = [
+        '商务座', '一等座', '二等座', '软卧', '硬卧', '硬座', '无座'
     ];
 
     const toggleSelection = (list, setList, value) => {
@@ -71,8 +76,15 @@ const TrainFilterBar = ({ trains, onFilterChange }) => {
             filtered = filtered.filter(train => selectedArrStations.includes(train.to_station_name));
         }
 
+        // Filter by Seat Type
+        if (selectedSeatTypes.length > 0) {
+            filtered = filtered.filter(train => 
+                train.tickets && train.tickets.some(ticket => selectedSeatTypes.includes(ticket.seat_type))
+            );
+        }
+
         onFilterChange(filtered);
-    }, [selectedTypes, selectedDepStations, selectedArrStations, trains, onFilterChange]);
+    }, [selectedTypes, selectedDepStations, selectedArrStations, selectedSeatTypes, trains, onFilterChange]);
 
     return (
         <div className="train-filter-bar">
@@ -125,6 +137,24 @@ const TrainFilterBar = ({ trains, onFilterChange }) => {
                                 onChange={() => toggleSelection(selectedArrStations, setSelectedArrStations, station)}
                             />
                             {station}
+                        </label>
+                    ))}
+                </div>
+            </div>
+
+            {/* Seat Type Filter */}
+            <div className="filter-row">
+                <span className="filter-label">座席类型：</span>
+                <div className="filter-options">
+                    {seatTypes.map((type) => (
+                        <label key={type} className="checkbox-label">
+                            <input
+                                type="checkbox"
+                                value={type}
+                                checked={selectedSeatTypes.includes(type)}
+                                onChange={() => toggleSelection(selectedSeatTypes, setSelectedSeatTypes, type)}
+                            />
+                            {type}
                         </label>
                     ))}
                 </div>

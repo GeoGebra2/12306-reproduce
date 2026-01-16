@@ -242,7 +242,7 @@ nodes:
   UI-TRAIN-FILTER-BAR:
     type: UI
     path: frontend/src/components/TrainList/TrainFilterBar.jsx
-    description: Horizontal Filter Component for Train List (Type, Seat, Stations)
+    description: Horizontal Filter Bar for Train List (Type, Station, Seat Type)
   UI-SEARCH-FILTER:
     type: UI
     path: frontend/src/components/TrainList/SearchFilter.jsx
@@ -481,4 +481,7 @@ edges:
     relation: DEFINES
   - from: UI-SEARCH-FILTER
     to: UI-TRAIN-LIST-PAGE
+    relation: CALLS
+  - from: API-TICKETS-SEARCH
+    to: UI-TRAIN-FILTER-BAR
     relation: CALLS

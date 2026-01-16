@@ -59,8 +59,9 @@ UI-BOOKING-FORM-DATE:
 UI-TRAIN-FILTER-BAR:
   related_req_id: REQ-2-2-2
   path: frontend/src/components/TrainList/TrainFilterBar.jsx
-  description: Horizontal Filter Component for Train List (Type, Seat, Stations)
-  upstream_ids: []
+  description: Horizontal Filter Bar for Train List (Type, Station, Seat Type)
+  upstream_ids:
+    - API-TICKETS-SEARCH
   downstream_ids:
     - UI-TRAIN-LIST-PAGE
 UI-SEARCH-FILTER:

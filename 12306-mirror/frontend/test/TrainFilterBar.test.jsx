@@ -10,7 +10,7 @@ describe('TrainFilterBar Component', () => {
             train_number: 'G101', 
             from_station_name: 'Beijing Nan', 
             to_station_name: 'Shanghai Hongqiao',
-            tickets: [{ seat_type: '二等座' }, { seat_type: '一等座' }]
+            tickets: [{ seat_type: '二等座' }, { seat_type: '一等座' }, { seat_type: '商务座' }]
         },
         { 
             id: 2, 
@@ -33,6 +33,23 @@ describe('TrainFilterBar Component', () => {
         expect(screen.getByLabelText(/GC-高铁\/城际/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/D-动车/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Z-直达/i)).toBeInTheDocument();
+    });
+
+    it('filters trains by seat type correctly', () => {
+        const handleFilterChange = vi.fn();
+        render(<TrainFilterBar trains={mockTrains} onFilterChange={handleFilterChange} />);
+
+        // Select "商务座" (Business Class) - Should match G trains
+        const businessCheckbox = screen.getByLabelText(/商务座/i);
+        fireEvent.click(businessCheckbox);
+
+        const lastCallArgs = handleFilterChange.mock.calls[handleFilterChange.mock.calls.length - 1];
+        const filteredTrains = lastCallArgs[0];
+        
+        // G101 should be present (High Speed has Business Class)
+        // K555 should NOT be present
+        expect(filteredTrains.some(t => t.train_number === 'G101')).toBe(true);
+        expect(filteredTrains.some(t => t.train_number === 'K555')).toBe(false);
     });
 
     it('renders dynamic station filters based on trains', () => {
