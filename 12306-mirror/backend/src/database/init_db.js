@@ -22,6 +22,7 @@ function initTables() {
       id_card TEXT,
       real_name TEXT,
       phone TEXT,
+      email TEXT,
       type TEXT
     )`);
 

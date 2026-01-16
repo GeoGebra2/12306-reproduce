@@ -78,6 +78,13 @@
   status: unprocessed
 - id: REQ-3-1
   status: unprocessed
+  artifacts:
+    ui_ids:
+      - UI-PROFILE-INFO
+    api_ids:
+      - API-USER-PROFILE
+    func_ids:
+      - FUNC-GET-USER-PROFILE
 - id: REQ-3-2
   status: unprocessed
 - id: REQ-3-2-1

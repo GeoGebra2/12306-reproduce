@@ -14,8 +14,8 @@ exports.register = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const sql = `INSERT INTO users (username, password, id_type, id_card, real_name, phone, type) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const params = [username, hashedPassword, id_type, id_card, real_name, phone, user_type || 'ADULT'];
+    const sql = `INSERT INTO users (username, password, id_type, id_card, real_name, phone, email, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    const params = [username, hashedPassword, id_type, id_card, real_name, phone, email, user_type || 'ADULT'];
 
     db.run(sql, params, function(err) {
       if (err) {
@@ -98,14 +98,29 @@ exports.resetPassword = async (req, res) => {
   const { account, newPassword } = req.body;
   if (!account || !newPassword) return res.status(400).json({ success: false, message: 'Missing fields' });
   
-  try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    const sql = `UPDATE users SET password = ? WHERE username = ? OR phone = ?`;
-    db.run(sql, [hashedPassword, account, account], function(err) {
-      if (err) return res.status(500).json({ success: false, message: err.message });
-      res.json({ success: true, message: 'Password updated' });
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const sql = `UPDATE users SET password = ? WHERE username = ? OR phone = ?`;
+  
+  db.run(sql, [hashedPassword, account, account], function(err) {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    if (this.changes === 0) return res.status(404).json({ success: false, message: 'User not found' });
+    
+    res.json({ success: true, message: 'Password reset successfully' });
+  });
 };
+
+exports.getUserProfile = (req, res) => {
+  const userId = req.headers['x-user-id'];
+  if (!userId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const sql = `SELECT id, username, real_name, phone, email, type FROM users WHERE id = ?`;
+  db.get(sql, [userId], (err, user) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    
+    res.json({ success: true, user });
+  });
+};
+

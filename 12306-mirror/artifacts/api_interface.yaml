@@ -30,3 +30,11 @@ API-STATIONS-SEARCH:
     - DB-TABLE-STATIONS
   downstream_ids:
     - UI-BOOKING-FORM-DEPARTURE
+API-USER-PROFILE:
+  related_req_id: REQ-3-1
+  path: backend/src/routes/users.js
+  signature: GET /api/users/profile
+  upstream_ids:
+    - FUNC-GET-USER-PROFILE
+  downstream_ids:
+    - UI-PROFILE-INFO

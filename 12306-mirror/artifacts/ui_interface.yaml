@@ -74,3 +74,10 @@ UI-SEARCH-FILTER:
     - API-STATIONS-SEARCH
   downstream_ids:
     - UI-TRAIN-LIST-PAGE
+UI-PROFILE-INFO:
+  related_req_id: REQ-3-1
+  path: frontend/src/components/Profile/ProfileInfo.jsx
+  description: Profile Info Component displaying user details
+  upstream_ids:
+    - UI-PROFILE-PAGE
+  downstream_ids: []

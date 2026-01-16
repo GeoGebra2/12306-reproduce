@@ -224,6 +224,20 @@ nodes:
     type: UI
     path: frontend/src/components/TrainList/SearchFilter.jsx
     description: Search Filter Component on Train List Page (From/To/Date inputs with autocomplete)
+  UI-PROFILE-INFO:
+    type: UI
+    path: frontend/src/components/Profile/ProfileInfo.jsx
+    description: Profile Info Component displaying user details
+  API-USER-PROFILE:
+    type: API
+    path: backend/src/routes/users.js
+    signature: GET /api/users/profile
+  FUNC-GET-USER-PROFILE:
+    type: FUNC
+    path: backend/src/controllers/userController.js
+    signature: exports.getUserProfile
+    db_tables:
+      - users
 edges:
   - from: ROOT
     to: REQ-1
@@ -450,3 +464,21 @@ edges:
   - from: UI-SEARCH-FILTER
     to: UI-TRAIN-LIST-PAGE
     relation: CALLS
+  - from: REQ-3-1
+    to: UI-PROFILE-INFO
+    relation: DEFINES
+  - from: UI-PROFILE-PAGE
+    to: UI-PROFILE-INFO
+    relation: CALLS
+  - from: REQ-3-1
+    to: API-USER-PROFILE
+    relation: DEFINES
+  - from: FUNC-GET-USER-PROFILE
+    to: API-USER-PROFILE
+    relation: CALLS
+  - from: API-USER-PROFILE
+    to: UI-PROFILE-INFO
+    relation: CALLS
+  - from: REQ-3-1
+    to: FUNC-GET-USER-PROFILE
+    relation: DEFINES

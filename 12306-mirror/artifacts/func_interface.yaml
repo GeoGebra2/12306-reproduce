@@ -36,3 +36,10 @@ FUNC-USER-RESET-PASSWORD:
     - DB-USERS-TABLE
   db_tables:
     - users
+FUNC-GET-USER-PROFILE:
+  related_req_id: REQ-3-1
+  path: backend/src/controllers/userController.js
+  signature: exports.getUserProfile
+  upstream_ids: []
+  db_tables:
+    - users
