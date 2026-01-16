@@ -1,13 +1,33 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-const dbPath = path.resolve(process.cwd(), 'database.db');
+const dbPath = path.resolve(__dirname, '../../database.db');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database', err.message);
   } else {
     console.log('Connected to the SQLite database.');
+    initTables();
   }
 });
+
+function initTables() {
+  db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    password TEXT,
+    id_type TEXT,
+    id_card TEXT,
+    real_name TEXT,
+    phone TEXT,
+    type TEXT
+  )`, (err) => {
+    if (err) {
+        console.error("Error creating users table:", err);
+    } else {
+        console.log("Users table ready.");
+    }
+  });
+}
 
 module.exports = db;

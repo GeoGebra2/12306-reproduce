@@ -4,7 +4,13 @@
     ui_ids:
       - HOME_PAGE
 - id: REQ-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - LOGIN_PAGE
+      - REGISTER_PAGE
+    func_ids:
+      - INIT_DB_USERS
 - id: REQ-1-1
   status: unprocessed
 - id: REQ-1-2

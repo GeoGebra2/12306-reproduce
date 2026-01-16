@@ -143,6 +143,20 @@ nodes:
     type: UI
     path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\HomePage.jsx
     description: 首页容器，包含导航、轮播、搜索等子模块
+  LOGIN_PAGE:
+    type: UI
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\LoginPage.jsx
+    description: 用户登录页面容器
+  REGISTER_PAGE:
+    type: UI
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\frontend\src\pages\RegisterPage.jsx
+    description: 用户注册页面容器
+  INIT_DB_USERS:
+    type: FUNC
+    path: D:\软件工程与项目管理\tdd-framework\12306-mirror\backend\src\database\init_db.js
+    signature: initTables()
+    db_tables:
+      - users
 edges:
   - from: ROOT
     to: REQ-1
@@ -248,4 +262,19 @@ edges:
     relation: HAS_CHILD
   - from: ROOT
     to: HOME_PAGE
+    relation: DEFINES
+  - from: REQ-1
+    to: LOGIN_PAGE
+    relation: DEFINES
+  - from: HOME_PAGE
+    to: LOGIN_PAGE
+    relation: CALLS
+  - from: REQ-1
+    to: REGISTER_PAGE
+    relation: DEFINES
+  - from: HOME_PAGE
+    to: REGISTER_PAGE
+    relation: CALLS
+  - from: REQ-1
+    to: INIT_DB_USERS
     relation: DEFINES
