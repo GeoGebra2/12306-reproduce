@@ -12,21 +12,107 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 function initTables() {
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT,
-    id_type TEXT,
-    id_card TEXT,
-    real_name TEXT,
-    phone TEXT,
-    type TEXT
-  )`, (err) => {
-    if (err) {
-        console.error("Error creating users table:", err);
-    } else {
-        console.log("Users table ready.");
+  db.serialize(() => {
+    // Users table
+    db.run(`CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE,
+      password TEXT,
+      id_type TEXT,
+      id_card TEXT,
+      real_name TEXT,
+      phone TEXT,
+      type TEXT
+    )`);
+
+    // Stations table
+    db.run(`CREATE TABLE IF NOT EXISTS stations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT UNIQUE,
+      code TEXT UNIQUE,
+      city_name TEXT,
+      pinyin TEXT
+    )`);
+
+    // Trains table
+    db.run(`CREATE TABLE IF NOT EXISTS trains (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      train_number TEXT UNIQUE,
+      start_station TEXT,
+      end_station TEXT,
+      start_time TEXT,
+      end_time TEXT,
+      duration TEXT
+    )`);
+
+    // Train Station Mapping (Stopovers)
+    db.run(`CREATE TABLE IF NOT EXISTS train_station_mapping (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      train_id INTEGER,
+      station_name TEXT,
+      arrival_time TEXT,
+      departure_time TEXT,
+      stop_order INTEGER,
+      FOREIGN KEY(train_id) REFERENCES trains(id)
+    )`);
+    
+    seedData();
+  });
+}
+
+function seedData() {
+  // Seed Stations
+  const stations = [
+    { name: '北京南', code: 'VNP', city: '北京' },
+    { name: '北京', code: 'BJP', city: '北京' },
+    { name: '北京北', code: 'VAP', city: '北京' },
+    { name: '上海南', code: 'SNH', city: '上海' },
+    { name: '上海', code: 'SHH', city: '上海' },
+    { name: '上海虹桥', code: 'AOH', city: '上海' },
+    { name: '南京南', code: 'NKH', city: '南京' },
+    { name: '南京东', code: 'NDH', city: '南京' }
+  ];
+  
+  const stmt = db.prepare("INSERT OR IGNORE INTO stations (name, code, city_name) VALUES (?, ?, ?)");
+  stations.forEach(s => {
+    stmt.run(s.name, s.code, s.city);
+  });
+  stmt.finalize();
+
+  // Seed Trains
+  // We need 42 trains total.
+  // Beijing -> Shanghai (7)
+  // Shanghai -> Beijing (7)
+  // Beijing -> Nanjing (7)
+  // Nanjing -> Beijing (7)
+  // Shanghai -> Nanjing (7)
+  // Nanjing -> Shanghai (7)
+  
+  const routes = [
+    { start: '北京南', end: '上海虹桥', prefix: 'G', startNum: 1, count: 7 },
+    { start: '上海虹桥', end: '北京南', prefix: 'G', startNum: 2, count: 7 },
+    { start: '北京南', end: '南京南', prefix: 'G', startNum: 15, count: 7 },
+    { start: '南京南', end: '北京南', prefix: 'G', startNum: 16, count: 7 },
+    { start: '上海虹桥', end: '南京南', prefix: 'G', startNum: 29, count: 7 },
+    { start: '南京南', end: '上海虹桥', prefix: 'G', startNum: 30, count: 7 }
+  ];
+
+  const trainStmt = db.prepare(`INSERT OR IGNORE INTO trains (train_number, start_station, end_station, start_time, end_time, duration) VALUES (?, ?, ?, ?, ?, ?)`);
+
+  routes.forEach(route => {
+    for (let i = 0; i < route.count; i++) {
+      const num = route.startNum + (i * 2); 
+      const trainNum = `${route.prefix}${num}`;
+      const startTime = '08:00';
+      const endTime = '12:00';
+      const duration = '4h';
+      
+      trainStmt.run(trainNum, route.start, route.end, startTime, endTime, duration);
     }
+  });
+  trainStmt.finalize((err) => {
+      if(err) console.error("Error seeding trains", err);
+      else console.log("Database tables and seed data initialized.");
   });
 }
 

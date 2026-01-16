@@ -49,7 +49,10 @@
 - id: REQ-1-3-4
   status: processed
 - id: REQ-2
-  status: unprocessed
+  status: processed
+  artifacts:
+    func_ids:
+      - INIT_DB_TICKETS
 - id: REQ-2-1
   status: unprocessed
 - id: REQ-2-1-1

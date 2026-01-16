@@ -45,3 +45,12 @@ FUNC_USER_RESET_PASSWORD:
     - API_USER_RESET_PASSWORD
   db_tables:
     - users
+INIT_DB_TICKETS:
+  related_req_id: REQ-2
+  path: backend/src/database/init_db.js
+  signature: initTables()
+  upstream_ids: []
+  db_tables:
+    - stations
+    - trains
+    - train_station_mapping
