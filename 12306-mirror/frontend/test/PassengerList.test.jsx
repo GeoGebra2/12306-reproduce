@@ -88,4 +88,27 @@ describe('PassengerList Component', () => {
             }), expect.anything());
         });
     });
+
+    it('opens delete confirmation and deletes passenger', async () => {
+        axios.get.mockResolvedValue({ data: { success: true, data: [{ id: 1, name: '张三', id_type: '身份证', id_card: '123', phone: '123', type: '成人' }] } });
+        axios.delete.mockResolvedValue({ data: { success: true } });
+
+        render(<PassengerList />);
+        await waitFor(() => expect(screen.getByText('张三')).toBeInTheDocument());
+
+        // Click delete
+        fireEvent.click(screen.getByText('删除'));
+
+        // Expect confirmation modal
+        expect(screen.getByText('确认删除')).toBeInTheDocument();
+        expect(screen.getByText('确定要删除该乘车人吗？')).toBeInTheDocument();
+
+        // Click confirm
+        fireEvent.click(screen.getByText('确定'));
+
+        // Verify API call
+        await waitFor(() => {
+            expect(axios.delete).toHaveBeenCalledWith('/api/passengers/1', expect.anything());
+        });
+    });
 });

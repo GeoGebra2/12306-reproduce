@@ -54,3 +54,11 @@ INIT_DB_TICKETS:
     - stations
     - trains
     - train_station_mapping
+FUNC-PASSENGERS-DELETE:
+  related_req_id: REQ-3-2-2
+  path: backend/src/routes/passengers.js
+  signature: router.delete('/:id', ...)
+  upstream_ids:
+    - API-PASSENGERS-DELETE
+  db_tables:
+    - passengers

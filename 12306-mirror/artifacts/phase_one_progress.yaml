@@ -107,7 +107,7 @@
     ui_ids:
       - UI-PASSENGER-LIST
 - id: REQ-3-2-2
-  status: unprocessed
+  status: processed
 - id: REQ-3-3
   status: unprocessed
 - id: REQ-4
