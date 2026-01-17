@@ -91,33 +91,37 @@ test.describe('12306 E2E Flow', () => {
     console.log('Starting Passenger Management...');
     await page.goto('/profile/passengers');
     
-    // Should be empty initially (or at least valid page)
+    // Should be empty initially
     await expect(page.getByText('暂无联系人')).toBeVisible();
     
-    // Seed a passenger via API
-    console.log('Seeding Passenger...');
-    const passengerData = {
-      name: 'Passenger One',
-      id_type: '身份证',
-      id_card: '110101199001015555',
-      phone: '13900000000',
-      type: '成人'
-    };
+    // Add Passenger via UI (REQ-3-2-1)
+    console.log('Adding Passenger via UI...');
+    await page.click('button.add-passenger-btn');
     
-    const apiResponse = await request.post('/api/passengers', {
-      headers: { 'x-user-id': String(userId) },
-      data: passengerData
-    });
-    expect(apiResponse.ok()).toBeTruthy();
+    await expect(page.locator('.modal-content')).toBeVisible();
+    await page.fill('input[name="name"]', 'Passenger One');
+    await page.selectOption('select[name="id_type"]', '中国居民身份证');
+    await page.fill('input[name="id_card"]', '110101199001015555');
+    await page.fill('input[name="phone"]', '13900000000');
+    await page.selectOption('select[name="type"]', '成人');
     
-    // Reload page to see the passenger
-    await page.reload();
+    await page.click('button:has-text("保存")');
+    
+    // Verify passenger appears
+    await expect(page.locator('.modal-content')).not.toBeVisible();
     await expect(page.getByText('Passenger One')).toBeVisible();
     
-    // Delete Passenger
+    // Delete Passenger via UI (REQ-3-2-2)
     console.log('Deleting Passenger...');
     // Find the delete button for this passenger
-    await page.click('button:has-text("删除")');
+    await page.click('button.delete-btn');
+    
+    // Verify Confirmation Modal
+    await expect(page.getByText('确认删除')).toBeVisible();
+    await expect(page.getByText('确定要删除该乘车人吗？')).toBeVisible();
+    
+    // Confirm Delete
+    await page.click('button.delete-confirm-btn');
     
     // Wait for delete to process and UI to update
     await expect(page.getByText('暂无联系人')).toBeVisible(); 

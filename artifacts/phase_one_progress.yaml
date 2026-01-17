@@ -118,7 +118,7 @@
     func_ids:
       - FUNC-PASSENGERS-ADD
 - id: REQ-3-2-2
-  status: unprocessed
+  status: processed
   artifacts:
     api_ids:
       - API-PASSENGERS-DELETE
