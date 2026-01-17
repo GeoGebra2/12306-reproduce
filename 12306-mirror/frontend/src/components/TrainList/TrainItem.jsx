@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TrainList.css';
 
-const TrainItem = ({ train }) => {
+const TrainItem = ({ train, date }) => {
     const navigate = useNavigate();
 
     const handleBook = () => {
-        navigate('/order', { state: { train } });
+        navigate('/booking', { state: { train, date } });
     };
 
     return (

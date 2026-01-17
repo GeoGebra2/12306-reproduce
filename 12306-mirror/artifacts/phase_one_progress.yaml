@@ -131,11 +131,17 @@
     api_ids:
       - API-ORDERS-LIST
 - id: REQ-4-2
-  status: unprocessed
+  status: processed
 - id: REQ-4-3
-  status: unprocessed
+  status: processed
 - id: REQ-4-4
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-PAY-ORDER-PAGE
+    api_ids:
+      - API-ORDERS-GET-DETAIL
+      - API-ORDERS-PAY
 - id: REQ-4-5
   status: unprocessed
 - id: REQ-4-6

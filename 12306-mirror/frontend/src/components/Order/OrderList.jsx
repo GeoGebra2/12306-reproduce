@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import './OrderList.css';
 
 const OrderList = () => {
-  const [activeTab, setActiveTab] = useState('Unpaid'); // Unpaid, Paid, Cancelled/History
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'Unpaid'); // Unpaid, Paid, Cancelled/History
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setActiveTab(searchParams.get('tab') || 'Unpaid');
+  }, [searchParams]);
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setSearchParams({ tab: tabId });
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -33,6 +45,28 @@ const OrderList = () => {
     }
   };
 
+  const handleCancel = async (orderId) => {
+    if (!window.confirm('确定要取消该订单吗？')) return;
+
+    try {
+      const userStr = localStorage.getItem('user');
+      const user = userStr ? JSON.parse(userStr) : {};
+      const userId = user.id || '1';
+
+      const res = await axios.post(`/api/orders/${orderId}/cancel`, {}, {
+        headers: { 'x-user-id': userId }
+      });
+
+      if (res.data.success) {
+        alert('订单取消成功');
+        fetchOrders();
+      }
+    } catch (err) {
+      console.error('Failed to cancel order', err);
+      alert('取消失败');
+    }
+  };
+
   const tabs = [
     { id: 'Unpaid', label: '未完成订单' },
     { id: 'Paid', label: '未出行订单' },
@@ -46,7 +80,7 @@ const OrderList = () => {
           <div
             key={tab.id}
             className={`tab-item ${activeTab === tab.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleTabChange(tab.id)}
           >
             {tab.label}
           </div>
@@ -84,8 +118,8 @@ const OrderList = () => {
                 <div className="order-actions">
                   {order.status === 'Unpaid' && (
                     <>
-                      <button className="btn btn-primary">支付</button>
-                      <button className="btn btn-secondary">取消订单</button>
+                      <button className="btn btn-primary" onClick={() => navigate(`/pay-order/${order.id}`)}>支付</button>
+                      <button className="btn btn-secondary" onClick={() => handleCancel(order.id)}>取消订单</button>
                     </>
                   )}
                   <button className="btn btn-secondary">查看详情</button>

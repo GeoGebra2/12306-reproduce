@@ -306,6 +306,23 @@ nodes:
     type: API
     path: backend/src/routes/orders.js
     signature: GET /api/orders
+  UI-PAY-ORDER-PAGE:
+    type: UI
+    path: frontend/src/pages/PayOrderPage.jsx
+    description: Order Payment Page
+  API-ORDERS-GET-DETAIL:
+    type: FUNC
+    path: backend/src/routes/orders.js
+    signature: GET /api/orders/:orderId
+    db_tables:
+      - orders
+      - order_items
+  API-ORDERS-PAY:
+    type: FUNC
+    path: backend/src/routes/orders.js
+    signature: POST /api/orders/:orderId/pay
+    db_tables:
+      - orders
 edges:
   - from: ROOT
     to: REQ-1
@@ -412,6 +429,24 @@ edges:
   - from: ROOT
     to: UI-ROOT
     relation: DEFINES
+  - from: REQ-4-4
+    to: UI-PAY-ORDER-PAGE
+    relation: DEFINES
+  - from: REQ-4-4
+    to: API-ORDERS-GET-DETAIL
+    relation: DEFINES
+  - from: REQ-4-4
+    to: API-ORDERS-PAY
+    relation: DEFINES
+  - from: UI-PAY-ORDER-PAGE
+    to: API-ORDERS-GET-DETAIL
+    relation: CALLS
+  - from: UI-PAY-ORDER-PAGE
+    to: API-ORDERS-PAY
+    relation: CALLS
+  - from: UI-ORDER-LIST
+    to: UI-PAY-ORDER-PAGE
+    relation: NAVIGATES
   - from: ROOT
     to: UI-HOME
     relation: DEFINES
@@ -649,3 +684,4 @@ edges:
   - from: REQ-4-1
     to: API-ORDERS-LIST
     relation: DEFINES
+

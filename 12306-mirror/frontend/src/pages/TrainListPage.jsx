@@ -65,7 +65,7 @@ const TrainListPage = () => {
                 {loading ? (
                     <div>Loading...</div>
                 ) : filteredTrains.length > 0 ? (
-                    filteredTrains.map(train => <TrainItem key={train.id} train={train} />)
+                    filteredTrains.map(train => <TrainItem key={train.id} train={train} date={date} />)
                 ) : (
                     <div style={{textAlign: 'center', padding: '20px'}}>
                         {(!from || !to) ? '请选择出发地和目的地' : '没有找到符合条件的车次'}

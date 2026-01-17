@@ -1,0 +1,112 @@
+.booking-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.train-info-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.train-route {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.train-number {
+    font-size: 20px;
+    color: #007bff;
+    margin: 0 10px;
+}
+
+.train-time {
+    color: #666;
+    font-size: 14px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+.passenger-selection {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.passenger-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.passenger-item {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.passenger-item.selected {
+    border-color: #007bff;
+    background-color: #e6f7ff;
+    color: #007bff;
+}
+
+.selected-passengers-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+.selected-passengers-table th,
+.selected-passengers-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.selected-passengers-table th {
+    background-color: #f8f9fa;
+}
+
+.submit-section {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    background-color: #ff9900;
+    color: white;
+    padding: 12px 40px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.submit-btn:hover {
+    background-color: #e68a00;
+}
+
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

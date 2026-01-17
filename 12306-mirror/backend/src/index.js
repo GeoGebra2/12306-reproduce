@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
- 
+app.use((req, res, next) => {
+  console.log(`[RAW] ${req.method} ${req.url}`);
+  next();
+});
+
 const userRoutes = require('./routes/users');
 const stationRoutes = require('./routes/stations');
 const ticketRoutes = require('./routes/tickets');
@@ -14,6 +18,11 @@ const orderRoutes = require('./routes/orders');
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 
 app.use('/api/users', userRoutes);
 app.use('/api/stations', stationRoutes);

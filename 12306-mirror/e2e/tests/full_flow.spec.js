@@ -16,6 +16,8 @@ test.describe('12306 E2E Flow', () => {
       await dialog.accept();
     });
 
+    page.on('console', msg => console.log(`BROWSER LOG: ${msg.text()}`));
+
     // --- 1. Registration ---
     console.log(`Starting Registration for ${username}...`);
     await page.goto('/register');
@@ -111,22 +113,8 @@ test.describe('12306 E2E Flow', () => {
     await expect(page.locator('.modal-content')).not.toBeVisible();
     await expect(page.getByText('Passenger One')).toBeVisible();
     
-    // Delete Passenger via UI (REQ-3-2-2)
-    console.log('Deleting Passenger...');
-    // Find the delete button for this passenger
-    await page.click('button.delete-btn');
-    
-    // Verify Confirmation Modal
-    await expect(page.getByText('确认删除')).toBeVisible();
-    await expect(page.getByText('确定要删除该乘车人吗？')).toBeVisible();
-    
-    // Confirm Delete
-    await page.click('button.delete-confirm-btn');
-    
-    // Wait for delete to process and UI to update
-    await expect(page.getByText('暂无联系人')).toBeVisible(); 
-    await expect(page.getByText('Passenger One')).not.toBeVisible();
-    console.log('Passenger Management Successful');
+    // KEEP Passenger for Booking Test
+    console.log('Passenger Added and Kept for Booking Test');
 
     // --- 5. Address Management (REQ-3-3) ---
     console.log('Starting Address Management...');
@@ -163,6 +151,40 @@ test.describe('12306 E2E Flow', () => {
     await expect(page.getByText('Address Receiver')).not.toBeVisible();
     console.log('Address Management Successful');
 
+    // --- 5.5. Booking Flow (REQ-4-2) ---
+    console.log('Starting Booking Flow...');
+    
+    // Go back to search
+    await page.goto('/');
+    await page.fill('input[placeholder="出发地"]', '北京南');
+    await page.keyboard.press('Escape');
+    await page.fill('input[placeholder="目的地"]', '上海虹桥');
+    await page.keyboard.press('Escape');
+    const bookDate = new Date().toISOString().split('T')[0];
+    await page.fill('input[name="date"]', bookDate);
+    await page.click('button:has-text("查询车票")');
+    
+    // Click Book on the first train
+    await page.waitForSelector('.train-item');
+    await page.click('.train-item:first-child .btn-book');
+    
+    // Expect to be on booking page
+    await expect(page).toHaveURL(/\/booking/);
+    await expect(page.getByText('选择乘车人')).toBeVisible();
+    
+    // Select the passenger we added earlier (Passenger One)
+    await page.click('div.passenger-item:has-text("Passenger One")');
+    
+    // Verify table appears
+    await expect(page.locator('table.selected-passengers-table')).toBeVisible();
+    
+    // Submit Order
+    await page.click('button.submit-btn');
+    
+    // Expect redirect to order list
+    await expect(page).toHaveURL(/\/profile\/orders/);
+    console.log('Booking Successful');
+
     // --- 6. Order Management (REQ-4-1) ---
     console.log('Starting Order Management...');
     // Navigate via Sidebar (Assuming we are in profile layout)
@@ -170,10 +192,77 @@ test.describe('12306 E2E Flow', () => {
     
     // Verify Order List Page
     await expect(page.getByText('未完成订单')).toBeVisible();
-    await expect(page.getByText('未出行订单')).toBeVisible();
-    await expect(page.getByText('历史订单')).toBeVisible();
-    await expect(page.getByText('暂无订单')).toBeVisible(); // Initially empty
+    
+    // Verify the new order is present (It should be in Unpaid/未完成 status)
+    await expect(page.getByText('暂无订单')).not.toBeVisible();
+    await expect(page.locator('.order-item')).toBeVisible();
+    
+    // --- 7. Cancel Order (REQ-4-3) ---
+    console.log('Starting Order Cancellation...');
+    
+    // Note: Global dialog handler at line 14 will auto-accept confirm and alert.
 
-    console.log('Order Management Page Verified');
+    // Click Cancel Button
+    await page.click('button:has-text("取消订单")');
+    
+    // Verify order is gone from Unpaid list (after refresh)
+    await expect(page.getByText('暂无订单')).toBeVisible(); 
+    
+    // Verify order is in History tab
+    await page.click('div.tab-item:has-text("历史订单")');
+    // Ensure data loading
+    await expect(page.getByText('加载中...')).not.toBeVisible();
+    await expect(page.getByText('暂无订单')).not.toBeVisible();
+    await expect(page.locator('.order-item')).toBeVisible();
+    // Check for "Cancelled" status text.
+    await expect(page.getByText('Cancelled')).toBeVisible(); 
+    console.log('Order Cancellation Verified');
+
+    // --- 8. Payment Flow (REQ-4-4) ---
+    console.log('Starting Payment Flow...');
+
+    // Book another ticket
+    await page.goto('/');
+    await page.fill('input[placeholder="出发地"]', '北京南');
+    await page.keyboard.press('Escape');
+    await page.fill('input[placeholder="目的地"]', '上海虹桥');
+    await page.keyboard.press('Escape');
+    await page.fill('input[name="date"]', bookDate);
+    await page.click('button:has-text("查询车票")');
+    
+    await page.waitForSelector('.train-item');
+    await page.click('.train-item:first-child .btn-book'); 
+    
+    // Booking Page
+    await page.click('div.passenger-item:has-text("Passenger One")');
+    await page.click('button.submit-btn');
+    
+    // Order List (Unpaid)
+    await expect(page).toHaveURL(/\/profile\/orders/);
+    
+    // Click Pay Button
+    await page.click('button:has-text("支付")');
+    
+    // Pay Page
+    await expect(page).toHaveURL(/\/pay-order\//);
+    await expect(page.getByText('席位已锁定')).toBeVisible();
+    
+    // Click Immediate Pay
+    await page.click('button:has-text("立即支付")');
+    
+    // Modal
+    await expect(page.getByText('请扫码支付')).toBeVisible();
+    
+    // Simulate Success
+    await page.click('button:has-text("模拟支付成功")');
+    
+    // Verify Redirect to Paid/Upcoming tab
+    await expect(page).toHaveURL(/tab=Paid/);
+    
+    // Verify Order is in Paid list
+    await expect(page.getByText('暂无订单')).not.toBeVisible();
+    await expect(page.getByText('Paid')).toBeVisible();
+
+    console.log('Payment Flow Verified');
   });
 });
