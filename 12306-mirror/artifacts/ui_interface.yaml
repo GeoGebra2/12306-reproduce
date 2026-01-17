@@ -99,7 +99,7 @@ UI-PROFILE-LAYOUT:
     - UI-PROFILE-SIDEBAR
 UI-PROFILE-SIDEBAR:
   related_req_id: REQ-3
-  path: frontend/src/components/Profile/Sidebar.jsx
+  path: frontend/src/components/Profile/ProfileSidebar.jsx
   description: Profile Sidebar Navigation
   upstream_ids:
     - UI-PROFILE-LAYOUT
@@ -107,59 +107,81 @@ UI-PROFILE-SIDEBAR:
 UI-PASSENGER-LIST:
   related_req_id: REQ-3-2
   path: frontend/src/components/Profile/PassengerList.jsx
-  description: Passenger List with Add/Delete functionality
+  description: Passenger Management Component (List, Add, Delete)
   upstream_ids:
     - UI-PROFILE-PAGE
-  downstream_ids:
     - API-PASSENGERS-LIST
-    - API-PASSENGERS-DELETE
     - API-PASSENGERS-ADD
+    - API-PASSENGERS-DELETE
+  downstream_ids: []
 UI-ADDRESS-LIST:
   related_req_id: REQ-3-3
   path: frontend/src/components/Profile/AddressList.jsx
-  description: Address management list and form
-  upstream_ids: []
+  description: Address Management Component
+  upstream_ids:
+    - UI-PROFILE-PAGE
   downstream_ids: []
-AddressList:
-  related_req_id: REQ-3-3
-  path: frontend/src/components/Profile/AddressList.jsx
-  description: Address management list component with add/delete functionality
-  upstream_ids: []
+UI-TRAIN-LIST-PAGE:
+  related_req_id: REQ-2-2
+  path: frontend/src/pages/TrainListPage.jsx
+  description: Train List Page with SearchFilter and TrainList
+  upstream_ids:
+    - UI-SEARCH-FILTER
   downstream_ids: []
 UI-ORDER-LIST:
   related_req_id: REQ-4-1
-  path: frontend/src/components/Order/OrderList.jsx
-  description: Order Management List with Tabs (Unpaid, Paid, History)
+  path: frontend/src/components/Profile/OrderList.jsx
+  description: Order List Component
   upstream_ids:
     - UI-PROFILE-PAGE
-  downstream_ids:
     - API-ORDERS-LIST
+  downstream_ids: []
+UI-PAY-ORDER-PAGE:
+  related_req_id: REQ-4-4
+  path: frontend/src/pages/PayOrderPage.jsx
+  description: Payment Page
+  upstream_ids:
+    - API-ORDERS-GET-DETAIL
+    - API-ORDERS-PAY
+  downstream_ids: []
 UI-CATERING-PAGE:
   related_req_id: REQ-5-1
   path: frontend/src/pages/CateringPage.jsx
   description: Catering Service Home Page
   upstream_ids:
     - UI-ROOT
-  downstream_ids:
-    - UI-CATERING-BOOK-PAGE
-    - UI-CATERING-VENDOR-PAGE
+    - API-CATERING-BRANDS
+  downstream_ids: []
 UI-CATERING-BOOK-PAGE:
   related_req_id: REQ-5-2
   path: frontend/src/pages/CateringBookPage.jsx
-  description: Catering Booking Page with Menu and Cart
+  description: Catering Booking Page
   upstream_ids:
-    - UI-CATERING-PAGE
-    - API-CATERING-BRANDS
+    - UI-ROOT
     - API-CATERING-ITEMS
     - API-CATERING-ORDERS
   downstream_ids: []
 UI-CATERING-VENDOR-PAGE:
   related_req_id: REQ-5-3
   path: frontend/src/pages/CateringVendorPage.jsx
-  description: Catering Vendor Detail Page with Menu and Cart
+  description: Catering Vendor Detail Page
   upstream_ids:
     - UI-CATERING-PAGE
-    - API-CATERING-BRANDS
     - API-CATERING-ITEMS
     - API-CATERING-ORDERS
+  downstream_ids: []
+UI-ORDER-DETAIL-PAGE:
+  related_req_id: REQ-4-5
+  path: frontend/src/pages/OrderDetailPage.jsx
+  description: Order Detail Page with Refund option
+  upstream_ids:
+    - API-ORDERS-GET-DETAIL
+    - API-ORDERS-REFUND
+  downstream_ids: []
+UI-REFUND-SUCCESS-PAGE:
+  related_req_id: REQ-4-6
+  path: frontend/src/pages/RefundSuccessPage.jsx
+  description: Refund Success Confirmation Page
+  upstream_ids:
+    - UI-ORDER-DETAIL-PAGE
   downstream_ids: []
