@@ -38,3 +38,24 @@ API-USER-PROFILE:
     - FUNC-GET-USER-PROFILE
   downstream_ids:
     - UI-PROFILE-INFO
+API-PASSENGERS-LIST:
+  related_req_id: REQ-3-2
+  path: backend/src/routes/passengers.js
+  signature: GET /api/passengers
+  upstream_ids:
+    - UI-PASSENGER-LIST
+  downstream_ids: []
+API-PASSENGERS-ADD:
+  related_req_id: REQ-3-2
+  path: backend/src/routes/passengers.js
+  signature: POST /api/passengers
+  upstream_ids:
+    - UI-PASSENGER-LIST
+  downstream_ids: []
+API-PASSENGERS-DELETE:
+  related_req_id: REQ-3-2
+  path: backend/src/routes/passengers.js
+  signature: DELETE /api/passengers/:id
+  upstream_ids:
+    - UI-PASSENGER-LIST
+  downstream_ids: []

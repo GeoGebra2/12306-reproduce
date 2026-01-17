@@ -56,6 +56,18 @@ function initTables() {
       stop_order INTEGER,
       FOREIGN KEY(train_id) REFERENCES trains(id)
     )`);
+
+    // Passengers table
+    db.run(`CREATE TABLE IF NOT EXISTS passengers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      name TEXT,
+      id_type TEXT,
+      id_card TEXT,
+      phone TEXT,
+      type TEXT,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    )`);
     
     seedData();
   });

@@ -250,6 +250,22 @@ nodes:
     type: UI
     path: frontend/src/components/Profile/Sidebar.jsx
     description: Profile Sidebar Navigation
+  UI-PASSENGER-LIST:
+    type: UI
+    path: frontend/src/components/Profile/PassengerList.jsx
+    description: Passenger List Component with Add/Delete actions
+  API-PASSENGERS-LIST:
+    type: API
+    path: backend/src/routes/passengers.js
+    signature: GET /api/passengers
+  API-PASSENGERS-ADD:
+    type: API
+    path: backend/src/routes/passengers.js
+    signature: POST /api/passengers
+  API-PASSENGERS-DELETE:
+    type: API
+    path: backend/src/routes/passengers.js
+    signature: DELETE /api/passengers/:id
 edges:
   - from: ROOT
     to: REQ-1
@@ -511,4 +527,28 @@ edges:
     relation: CALLS
   - from: REQ-3
     to: UI-PROFILE-SIDEBAR
+    relation: DEFINES
+  - from: REQ-3-2
+    to: UI-PASSENGER-LIST
+    relation: DEFINES
+  - from: UI-PROFILE-PAGE
+    to: UI-PASSENGER-LIST
+    relation: CALLS
+  - from: UI-PASSENGER-LIST
+    to: API-PASSENGERS-LIST
+    relation: CALLS
+  - from: UI-PASSENGER-LIST
+    to: API-PASSENGERS-DELETE
+    relation: CALLS
+  - from: REQ-3-2
+    to: API-PASSENGERS-LIST
+    relation: DEFINES
+  - from: REQ-3-2
+    to: API-PASSENGERS-ADD
+    relation: DEFINES
+  - from: UI-PASSENGER-LIST
+    to: API-PASSENGERS-ADD
+    relation: CALLS
+  - from: REQ-3-2
+    to: API-PASSENGERS-DELETE
     relation: DEFINES

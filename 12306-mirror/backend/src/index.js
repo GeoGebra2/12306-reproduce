@@ -8,6 +8,7 @@ const port = 3000;
 const userRoutes = require('./routes/users');
 const stationRoutes = require('./routes/stations');
 const ticketRoutes = require('./routes/tickets');
+const passengerRoutes = require('./routes/passengers');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/passengers', passengerRoutes);
 
  
 require('./database/init_db');
