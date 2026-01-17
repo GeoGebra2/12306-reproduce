@@ -279,8 +279,15 @@ test.describe('12306 E2E Flow', () => {
     // Click Refund
     await page.click('button:has-text("退票")');
     
-    // Verify Refund Success (Alert handled by dialog handler)
-    // Wait for status update
+    // Verify Refund Success Page
+    // Alert is handled by dialog handler, but now we expect redirection
+    await expect(page).toHaveURL(/\/refund-success/);
+    await expect(page.getByText('退票申请已提交')).toBeVisible();
+    await expect(page.getByText('查看订单详情')).toBeVisible();
+    
+    // Navigate back to Order Detail to verify status
+    await page.click('button:has-text("查看订单详情")');
+    await expect(page).toHaveURL(/\/order-detail\//); 
     await expect(page.locator('.status-text', { hasText: '已退票' })).toBeVisible();
     
     console.log('Refund Flow Verified');

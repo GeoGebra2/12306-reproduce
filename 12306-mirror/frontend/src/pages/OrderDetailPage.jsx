@@ -66,8 +66,13 @@ const OrderDetailPage = () => {
             await axios.post(`/api/orders/${orderId}/refund`, {}, {
                 headers: { 'x-user-id': userId }
             });
-            alert('退票成功');
-            fetchOrder();
+            // Navigate to success page with state
+            navigate('/refund-success', { 
+                state: { 
+                    orderId: order.id, 
+                    amount: order.total_price 
+                } 
+            });
         } catch (error) {
             alert('退票失败');
         }

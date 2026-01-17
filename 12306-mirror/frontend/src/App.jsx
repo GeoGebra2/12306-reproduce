@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import BookingPage from './pages/BookingPage';
 import PayOrderPage from './pages/PayOrderPage';
 import OrderDetailPage from './pages/OrderDetailPage';
+import RefundSuccessPage from './pages/RefundSuccessPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/booking" element={<BookingPage />} />
       <Route path="/pay-order/:orderId" element={<PayOrderPage />} />
       <Route path="/order-detail/:orderId" element={<OrderDetailPage />} />
+      <Route path="/refund-success" element={<RefundSuccessPage />} />
       <Route path="/profile/*" element={<ProfilePage />} />
     </Routes>
   );
