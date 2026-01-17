@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import BrandSearch from '../components/HeaderBrandSearch';
+import { Link } from 'react-router-dom';
 import './CateringPage.css';
 
 const CateringPage = () => {
@@ -9,11 +9,9 @@ const CateringPage = () => {
     <div className="catering-container">
       <BrandSearch />
       <Navbar />
-      
-      {/* Brand Info Section (REQ-5-1: Top shows 12306 Logo) */}
       <div className="catering-brand-section">
         <img 
-          src="/assets/profile-and-catering/铁路12306-512x512.png"
+          src="/assets/profile-and-catering/铁路12306-512x512.png" 
           alt="12306 Logo" 
           className="catering-12306-logo"
           onError={(e) => { e.target.src = 'https://via.placeholder.com/60x60?text=12306'; }} 

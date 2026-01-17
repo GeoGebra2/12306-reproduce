@@ -43,3 +43,25 @@ FUNC-GET-USER-PROFILE:
   upstream_ids: []
   db_tables:
     - users
+FUNC-GET-CATERING-BRANDS:
+  related_req_id: REQ-5
+  path: backend/src/routes/catering.js
+  signature: router.get('/brands')
+  upstream_ids: []
+  db_tables:
+    - catering_brands
+FUNC-GET-CATERING-ITEMS:
+  related_req_id: REQ-5
+  path: backend/src/routes/catering.js
+  signature: router.get('/items')
+  upstream_ids: []
+  db_tables:
+    - catering_items
+FUNC-CREATE-CATERING-ORDER:
+  related_req_id: REQ-5
+  path: backend/src/routes/catering.js
+  signature: router.post('/orders')
+  upstream_ids: []
+  db_tables:
+    - catering_orders
+    - catering_order_items

@@ -134,3 +134,21 @@ UI-ORDER-LIST:
     - UI-PROFILE-PAGE
   downstream_ids:
     - API-ORDERS-LIST
+UI-CATERING-PAGE:
+  related_req_id: REQ-5-1
+  path: frontend/src/pages/CateringPage.jsx
+  description: Catering Service Home Page
+  upstream_ids:
+    - UI-ROOT
+  downstream_ids:
+    - UI-CATERING-BOOK-PAGE
+UI-CATERING-BOOK-PAGE:
+  related_req_id: REQ-5-2
+  path: frontend/src/pages/CateringBookPage.jsx
+  description: Catering Booking Page with Menu and Cart
+  upstream_ids:
+    - UI-CATERING-PAGE
+    - API-CATERING-BRANDS
+    - API-CATERING-ITEMS
+    - API-CATERING-ORDERS
+  downstream_ids: []

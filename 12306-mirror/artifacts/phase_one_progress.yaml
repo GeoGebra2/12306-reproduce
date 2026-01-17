@@ -147,10 +147,25 @@
 - id: REQ-4-6
   status: unprocessed
 - id: REQ-5
-  status: unprocessed
+  status: processed
+  artifacts:
+    api_ids:
+      - API-CATERING-BRANDS
+      - API-CATERING-ITEMS
+      - API-CATERING-ORDERS
+    func_ids:
+      - FUNC-GET-CATERING-BRANDS
+      - FUNC-GET-CATERING-ITEMS
+      - FUNC-CREATE-CATERING-ORDER
 - id: REQ-5-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-CATERING-PAGE
 - id: REQ-5-2
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-CATERING-BOOK-PAGE
 - id: REQ-5-3
   status: unprocessed

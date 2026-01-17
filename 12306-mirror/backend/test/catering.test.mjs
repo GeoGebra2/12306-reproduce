@@ -46,4 +46,28 @@ describe('Catering API', () => {
       expect(item.type).toBe('SELF_OPERATED');
     });
   });
+
+  describe('POST /api/catering/orders', () => {
+    it('should create a new catering order', async () => {
+      // Create a test user first or use a mock user ID
+      // For this test, we'll assume auth middleware is bypassed or we provide x-user-id
+      // But we need valid items.
+      const itemsRes = await request(baseUrl).get('/api/catering/items?type=SELF_OPERATED');
+      const item = itemsRes.body.data[0];
+
+      const res = await request(baseUrl)
+        .post('/api/catering/orders')
+        .set('x-user-id', '1') // Mock user ID
+        .send({
+          items: [
+            { id: item.id, quantity: 2 }
+          ]
+        });
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.message).toBe('Catering order created successfully');
+      expect(res.body.data).toHaveProperty('orderId');
+    });
+  });
 });

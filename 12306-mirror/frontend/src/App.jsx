@@ -11,6 +11,7 @@ import PayOrderPage from './pages/PayOrderPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import RefundSuccessPage from './pages/RefundSuccessPage';
 import CateringPage from './pages/CateringPage';
+import CateringBookPage from './pages/CateringBookPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path="/order-detail/:orderId" element={<OrderDetailPage />} />
       <Route path="/refund-success" element={<RefundSuccessPage />} />
       <Route path="/catering" element={<CateringPage />} />
+      <Route path="/catering/book" element={<CateringBookPage />} />
       <Route path="/profile/*" element={<ProfilePage />} />
     </Routes>
   );

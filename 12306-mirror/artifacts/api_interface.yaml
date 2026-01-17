@@ -107,3 +107,29 @@ API-ORDERS-LIST:
   upstream_ids:
     - UI-ORDER-LIST
   downstream_ids: []
+API-CATERING-BRANDS:
+  related_req_id: REQ-5
+  path: backend/src/routes/catering.js
+  signature: GET /api/catering/brands
+  upstream_ids:
+    - DB-TABLE-CATERING-BRANDS
+  downstream_ids:
+    - UI-CATERING-PAGE
+    - UI-CATERING-BOOK-PAGE
+API-CATERING-ITEMS:
+  related_req_id: REQ-5
+  path: backend/src/routes/catering.js
+  signature: GET /api/catering/items
+  upstream_ids:
+    - DB-TABLE-CATERING-ITEMS
+  downstream_ids:
+    - UI-CATERING-BOOK-PAGE
+API-CATERING-ORDERS:
+  related_req_id: REQ-5
+  path: backend/src/routes/catering.js
+  signature: POST /api/catering/orders
+  upstream_ids:
+    - DB-TABLE-CATERING-ORDERS
+    - DB-TABLE-CATERING-ORDER-ITEMS
+  downstream_ids:
+    - UI-CATERING-BOOK-PAGE

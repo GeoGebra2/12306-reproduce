@@ -126,6 +126,28 @@ function initTables() {
       image_url TEXT,
       FOREIGN KEY(brand_id) REFERENCES catering_brands(id)
     )`);
+
+    // Catering Orders table
+    db.run(`CREATE TABLE IF NOT EXISTS catering_orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      status TEXT, -- 'Pending', 'Paid', 'Cancelled'
+      total_price REAL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    )`);
+
+    // Catering Order Items table
+    db.run(`CREATE TABLE IF NOT EXISTS catering_order_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      order_id INTEGER,
+      item_id INTEGER,
+      item_name TEXT,
+      price REAL,
+      quantity INTEGER,
+      FOREIGN KEY(order_id) REFERENCES catering_orders(id),
+      FOREIGN KEY(item_id) REFERENCES catering_items(id)
+    )`);
     
     seedData();
   });
