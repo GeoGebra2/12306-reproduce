@@ -52,3 +52,10 @@ API-TICKETS-SEARCH:
   upstream_ids: []
   downstream_ids:
     - UI-TRAIN-LIST-PAGE
+PassengerAPI:
+  related_req_id: REQ-3-2
+  path: backend/src/routes/passengers.js
+  signature: GET/POST/PUT/DELETE /api/passengers
+  upstream_ids: []
+  downstream_ids:
+    - PassengerList

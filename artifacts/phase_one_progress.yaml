@@ -102,9 +102,14 @@
       - UI-PROFILE-SIDEBAR
       - UI-PROFILE-PAGE
 - id: REQ-3-1
-  status: unprocessed
+  status: processed
 - id: REQ-3-2
   status: unprocessed
+  artifacts:
+    ui_ids:
+      - PassengerList
+    api_ids:
+      - PassengerAPI
 - id: REQ-3-2-1
   status: unprocessed
 - id: REQ-3-2-2

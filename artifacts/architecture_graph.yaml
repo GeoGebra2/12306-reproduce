@@ -267,6 +267,14 @@ nodes:
     type: UI
     path: frontend/src/pages/ProfilePage.jsx
     description: 个人中心主页面容器，管理子路由
+  PassengerList:
+    type: UI
+    path: frontend/src/components/Profile/PassengerList.jsx
+    description: Passenger Management List Component
+  PassengerAPI:
+    type: API
+    path: backend/src/routes/passengers.js
+    signature: GET/POST/PUT/DELETE /api/passengers
 edges:
   - from: ROOT
     to: REQ-1
@@ -541,3 +549,12 @@ edges:
   - from: UI-PROFILE-PAGE
     to: UI-PROFILE-LAYOUT
     relation: CALLS
+  - from: REQ-3-2
+    to: PassengerList
+    relation: DEFINES
+  - from: PassengerAPI
+    to: PassengerList
+    relation: CALLS
+  - from: REQ-3-2
+    to: PassengerAPI
+    relation: DEFINES

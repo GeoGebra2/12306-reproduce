@@ -15,7 +15,9 @@ const PassengerList = () => {
     try {
       setLoading(true);
       // In a real app, x-user-id would come from auth context/storage
-      const userId = localStorage.getItem('userId') || '1';
+      const userStr = localStorage.getItem('user');
+      const user = userStr ? JSON.parse(userStr) : {};
+      const userId = user.id || '1';
       const response = await axios.get('/api/passengers', {
         headers: { 'x-user-id': userId }
       });
@@ -35,7 +37,9 @@ const PassengerList = () => {
     if (!window.confirm('确定要删除该乘车人吗？')) return;
     
     try {
-      const userId = localStorage.getItem('userId') || '1';
+      const userStr = localStorage.getItem('user');
+      const user = userStr ? JSON.parse(userStr) : {};
+      const userId = user.id || '1';
       await axios.delete(`/api/passengers/${id}`, {
         headers: { 'x-user-id': userId }
       });
