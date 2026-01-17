@@ -114,3 +114,15 @@ UI-PASSENGER-LIST:
     - API-PASSENGERS-LIST
     - API-PASSENGERS-DELETE
     - API-PASSENGERS-ADD
+UI-ADDRESS-LIST:
+  related_req_id: REQ-3-3
+  path: frontend/src/components/Profile/AddressList.jsx
+  description: Address management list and form
+  upstream_ids: []
+  downstream_ids: []
+AddressList:
+  related_req_id: REQ-3-3
+  path: frontend/src/components/Profile/AddressList.jsx
+  description: Address management list component with add/delete functionality
+  upstream_ids: []
+  downstream_ids: []

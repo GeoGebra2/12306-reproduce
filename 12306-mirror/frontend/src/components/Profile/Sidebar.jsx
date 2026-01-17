@@ -10,6 +10,7 @@ const Sidebar = () => {
     { name: '查看个人信息', path: '/profile/info' },
     { name: '账号安全', path: '/profile/security' },
     { name: '常用联系人', path: '/profile/passengers' },
+    { name: '常用地址', path: '/profile/address' },
     { name: '重点旅客预约', path: '/profile/priority' },
     { name: '遗失物品查找', path: '/profile/lost-found' },
     { name: '服务查询', path: '/profile/service' },

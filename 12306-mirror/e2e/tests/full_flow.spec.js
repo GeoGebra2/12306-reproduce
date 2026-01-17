@@ -127,5 +127,40 @@ test.describe('12306 E2E Flow', () => {
     await expect(page.getByText('暂无联系人')).toBeVisible(); 
     await expect(page.getByText('Passenger One')).not.toBeVisible();
     console.log('Passenger Management Successful');
+
+    // --- 5. Address Management (REQ-3-3) ---
+    console.log('Starting Address Management...');
+    await page.goto('/profile/address');
+    
+    // Should be empty initially
+    await expect(page.getByText('暂无常用地址')).toBeVisible();
+
+    // Add Address
+    console.log('Adding Address...');
+    await page.click('button.add-address-btn');
+    
+    await expect(page.locator('.modal-content')).toBeVisible();
+    await page.fill('input[name="receiver_name"]', 'Address Receiver');
+    await page.fill('input[name="phone"]', '13800000000');
+    await page.fill('input[name="province"]', 'Test Province');
+    await page.fill('input[name="city"]', 'Test City');
+    await page.fill('input[name="district"]', 'Test District');
+    await page.fill('input[name="detail_address"]', 'Test Detail 101');
+    
+    await page.click('button.save-btn');
+    
+    // Verify address appears
+    await expect(page.locator('.modal-content')).not.toBeVisible();
+    await expect(page.getByText('Address Receiver')).toBeVisible();
+    await expect(page.getByText('Test Province Test City Test District')).toBeVisible();
+
+    // Delete Address
+    console.log('Deleting Address...');
+    await page.click('button.delete-btn');
+    
+    // Verify address removed
+    await expect(page.getByText('暂无常用地址')).toBeVisible();
+    await expect(page.getByText('Address Receiver')).not.toBeVisible();
+    console.log('Address Management Successful');
   });
 });

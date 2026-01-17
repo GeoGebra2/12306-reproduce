@@ -68,6 +68,21 @@ function initTables() {
       type TEXT,
       FOREIGN KEY(user_id) REFERENCES users(id)
     )`);
+
+    // Addresses table
+    db.run(`CREATE TABLE IF NOT EXISTS addresses (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      receiver_name TEXT,
+      phone TEXT,
+      province TEXT,
+      city TEXT,
+      district TEXT,
+      detail_address TEXT,
+      is_default INTEGER DEFAULT 0,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    )`);
     
     seedData();
   });

@@ -61,3 +61,42 @@ API-PASSENGERS-DELETE:
   upstream_ids:
     - UI-PASSENGER-LIST
   downstream_ids: []
+API-ADDRESS-LIST:
+  related_req_id: REQ-3-3
+  path: backend/src/routes/address.js
+  signature: GET /api/addresses
+  upstream_ids:
+    - UI-ADDRESS-LIST
+  downstream_ids: []
+API-ADDRESS-ADD:
+  related_req_id: REQ-3-3
+  path: backend/src/routes/address.js
+  signature: POST /api/addresses
+  upstream_ids:
+    - UI-ADDRESS-LIST
+  downstream_ids: []
+API-ADDRESS-DELETE:
+  related_req_id: REQ-3-3
+  path: backend/src/routes/address.js
+  signature: DELETE /api/addresses/:id
+  upstream_ids:
+    - UI-ADDRESS-LIST
+  downstream_ids: []
+GET /api/addresses:
+  related_req_id: REQ-3-3
+  path: backend/src/routes/address.js
+  signature: GET /api/addresses
+  upstream_ids: []
+  downstream_ids: []
+POST /api/addresses:
+  related_req_id: REQ-3-3
+  path: backend/src/routes/address.js
+  signature: POST /api/addresses
+  upstream_ids: []
+  downstream_ids: []
+DELETE /api/addresses/:id:
+  related_req_id: REQ-3-3
+  path: backend/src/routes/address.js
+  signature: DELETE /api/addresses/:id
+  upstream_ids: []
+  downstream_ids: []

@@ -266,6 +266,38 @@ nodes:
     type: API
     path: backend/src/routes/passengers.js
     signature: DELETE /api/passengers/:id
+  UI-ADDRESS-LIST:
+    type: UI
+    path: frontend/src/components/Profile/AddressList.jsx
+    description: Address management list and form
+  API-ADDRESS-LIST:
+    type: API
+    path: backend/src/routes/address.js
+    signature: GET /api/addresses
+  API-ADDRESS-ADD:
+    type: API
+    path: backend/src/routes/address.js
+    signature: POST /api/addresses
+  API-ADDRESS-DELETE:
+    type: API
+    path: backend/src/routes/address.js
+    signature: DELETE /api/addresses/:id
+  AddressList:
+    type: UI
+    path: frontend/src/components/Profile/AddressList.jsx
+    description: Address management list component with add/delete functionality
+  GET /api/addresses:
+    type: API
+    path: backend/src/routes/address.js
+    signature: GET /api/addresses
+  POST /api/addresses:
+    type: API
+    path: backend/src/routes/address.js
+    signature: POST /api/addresses
+  DELETE /api/addresses/:id:
+    type: API
+    path: backend/src/routes/address.js
+    signature: DELETE /api/addresses/:id
 edges:
   - from: ROOT
     to: REQ-1
@@ -563,4 +595,37 @@ edges:
     relation: CALLS
   - from: REQ-3-2-1
     to: UI-PASSENGER-LIST
+    relation: DEFINES
+  - from: REQ-3-3
+    to: UI-ADDRESS-LIST
+    relation: DEFINES
+  - from: REQ-3-3
+    to: API-ADDRESS-LIST
+    relation: DEFINES
+  - from: UI-ADDRESS-LIST
+    to: API-ADDRESS-LIST
+    relation: CALLS
+  - from: REQ-3-3
+    to: API-ADDRESS-ADD
+    relation: DEFINES
+  - from: UI-ADDRESS-LIST
+    to: API-ADDRESS-ADD
+    relation: CALLS
+  - from: REQ-3-3
+    to: API-ADDRESS-DELETE
+    relation: DEFINES
+  - from: UI-ADDRESS-LIST
+    to: API-ADDRESS-DELETE
+    relation: CALLS
+  - from: REQ-3-3
+    to: AddressList
+    relation: DEFINES
+  - from: REQ-3-3
+    to: GET /api/addresses
+    relation: DEFINES
+  - from: REQ-3-3
+    to: POST /api/addresses
+    relation: DEFINES
+  - from: REQ-3-3
+    to: DELETE /api/addresses/:id
     relation: DEFINES
