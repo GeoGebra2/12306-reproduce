@@ -100,7 +100,12 @@
       - API-PASSENGERS-ADD
       - API-PASSENGERS-DELETE
 - id: REQ-3-2-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    api_ids:
+      - API-PASSENGERS-ADD
+    ui_ids:
+      - UI-PASSENGER-LIST
 - id: REQ-3-2-2
   status: unprocessed
 - id: REQ-3-3

@@ -107,9 +107,10 @@ UI-PROFILE-SIDEBAR:
 UI-PASSENGER-LIST:
   related_req_id: REQ-3-2
   path: frontend/src/components/Profile/PassengerList.jsx
-  description: Passenger List Component with Add/Delete actions
+  description: Passenger List with Add/Delete functionality
   upstream_ids:
     - UI-PROFILE-PAGE
   downstream_ids:
     - API-PASSENGERS-LIST
     - API-PASSENGERS-DELETE
+    - API-PASSENGERS-ADD

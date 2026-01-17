@@ -55,4 +55,37 @@ describe('PassengerList Component', () => {
              expect(screen.getByText(/获取乘车人列表失败/i)).toBeInTheDocument();
         });
     });
+
+    it('opens add passenger modal and submits form', async () => {
+        axios.get.mockResolvedValue({ data: { success: true, data: [] } });
+        axios.post.mockResolvedValue({ data: { success: true, data: { id: 3, name: '王五', type: '成人' } } });
+
+        render(<PassengerList />);
+
+        // Wait for initial load
+        await waitFor(() => expect(screen.getByText('暂无联系人')).toBeInTheDocument());
+
+        // Click Add button
+        fireEvent.click(screen.getByText('+ 添加乘车人'));
+
+        // Expect modal/form to appear
+        expect(screen.getByText('基本信息')).toBeInTheDocument();
+
+        // Fill form
+        fireEvent.change(screen.getByPlaceholderText('请输入姓名'), { target: { value: '王五' } });
+        fireEvent.change(screen.getByPlaceholderText('请输入证件号码'), { target: { value: '110101199001015678' } });
+        fireEvent.change(screen.getByPlaceholderText('请输入手机号'), { target: { value: '13700137000' } });
+
+        // Submit
+        fireEvent.click(screen.getByText('保存'));
+
+        // Verify API call
+        await waitFor(() => {
+            expect(axios.post).toHaveBeenCalledWith('/api/passengers', expect.objectContaining({
+                name: '王五',
+                id_card: '110101199001015678',
+                phone: '13700137000'
+            }), expect.anything());
+        });
+    });
 });

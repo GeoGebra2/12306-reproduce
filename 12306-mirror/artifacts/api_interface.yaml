@@ -51,7 +51,9 @@ API-PASSENGERS-ADD:
   signature: POST /api/passengers
   upstream_ids:
     - UI-PASSENGER-LIST
-  downstream_ids: []
+    - DB-TABLE-PASSENGERS
+  downstream_ids:
+    - UI-PASSENGER-LIST
 API-PASSENGERS-DELETE:
   related_req_id: REQ-3-2
   path: backend/src/routes/passengers.js

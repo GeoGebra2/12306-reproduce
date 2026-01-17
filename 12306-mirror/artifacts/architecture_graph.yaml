@@ -253,7 +253,7 @@ nodes:
   UI-PASSENGER-LIST:
     type: UI
     path: frontend/src/components/Profile/PassengerList.jsx
-    description: Passenger List Component with Add/Delete actions
+    description: Passenger List with Add/Delete functionality
   API-PASSENGERS-LIST:
     type: API
     path: backend/src/routes/passengers.js
@@ -551,4 +551,16 @@ edges:
     relation: CALLS
   - from: REQ-3-2
     to: API-PASSENGERS-DELETE
+    relation: DEFINES
+  - from: REQ-3-2-1
+    to: API-PASSENGERS-ADD
+    relation: DEFINES
+  - from: DB-TABLE-PASSENGERS
+    to: API-PASSENGERS-ADD
+    relation: CALLS
+  - from: API-PASSENGERS-ADD
+    to: UI-PASSENGER-LIST
+    relation: CALLS
+  - from: REQ-3-2-1
+    to: UI-PASSENGER-LIST
     relation: DEFINES
