@@ -62,3 +62,11 @@ FUNC-PASSENGERS-DELETE:
     - API-PASSENGERS-DELETE
   db_tables:
     - passengers
+FUNC-PASSENGERS-ADD:
+  related_req_id: REQ-3-2-1
+  path: backend/src/routes/passengers.js
+  signature: router.post('/', ...)
+  upstream_ids:
+    - API-PASSENGERS-ADD
+  db_tables:
+    - passengers

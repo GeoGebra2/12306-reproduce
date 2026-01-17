@@ -285,6 +285,16 @@ nodes:
     signature: router.delete('/:id', ...)
     db_tables:
       - passengers
+  API-PASSENGERS-ADD:
+    type: API
+    path: /api/passengers
+    signature: POST /api/passengers
+  FUNC-PASSENGERS-ADD:
+    type: FUNC
+    path: backend/src/routes/passengers.js
+    signature: router.post('/', ...)
+    db_tables:
+      - passengers
 edges:
   - from: ROOT
     to: REQ-1
@@ -579,4 +589,16 @@ edges:
     relation: CALLS
   - from: REQ-3-2-2
     to: FUNC-PASSENGERS-DELETE
+    relation: DEFINES
+  - from: REQ-3-2-1
+    to: API-PASSENGERS-ADD
+    relation: DEFINES
+  - from: UI-PASSENGER-LIST
+    to: API-PASSENGERS-ADD
+    relation: CALLS
+  - from: API-PASSENGERS-ADD
+    to: FUNC-PASSENGERS-ADD
+    relation: CALLS
+  - from: REQ-3-2-1
+    to: FUNC-PASSENGERS-ADD
     relation: DEFINES

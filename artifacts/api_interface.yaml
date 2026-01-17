@@ -67,3 +67,11 @@ API-PASSENGERS-DELETE:
     - UI-PASSENGER-LIST
   downstream_ids:
     - FUNC-PASSENGERS-DELETE
+API-PASSENGERS-ADD:
+  related_req_id: REQ-3-2-1
+  path: /api/passengers
+  signature: POST /api/passengers
+  upstream_ids:
+    - UI-PASSENGER-LIST
+  downstream_ids:
+    - FUNC-PASSENGERS-ADD

@@ -111,7 +111,12 @@
     api_ids:
       - PassengerAPI
 - id: REQ-3-2-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    api_ids:
+      - API-PASSENGERS-ADD
+    func_ids:
+      - FUNC-PASSENGERS-ADD
 - id: REQ-3-2-2
   status: unprocessed
   artifacts:
