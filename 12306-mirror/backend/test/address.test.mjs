@@ -1,9 +1,12 @@
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 const request = require('supertest');
 const app = require('../src/index');
 const db = require('../src/database/init_db');
 
 describe('Address API', () => {
-  let server;
   const testUser = { id: 1, name: 'Test User' };
 
   beforeAll(async () => {
@@ -17,10 +20,6 @@ describe('Address API', () => {
         });
       });
     });
-  });
-
-  afterAll(() => {
-    // No cleanup needed
   });
 
   describe('GET /api/addresses', () => {

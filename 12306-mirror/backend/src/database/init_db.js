@@ -83,6 +83,31 @@ function initTables() {
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(user_id) REFERENCES users(id)
     )`);
+
+    // Orders table
+    db.run(`CREATE TABLE IF NOT EXISTS orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      status TEXT, -- 'Unpaid', 'Paid', 'Cancelled'
+      total_price REAL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    )`);
+
+    // Order Items table (Tickets snapshot)
+    db.run(`CREATE TABLE IF NOT EXISTS order_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      order_id INTEGER,
+      passenger_id INTEGER,
+      passenger_name TEXT,
+      train_number TEXT,
+      departure TEXT,
+      arrival TEXT,
+      departure_time TEXT,
+      seat_type TEXT,
+      price REAL,
+      FOREIGN KEY(order_id) REFERENCES orders(id)
+    )`);
     
     seedData();
   });

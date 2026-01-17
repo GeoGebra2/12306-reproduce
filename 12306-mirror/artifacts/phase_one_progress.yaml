@@ -109,7 +109,7 @@
 - id: REQ-3-2-2
   status: processed
 - id: REQ-3-3
-  status: unprocessed
+  status: processed
   artifacts:
     ui_ids:
       - UI-ADDRESS-LIST
@@ -122,7 +122,7 @@
       - POST /api/addresses
       - DELETE /api/addresses/:id
 - id: REQ-4
-  status: unprocessed
+  status: processed
 - id: REQ-4-1
   status: unprocessed
 - id: REQ-4-2
