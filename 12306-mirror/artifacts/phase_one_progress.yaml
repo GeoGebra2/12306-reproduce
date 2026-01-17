@@ -168,4 +168,7 @@
     ui_ids:
       - UI-CATERING-BOOK-PAGE
 - id: REQ-5-3
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-CATERING-VENDOR-PAGE

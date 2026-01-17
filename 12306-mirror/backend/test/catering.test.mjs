@@ -45,6 +45,19 @@ describe('Catering API', () => {
       expect(item).toHaveProperty('price');
       expect(item.type).toBe('SELF_OPERATED');
     });
+
+    it('should filter items by brand_id', async () => {
+      // First get a brand
+      const brandsRes = await request(baseUrl).get('/api/catering/brands');
+      const brand = brandsRes.body.data[0];
+      
+      const res = await request(baseUrl).get(`/api/catering/items?brand_id=${brand.id}`);
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      if (res.body.data.length > 0) {
+        expect(res.body.data[0].brand_id).toBe(brand.id);
+      }
+    });
   });
 
   describe('POST /api/catering/orders', () => {

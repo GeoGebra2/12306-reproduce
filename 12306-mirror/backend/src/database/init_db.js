@@ -182,8 +182,41 @@ function seedData() {
      selfItems.forEach(i => {
        itemStmt.run(i.name, i.price, i.type, i.image_url, i.name);
      });
-     itemStmt.finalize();
-   });
+     itemStmt.finalize((err) => {
+      // After self-items, seed brand items
+      db.all("SELECT id, name FROM catering_brands", (err, rows) => {
+        if (err || !rows) return;
+        
+        const brandItems = [];
+        const mcd = rows.find(r => r.name === '麦当劳');
+        const dicos = rows.find(r => r.name === '德克士');
+        const kungfu = rows.find(r => r.name === '真功夫');
+
+        if (mcd) {
+          brandItems.push(
+            { name: '麦香鸡腿堡', price: 22, type: 'BRAND', brand_id: mcd.id, image_url: '/assets/profile-and-catering/麦当劳-麦麦脆汁鸡（鸡腿）1块.jpg' },
+            { name: '巨无霸套餐', price: 35, type: 'BRAND', brand_id: mcd.id, image_url: '/assets/profile-and-catering/麦当劳-鸡牛双堡双人餐乘运款.jpg' }
+          );
+        }
+        if (dicos) {
+          brandItems.push(
+            { name: '手枪腿套餐', price: 38, type: 'BRAND', brand_id: dicos.id, image_url: '/assets/profile-and-catering/德克士-脆皮鸡腿堡套餐（柠香）.jpg' }
+          );
+        }
+        if (kungfu) {
+           brandItems.push(
+            { name: '香菇滑鸡饭', price: 28, type: 'BRAND', brand_id: kungfu.id, image_url: '/assets/profile-and-catering/真功夫-香汁排骨饭+乌鸡汤+田园彩豆.jpg' }
+          );
+        }
+
+        const brandItemStmt = db.prepare("INSERT INTO catering_items (name, price, type, brand_id, image_url) SELECT ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM catering_items WHERE name = ?)");
+        brandItems.forEach(i => {
+          brandItemStmt.run(i.name, i.price, i.type, i.brand_id, i.image_url, i.name);
+        });
+        brandItemStmt.finalize();
+      });
+    });
+  });
 
   // Seed Stations
   const stations = [

@@ -12,6 +12,7 @@ import OrderDetailPage from './pages/OrderDetailPage';
 import RefundSuccessPage from './pages/RefundSuccessPage';
 import CateringPage from './pages/CateringPage';
 import CateringBookPage from './pages/CateringBookPage';
+import CateringVendorPage from './pages/CateringVendorPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/refund-success" element={<RefundSuccessPage />} />
       <Route path="/catering" element={<CateringPage />} />
       <Route path="/catering/book" element={<CateringBookPage />} />
+      <Route path="/catering/vendor/:id" element={<CateringVendorPage />} />
       <Route path="/profile/*" element={<ProfilePage />} />
     </Routes>
   );

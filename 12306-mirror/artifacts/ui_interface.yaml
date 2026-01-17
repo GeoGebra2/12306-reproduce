@@ -142,10 +142,21 @@ UI-CATERING-PAGE:
     - UI-ROOT
   downstream_ids:
     - UI-CATERING-BOOK-PAGE
+    - UI-CATERING-VENDOR-PAGE
 UI-CATERING-BOOK-PAGE:
   related_req_id: REQ-5-2
   path: frontend/src/pages/CateringBookPage.jsx
   description: Catering Booking Page with Menu and Cart
+  upstream_ids:
+    - UI-CATERING-PAGE
+    - API-CATERING-BRANDS
+    - API-CATERING-ITEMS
+    - API-CATERING-ORDERS
+  downstream_ids: []
+UI-CATERING-VENDOR-PAGE:
+  related_req_id: REQ-5-3
+  path: frontend/src/pages/CateringVendorPage.jsx
+  description: Catering Vendor Detail Page with Menu and Cart
   upstream_ids:
     - UI-CATERING-PAGE
     - API-CATERING-BRANDS
