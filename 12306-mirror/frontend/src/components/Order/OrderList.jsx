@@ -122,7 +122,7 @@ const OrderList = () => {
                       <button className="btn btn-secondary" onClick={() => handleCancel(order.id)}>取消订单</button>
                     </>
                   )}
-                  <button className="btn btn-secondary">查看详情</button>
+                  <button className="btn btn-secondary" onClick={() => navigate(`/order-detail/${order.id}`)}>查看详情</button>
                 </div>
               </div>
             </div>

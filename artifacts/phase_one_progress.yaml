@@ -125,7 +125,7 @@
     func_ids:
       - FUNC-PASSENGERS-DELETE
 - id: REQ-3-3
-  status: unprocessed
+  status: processed
 - id: REQ-4
   status: unprocessed
 - id: REQ-4-1
@@ -137,7 +137,14 @@
 - id: REQ-4-4
   status: unprocessed
 - id: REQ-4-5
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - ORDER_DETAIL_PAGE
+    api_ids:
+      - API_ORDER_DETAIL
+      - API_ORDER_REFUND
+      - API_ORDER_CANCEL
 - id: REQ-4-6
   status: unprocessed
 - id: REQ-5

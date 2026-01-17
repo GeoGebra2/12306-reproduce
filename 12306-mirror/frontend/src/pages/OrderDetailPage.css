@@ -1,0 +1,115 @@
+
+.order-detail-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.order-header {
+    background: linear-gradient(to right, #3b99fc, #2c72dd);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-info-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.train-info-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #eee;
+}
+
+.station-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.station-name.departure {
+    color: #f42421;
+}
+
+.train-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.passenger-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.passenger-table th {
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    color: #666;
+}
+
+.passenger-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.status-text {
+    font-weight: bold;
+}
+
+.status-paid { color: #28a745; }
+.status-unpaid { color: #ffc107; }
+.status-refunded { color: #6c757d; }
+.status-cancelled { color: #dc3545; }
+
+.action-bar {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.btn-action {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: #ff9900;
+    color: white;
+    border-color: #ff9900;
+}
+
+.btn-secondary {
+    background: #f8f9fa;
+    color: #333;
+    border-color: #ddd;
+}
+
+.btn-danger {
+    background: #fff;
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background: #dc3545;
+    color: white;
+}

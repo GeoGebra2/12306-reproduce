@@ -264,5 +264,25 @@ test.describe('12306 E2E Flow', () => {
     await expect(page.getByText('Paid')).toBeVisible();
 
     console.log('Payment Flow Verified');
+
+    // --- 9. Refund Flow (REQ-4-5) ---
+    console.log('Starting Refund Flow...');
+    
+    // Click View Details
+    await page.click('button:has-text("查看详情")');
+    
+    // Verify Order Detail Page
+    await expect(page).toHaveURL(/\/order-detail\//); 
+    await expect(page.getByText('订单详情')).toBeVisible();
+    await expect(page.locator('.status-text', { hasText: '已支付' })).toBeVisible(); // Specific to header status
+    
+    // Click Refund
+    await page.click('button:has-text("退票")');
+    
+    // Verify Refund Success (Alert handled by dialog handler)
+    // Wait for status update
+    await expect(page.locator('.status-text', { hasText: '已退票' })).toBeVisible();
+    
+    console.log('Refund Flow Verified');
   });
 });

@@ -149,9 +149,16 @@ router.post('/:orderId/cancel', requireAuth, (req, res) => {
 // GET /api/orders/:orderId
 router.get('/:orderId', requireAuth, (req, res) => {
   const { orderId } = req.params;
+  console.log(`Fetching order ${orderId} for user ${req.userId}`);
   db.get('SELECT * FROM orders WHERE id = ? AND user_id = ?', [orderId, req.userId], (err, order) => {
-    if (err) return res.status(500).json({ success: false, message: 'Database error' });
-    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+    if (err) {
+        console.error('DB Error:', err);
+        return res.status(500).json({ success: false, message: 'Database error' });
+    }
+    if (!order) {
+        console.log(`Order ${orderId} not found for user ${req.userId}`);
+        return res.status(404).json({ success: false, message: 'Order not found' });
+    }
     
     db.all('SELECT * FROM order_items WHERE order_id = ?', [orderId], (err, items) => {
       if (err) return res.status(500).json({ success: false, message: 'Database error' });
@@ -184,6 +191,24 @@ router.post('/:orderId/pay', requireAuth, (req, res) => {
     db.run('UPDATE orders SET status = ? WHERE id = ?', ['Paid', orderId], (err) => {
       if (err) return res.status(500).json({ success: false, message: 'Failed to pay order' });
       res.json({ success: true, message: 'Payment successful' });
+    });
+  });
+});
+
+// POST /api/orders/:orderId/refund
+router.post('/:orderId/refund', requireAuth, (req, res) => {
+  const { orderId } = req.params;
+  db.get('SELECT * FROM orders WHERE id = ? AND user_id = ?', [orderId, req.userId], (err, order) => {
+    if (err) return res.status(500).json({ success: false, message: 'Database error' });
+    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+    
+    if (order.status !== 'Paid') {
+      return res.status(400).json({ success: false, message: 'Only paid orders can be refunded' });
+    }
+    
+    db.run('UPDATE orders SET status = ? WHERE id = ?', ['Refunded', orderId], (err) => {
+      if (err) return res.status(500).json({ success: false, message: 'Failed to refund order' });
+      res.json({ success: true, message: 'Order refunded successfully' });
     });
   });
 });
