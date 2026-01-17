@@ -81,3 +81,26 @@ UI-PROFILE-INFO:
   upstream_ids:
     - UI-PROFILE-PAGE
   downstream_ids: []
+UI-PROFILE-PAGE:
+  related_req_id: REQ-3
+  path: frontend/src/pages/ProfilePage.jsx
+  description: Profile Page Container with Sub-routes
+  upstream_ids:
+    - UI-ROOT
+  downstream_ids:
+    - UI-PROFILE-LAYOUT
+UI-PROFILE-LAYOUT:
+  related_req_id: REQ-3
+  path: frontend/src/components/Profile/ProfileLayout.jsx
+  description: Profile Layout with Header and Sidebar
+  upstream_ids:
+    - UI-PROFILE-PAGE
+  downstream_ids:
+    - UI-PROFILE-SIDEBAR
+UI-PROFILE-SIDEBAR:
+  related_req_id: REQ-3
+  path: frontend/src/components/Profile/Sidebar.jsx
+  description: Profile Sidebar Navigation
+  upstream_ids:
+    - UI-PROFILE-LAYOUT
+  downstream_ids: []

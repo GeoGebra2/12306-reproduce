@@ -238,6 +238,18 @@ nodes:
     signature: exports.getUserProfile
     db_tables:
       - users
+  UI-PROFILE-PAGE:
+    type: UI
+    path: frontend/src/pages/ProfilePage.jsx
+    description: Profile Page Container with Sub-routes
+  UI-PROFILE-LAYOUT:
+    type: UI
+    path: frontend/src/components/Profile/ProfileLayout.jsx
+    description: Profile Layout with Header and Sidebar
+  UI-PROFILE-SIDEBAR:
+    type: UI
+    path: frontend/src/components/Profile/Sidebar.jsx
+    description: Profile Sidebar Navigation
 edges:
   - from: ROOT
     to: REQ-1
@@ -481,4 +493,22 @@ edges:
     relation: CALLS
   - from: REQ-3-1
     to: FUNC-GET-USER-PROFILE
+    relation: DEFINES
+  - from: REQ-3
+    to: UI-PROFILE-PAGE
+    relation: DEFINES
+  - from: UI-ROOT
+    to: UI-PROFILE-PAGE
+    relation: CALLS
+  - from: UI-PROFILE-PAGE
+    to: UI-PROFILE-LAYOUT
+    relation: CALLS
+  - from: REQ-3
+    to: UI-PROFILE-LAYOUT
+    relation: DEFINES
+  - from: UI-PROFILE-LAYOUT
+    to: UI-PROFILE-SIDEBAR
+    relation: CALLS
+  - from: REQ-3
+    to: UI-PROFILE-SIDEBAR
     relation: DEFINES
