@@ -10,6 +10,7 @@ import BookingPage from './pages/BookingPage';
 import PayOrderPage from './pages/PayOrderPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import RefundSuccessPage from './pages/RefundSuccessPage';
+import CateringPage from './pages/CateringPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/pay-order/:orderId" element={<PayOrderPage />} />
       <Route path="/order-detail/:orderId" element={<OrderDetailPage />} />
       <Route path="/refund-success" element={<RefundSuccessPage />} />
+      <Route path="/catering" element={<CateringPage />} />
       <Route path="/profile/*" element={<ProfilePage />} />
     </Routes>
   );

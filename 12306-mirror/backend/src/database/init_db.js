@@ -108,12 +108,61 @@ function initTables() {
       price REAL,
       FOREIGN KEY(order_id) REFERENCES orders(id)
     )`);
+
+    // Catering Brands table
+    db.run(`CREATE TABLE IF NOT EXISTS catering_brands (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT UNIQUE,
+      logo_url TEXT
+    )`);
+
+    // Catering Items table
+    db.run(`CREATE TABLE IF NOT EXISTS catering_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      price REAL,
+      type TEXT, -- 'SELF_OPERATED', 'BRAND'
+      brand_id INTEGER,
+      image_url TEXT,
+      FOREIGN KEY(brand_id) REFERENCES catering_brands(id)
+    )`);
     
     seedData();
   });
 }
 
 function seedData() {
+  // Seed Catering Brands
+  const brands = [
+    { name: '永和大王', logo_url: './assets/profile-and-catering/Food-永和大王.jpg' },
+    { name: '老娘舅', logo_url: './assets/profile-and-catering/Food-老娘舅.jpg' },
+    { name: '麦当劳', logo_url: './assets/profile-and-catering/Food-麦当劳.jpg' },
+    { name: '康师傅', logo_url: './assets/profile-and-catering/Food-康师傅.jpg' },
+    { name: '德克士', logo_url: './assets/profile-and-catering/Food-德克士.jpg' },
+    { name: '真功夫', logo_url: './assets/profile-and-catering/Food-真功夫.jpg' }
+  ];
+  
+  const brandStmt = db.prepare("INSERT OR IGNORE INTO catering_brands (name, logo_url) VALUES (?, ?)");
+  brands.forEach(b => {
+    brandStmt.run(b.name, b.logo_url);
+  });
+  brandStmt.finalize();
+
+  // Seed Self-Operated Items
+   const selfItems = [
+     { name: '列车自营商品-15元', price: 15, type: 'SELF_OPERATED', image_url: './assets/profile-and-catering/Food-列车自营商品-15元.jpg' },
+     { name: '列车自营商品-30元', price: 30, type: 'SELF_OPERATED', image_url: './assets/profile-and-catering/Food-列车自营商品-30元.jpg' },
+     { name: '列车自营商品-40元', price: 40, type: 'SELF_OPERATED', image_url: './assets/profile-and-catering/Food-列车自营商品-40元.jpg' }
+   ];
+ 
+   db.serialize(() => {
+     const itemStmt = db.prepare("INSERT INTO catering_items (name, price, type, image_url) SELECT ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM catering_items WHERE name = ?)");
+     selfItems.forEach(i => {
+       itemStmt.run(i.name, i.price, i.type, i.image_url, i.name);
+     });
+     itemStmt.finalize();
+   });
+
   // Seed Stations
   const stations = [
     { name: '北京南', code: 'VNP', city: '北京' },
