@@ -162,5 +162,18 @@ test.describe('12306 E2E Flow', () => {
     await expect(page.getByText('暂无常用地址')).toBeVisible();
     await expect(page.getByText('Address Receiver')).not.toBeVisible();
     console.log('Address Management Successful');
+
+    // --- 6. Order Management (REQ-4-1) ---
+    console.log('Starting Order Management...');
+    // Navigate via Sidebar (Assuming we are in profile layout)
+    await page.click('a[href="/profile/orders"]');
+    
+    // Verify Order List Page
+    await expect(page.getByText('未完成订单')).toBeVisible();
+    await expect(page.getByText('未出行订单')).toBeVisible();
+    await expect(page.getByText('历史订单')).toBeVisible();
+    await expect(page.getByText('暂无订单')).toBeVisible(); // Initially empty
+
+    console.log('Order Management Page Verified');
   });
 });

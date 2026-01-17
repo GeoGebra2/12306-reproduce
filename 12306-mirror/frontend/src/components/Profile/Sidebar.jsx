@@ -16,7 +16,7 @@ const Sidebar = () => {
     { name: '服务查询', path: '/profile/service' },
     { name: '投诉', path: '/profile/complaint' },
     { name: '建议', path: '/profile/suggestion' },
-    { name: '订单中心', path: '/profile/orders' },
+    { name: '火车票订单', path: '/profile/orders' },
   ];
 
   return (

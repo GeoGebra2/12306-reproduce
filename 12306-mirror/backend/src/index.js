@@ -10,6 +10,7 @@ const stationRoutes = require('./routes/stations');
 const ticketRoutes = require('./routes/tickets');
 const passengerRoutes = require('./routes/passengers');
 const addressRoutes = require('./routes/address');
+const orderRoutes = require('./routes/orders');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,6 +20,7 @@ app.use('/api/stations', stationRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/passengers', passengerRoutes);
 app.use('/api/addresses', addressRoutes);
+app.use('/api/orders', orderRoutes);
 
  
 require('./database/init_db');

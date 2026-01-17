@@ -124,7 +124,12 @@
 - id: REQ-4
   status: processed
 - id: REQ-4-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-ORDER-LIST
+    api_ids:
+      - API-ORDERS-LIST
 - id: REQ-4-2
   status: unprocessed
 - id: REQ-4-3

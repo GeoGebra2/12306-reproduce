@@ -126,3 +126,11 @@ AddressList:
   description: Address management list component with add/delete functionality
   upstream_ids: []
   downstream_ids: []
+UI-ORDER-LIST:
+  related_req_id: REQ-4-1
+  path: frontend/src/components/Order/OrderList.jsx
+  description: Order Management List with Tabs (Unpaid, Paid, History)
+  upstream_ids:
+    - UI-PROFILE-PAGE
+  downstream_ids:
+    - API-ORDERS-LIST

@@ -100,3 +100,10 @@ DELETE /api/addresses/:id:
   signature: DELETE /api/addresses/:id
   upstream_ids: []
   downstream_ids: []
+API-ORDERS-LIST:
+  related_req_id: REQ-4-1
+  path: backend/src/routes/orders.js
+  signature: GET /api/orders
+  upstream_ids:
+    - UI-ORDER-LIST
+  downstream_ids: []

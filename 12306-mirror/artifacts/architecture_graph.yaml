@@ -298,6 +298,14 @@ nodes:
     type: API
     path: backend/src/routes/address.js
     signature: DELETE /api/addresses/:id
+  UI-ORDER-LIST:
+    type: UI
+    path: frontend/src/components/Order/OrderList.jsx
+    description: Order Management List with Tabs (Unpaid, Paid, History)
+  API-ORDERS-LIST:
+    type: API
+    path: backend/src/routes/orders.js
+    signature: GET /api/orders
 edges:
   - from: ROOT
     to: REQ-1
@@ -628,4 +636,16 @@ edges:
     relation: DEFINES
   - from: REQ-3-3
     to: DELETE /api/addresses/:id
+    relation: DEFINES
+  - from: REQ-4-1
+    to: UI-ORDER-LIST
+    relation: DEFINES
+  - from: UI-PROFILE-PAGE
+    to: UI-ORDER-LIST
+    relation: CALLS
+  - from: UI-ORDER-LIST
+    to: API-ORDERS-LIST
+    relation: CALLS
+  - from: REQ-4-1
+    to: API-ORDERS-LIST
     relation: DEFINES
