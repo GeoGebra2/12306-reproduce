@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import BookingPage from '../src/pages/BookingPage';
+import BookingPage from '../src/pages/OrderPage';
 
 vi.mock('axios');
 
@@ -20,7 +20,10 @@ vi.mock('react-router-dom', async () => {
           start_station: 'Beijing',
           end_station: 'Shanghai',
           start_time: '09:00',
-          end_time: '13:00'
+          end_time: '13:00',
+          tickets: [
+             { seat_type: '二等座', price: 100, count: 10 }
+          ]
         },
         date: '2023-10-01'
       }
@@ -49,7 +52,7 @@ describe('BookingPage', () => {
         return Promise.resolve({ data: {} });
     });
 
-    axios.post.mockResolvedValue({ data: { success: true, orderId: 100 } });
+    axios.post.mockResolvedValue({ data: { success: true, data: { id: '12345' } } });
   });
 
   it('renders train info correctly', () => {
@@ -100,19 +103,27 @@ describe('BookingPage', () => {
     await waitFor(() => screen.getByText('Passenger A'));
     fireEvent.click(screen.getByText('Passenger A'));
 
-    // Submit
-    const submitBtn = screen.getByText(/提交订单/i);
+    // Click pre-submit button (opens modal)
+    const submitBtn = screen.getByText('提交订单');
+    expect(submitBtn).not.toBeDisabled();
     fireEvent.click(submitBtn);
 
+    // Verify modal appears
     await waitFor(() => {
-        expect(axios.post).toHaveBeenCalledWith('/api/orders', expect.objectContaining({
-            train_number: 'G1',
-            passengers: expect.arrayContaining([
-                expect.objectContaining({ name: 'Passenger A' })
-            ])
-        }), expect.anything());
-        
-        expect(mockNavigate).toHaveBeenCalledWith('/profile/orders');
+        expect(screen.getByText('订单确认')).toBeInTheDocument();
+    });
+
+    // Click confirm in modal
+    const confirmBtn = screen.getByText('确认提交');
+    fireEvent.click(confirmBtn);
+
+    await waitFor(() => {
+      expect(axios.post).toHaveBeenCalledWith('/api/orders', expect.objectContaining({
+          passengers: expect.arrayContaining([
+              expect.objectContaining({ name: 'Passenger A' })
+          ])
+      }), expect.anything());
+      expect(mockNavigate).toHaveBeenCalledWith('/pay-order/12345');
     });
   });
 });

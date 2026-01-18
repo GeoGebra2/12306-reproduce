@@ -5,6 +5,16 @@ import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import TrainItem from '../src/components/TrainList/TrainItem';
 
+const mockNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual('react-router-dom');
+    return {
+        ...actual,
+        useNavigate: () => mockNavigate,
+    };
+});
+
 describe('TrainItem Component', () => {
     const mockTrain = {
         id: 1,
@@ -61,8 +71,6 @@ describe('TrainItem Component', () => {
     });
 
     it('navigates to order page on book click', () => {
-        // We can't easily test navigation with real BrowserRouter without mocking useNavigate.
-        // But we can check if the button exists and is clickable.
         render(
             <BrowserRouter>
                 <TrainItem train={mockTrain} />
@@ -70,7 +78,12 @@ describe('TrainItem Component', () => {
         );
         
         const bookButton = screen.getByRole('button', { name: /预订/i });
-        expect(bookButton).toBeInTheDocument();
-        // actual navigation test is better done in integration test
+        fireEvent.click(bookButton);
+        
+        expect(mockNavigate).toHaveBeenCalledWith('/order', expect.objectContaining({
+            state: expect.objectContaining({
+                train: mockTrain
+            })
+        }));
     });
 });

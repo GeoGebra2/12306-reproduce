@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './BookingPage.css';
+import './OrderPage.css';
 
-const BookingPage = () => {
+const OrderPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { train, date } = location.state || {};
@@ -12,6 +12,7 @@ const BookingPage = () => {
     const [selectedPassengers, setSelectedPassengers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     useEffect(() => {
         if (!train) {
@@ -55,8 +56,20 @@ const BookingPage = () => {
         ));
     };
 
-    const handleSubmit = async () => {
+    const calculateTotalPrice = () => {
+        return selectedPassengers.reduce((total, p) => {
+            const ticket = train.tickets && train.tickets.find(t => t.seat_type === p.seat_type);
+            const price = ticket ? ticket.price : 0;
+            return total + price;
+        }, 0);
+    };
+
+    const handlePreSubmit = () => {
         if (selectedPassengers.length === 0) return;
+        setShowConfirmModal(true);
+    };
+
+    const handleConfirmSubmit = async () => {
         setSubmitting(true);
         try {
             const userStr = localStorage.getItem('user');
@@ -77,13 +90,14 @@ const BookingPage = () => {
             });
 
             if (res.data.success) {
-        navigate('/profile/orders');
-      }
-    } catch (err) {
-      console.error('Failed to create order', err);
-      alert('订单创建失败');
-    } finally {
+                navigate(`/pay-order/${res.data.data.id}`);
+            }
+        } catch (err) {
+            console.error('Failed to create order', err);
+            alert('订单创建失败');
+        } finally {
             setSubmitting(false);
+            setShowConfirmModal(false);
         }
     };
 
@@ -164,13 +178,49 @@ const BookingPage = () => {
                 <button 
                     className="submit-btn" 
                     disabled={selectedPassengers.length === 0 || submitting}
-                    onClick={handleSubmit}
+                    onClick={handlePreSubmit}
                 >
                     {submitting ? '提交中...' : '提交订单'}
                 </button>
             </div>
+
+            {showConfirmModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <div className="modal-header">订单确认</div>
+                        <div className="modal-body">
+                            <div className="modal-row">
+                                <span>车次：</span>
+                                <span>{train.train_number} ({train.start_station} - {train.end_station})</span>
+                            </div>
+                            <div className="modal-row">
+                                <span>出发时间：</span>
+                                <span>{date} {train.start_time}</span>
+                            </div>
+                            <div style={{marginTop: '16px', borderTop: '1px solid #eee', paddingTop: '8px'}}>
+                                <strong>乘车人：</strong>
+                                {selectedPassengers.map(p => (
+                                    <div key={p.id} className="modal-row" style={{fontSize: '14px', color: '#666'}}>
+                                        <span>{p.name} ({p.seat_type})</span>
+                                        <span>¥{train.tickets.find(t => t.seat_type === p.seat_type)?.price}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="modal-total">
+                                总价：¥{calculateTotalPrice()}
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn-cancel" onClick={() => setShowConfirmModal(false)}>取消</button>
+                            <button className="btn-confirm" onClick={handleConfirmSubmit} disabled={submitting}>
+                                {submitting ? '处理中...' : '确认提交'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default BookingPage;
+export default OrderPage;

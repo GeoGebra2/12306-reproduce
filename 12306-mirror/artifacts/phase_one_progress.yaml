@@ -98,7 +98,6 @@
     api_ids:
       - API-PASSENGERS-LIST
       - API-PASSENGERS-ADD
-      - API-PASSENGERS-DELETE
 - id: REQ-3-2-1
   status: processed
   artifacts:
@@ -143,9 +142,17 @@
       - API-ORDERS-GET-DETAIL
       - API-ORDERS-PAY
 - id: REQ-4-5
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-ORDER-DETAIL-PAGE
+    api_ids:
+      - API-ORDERS-REFUND
 - id: REQ-4-6
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - UI-REFUND-SUCCESS-PAGE
 - id: REQ-5
   status: processed
   artifacts:

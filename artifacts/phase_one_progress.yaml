@@ -151,9 +151,18 @@
     ui_ids:
       - REFUND_SUCCESS_PAGE
 - id: REQ-5
-  status: unprocessed
+  status: processed
+  artifacts:
+    func_ids:
+      - INIT_DB_CATERING
 - id: REQ-5-1
-  status: unprocessed
+  status: processed
+  artifacts:
+    ui_ids:
+      - CATERING_PAGE
+    api_ids:
+      - API_CATERING_BRANDS
+      - API_CATERING_ITEMS
 - id: REQ-5-2
   status: unprocessed
 - id: REQ-5-3

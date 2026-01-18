@@ -6,7 +6,7 @@ const TrainItem = ({ train, date }) => {
     const navigate = useNavigate();
 
     const handleBook = () => {
-        navigate('/booking', { state: { train, date } });
+        navigate('/order', { state: { train, date } });
     };
 
     return (

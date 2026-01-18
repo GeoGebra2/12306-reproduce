@@ -639,6 +639,20 @@ children:
                   - action: 页面加载或点击查询
                     expectation: 调用车次查询API (GET /api/trains)，返回数据并渲染车次列表，显示出发/到达时间、历时、票价及余票。
 
+      - id: REQ-2-3
+        name: 车票预订跳转
+        description: 用户在车次列表点击预订按钮，跳转至订单填写页。
+        dependencies:
+          - REQ-2-2-3
+        scenarios:
+          - id: REQ-2-3:SCE-0
+            name: 跳转至订单页
+            prerequisites:
+              - REQ-2-2-3:SCE-0 (车次列表已加载)
+            steps:
+              - action: 用户点击"预订"按钮
+                expectation: 系统跳转到"/order"页面，并携带选中的车次信息（车次号、出发/到达站、日期等），页面展示该车次的基本信息。
+
   - id: REQ-3
     name: 个人中心
     description: 管理购票所需的常用数据（如查看个人信息，乘车人、地址等）。参考图片：[image](./reference/center/self.png)

@@ -6,7 +6,7 @@ import RegisterPage from './pages/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import TrainListPage from './pages/TrainListPage';
 import ProfilePage from './pages/ProfilePage';
-import BookingPage from './pages/BookingPage';
+import OrderPage from './pages/OrderPage';
 import PayOrderPage from './pages/PayOrderPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import RefundSuccessPage from './pages/RefundSuccessPage';
@@ -22,7 +22,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/search" element={<TrainListPage />} />
-      <Route path="/booking" element={<BookingPage />} />
+      <Route path="/order" element={<OrderPage />} />
       <Route path="/pay-order/:orderId" element={<PayOrderPage />} />
       <Route path="/order-detail/:orderId" element={<OrderDetailPage />} />
       <Route path="/refund-success" element={<RefundSuccessPage />} />

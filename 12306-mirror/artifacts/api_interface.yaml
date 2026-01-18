@@ -104,32 +104,49 @@ API-ORDERS-LIST:
   related_req_id: REQ-4-1
   path: backend/src/routes/orders.js
   signature: GET /api/orders
-  upstream_ids:
+  upstream_ids: []
+  downstream_ids:
     - UI-ORDER-LIST
-  downstream_ids: []
+API-ORDERS-GET-DETAIL:
+  related_req_id: REQ-4-4
+  path: backend/src/routes/orders.js
+  signature: GET /api/orders/:id
+  upstream_ids: []
+  downstream_ids:
+    - UI-PAY-ORDER-PAGE
+    - UI-ORDER-DETAIL-PAGE
+API-ORDERS-PAY:
+  related_req_id: REQ-4-4
+  path: backend/src/routes/orders.js
+  signature: POST /api/orders/:id/pay
+  upstream_ids: []
+  downstream_ids:
+    - UI-PAY-ORDER-PAGE
 API-CATERING-BRANDS:
   related_req_id: REQ-5
   path: backend/src/routes/catering.js
   signature: GET /api/catering/brands
-  upstream_ids:
-    - DB-TABLE-CATERING-BRANDS
+  upstream_ids: []
   downstream_ids:
     - UI-CATERING-PAGE
-    - UI-CATERING-BOOK-PAGE
 API-CATERING-ITEMS:
   related_req_id: REQ-5
   path: backend/src/routes/catering.js
   signature: GET /api/catering/items
-  upstream_ids:
-    - DB-TABLE-CATERING-ITEMS
+  upstream_ids: []
   downstream_ids:
     - UI-CATERING-BOOK-PAGE
 API-CATERING-ORDERS:
   related_req_id: REQ-5
   path: backend/src/routes/catering.js
   signature: POST /api/catering/orders
-  upstream_ids:
-    - DB-TABLE-CATERING-ORDERS
-    - DB-TABLE-CATERING-ORDER-ITEMS
+  upstream_ids: []
   downstream_ids:
     - UI-CATERING-BOOK-PAGE
+API-ORDERS-REFUND:
+  related_req_id: REQ-4-5
+  path: backend/src/routes/orders.js
+  signature: POST /api/orders/:id/refund
+  upstream_ids: []
+  downstream_ids:
+    - UI-ORDER-DETAIL-PAGE
